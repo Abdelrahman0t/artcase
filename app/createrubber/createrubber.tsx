@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from 'react';
-import { useRouter } from 'next/Navigation';
+import { useRouter } from 'next/navigation';
 import { Stage, Layer, Image as KonvaImage, Transformer, Group, Rect } from 'react-konva';
 import Layout from '../fyp/layout';
 import { Text as KonvaText } from "react-konva";
