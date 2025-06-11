@@ -1,0 +1,723 @@
+.container {
+    font-family: Arial, sans-serif;
+    padding: 0;
+    margin: 0;
+    padding: 0px 100px 100px 0px;
+  }
+  
+  .heroSection {
+    position: relative;
+    width: 100%;
+    height: 60vh; /* Full viewport height */
+    overflow: hidden;
+    margin-bottom: 50px;
+  }
+  
+  .heroContent {
+    position: absolute;
+    top: 2%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1; /* Ensures the video stays behind any content */
+  }
+  
+  .heroVideo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the video covers the full container */
+  }
+  
+  
+ 
+  /* Popular Articles Section */
+  .popularArticlesSection {
+    padding: 0px 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+  }
+  
+  .popularArticlesSection h2 {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+  }
+  
+  .articlesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+  }
+  
+  .articleCard {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s;
+  }
+  
+  .articleCard:hover {
+    transform: translateY(-5px);
+  }
+  
+  .articleCard img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .articleCard h3 {
+    font-size: 1.5rem;
+    margin: 20px;
+    color: #333;
+  }
+  
+  .articleCard span {
+    display: block;
+    font-size: 0.9rem;
+    color: gray;
+    margin: 0 20px 20px;
+  }
+  
+  /* Lasted What We Do Section */
+  .lastedSection {
+    padding: 50px 20px;
+  }
+  
+  .lastedSection h2 {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+  }
+  
+  /* Conservation Projects Section */
+  .projectsSection {
+    padding: 50px 20px;
+    background-color: #f1f1f1;
+    text-align: center;
+  }
+  
+  .projectsSection h2 {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+  }
+  
+  .projectsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+  }
+  
+  .projectCard {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s;
+  }
+  
+  .projectCard:hover {
+    transform: translateY(-5px);
+  }
+  
+  .projectCard img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .projectCard h3 {
+    font-size: 1.4rem;
+    margin: 20px;
+    color: var(--secondColor);
+
+  }
+  
+  .moreButton {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 25px;
+    font-size: 1rem;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .moreButton:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Call to Action Section */
+  .ctaSection {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .ctaSection h2 {
+    font-size: 2.4rem;
+    margin-bottom: 30px;
+  }
+  
+
+  
+
+ 
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .heroContent h1 {
+      font-size: 2rem;
+    }
+  
+    .searchBar input {
+      width: 250px;
+    }
+  
+    .articlesGrid,
+    .projectsGrid {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+  
+    .articleCard img,
+    .projectCard img {
+      height: 150px;
+    }
+  
+    .ctaButtons button {
+      font-size: 0.9rem;
+      padding: 10px 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .heroContent h1 {
+      font-size: 1.5rem;
+    }
+  
+    .searchBar input {
+      width: 200px;
+    }
+  
+    .ctaSection h2 {
+      font-size: 1.8rem;
+    }
+  
+    .ctaButtons button {
+      font-size: 0.8rem;
+      padding: 8px 15px;
+    }
+  }
+  
+
+
+
+  /* Lasted What We Do Section */
+.lastedSection {
+    padding: 50px 20px;
+  }
+  
+  .lastedSection h2 {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  .articlesGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three columns */
+    gap: 20px;
+  }
+  
+  .articleCard {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s;
+  }
+  
+  .articleCard:hover {
+    transform: translateY(-5px);
+  }
+  
+  .articleCard img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+  
+  .articleCard h3 {
+    font-size: 1.4rem;
+    margin: 20px;
+    color: var(--secondColor);
+
+  }
+  
+  .articleCard span {
+    display: block;
+    font-size: 0.9rem;
+    color: gray;
+    margin: 0 20px 20px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .articlesGrid {
+      grid-template-columns: repeat(2, 1fr); /* Two columns for tablets */
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .articlesGrid {
+      grid-template-columns: 1fr; /* One column for mobile devices */
+    }
+  }
+  
+
+
+
+
+
+  /* Popular Articles Section */
+.popularArticlesSection {
+    padding: 50px 20px;
+  }
+  
+  .popularArticlesSection h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    font-weight: bold;
+    color: var(--secondColor);
+
+  }
+  
+  .articlesLayout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  
+  .largeArticle {
+    position: relative;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .largeArticle img {
+    width: 60%;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  .largeArticle h3 {
+    font-size: 1.3rem;
+    margin: 15px 0;
+    color: var(--secondColor);
+    font-weight: 600;
+
+  }
+  
+  .largeArticle p {
+    font-size: 0.8rem;
+    color: #555;
+    margin-bottom: 15px;
+  }
+  
+  .largeArticle span {
+    display: inline-block;
+    font-size: 0.9rem;
+    color: #4CAF50;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .smallArticles {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .articleCard {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 15px;
+  }
+
+
+  
+  .articleCard img {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+  
+  .articleContent {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .articleContent h4 {
+    font-size: 1.1rem;
+    margin: 0 0 10px;
+    color: var(--secondColor);
+    font-weight: 600;
+
+  }
+  
+  .articleContent p {
+    font-size: 0.8rem;
+    color: #555;
+  }
+  
+
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .articlesLayout {
+      grid-template-columns: 1fr;
+    }
+  
+    .articleCard {
+      flex-direction: row;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .articlesLayout {
+      grid-template-columns: 1fr;
+    }
+  
+    .articleCard {
+      flex-direction: row;
+    }
+  }
+  
+
+
+  .lastedSection {
+    padding: 50px 20px;
+  }
+  
+  .lastedSection h2 {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    text-align: center;
+    color: var(--secondColor);
+    font-weight: bold;
+
+  }
+  
+  .articlesGrid1 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three columns */
+    gap: 20px;
+  }
+  
+  .articleCard1 {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s;
+  }
+  
+  .articleCard1:hover {
+    transform: translateY(-5px);
+  }
+  
+  .articleCard1 img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+  
+  .articleCard1 h3 {
+    font-size: 1.4rem;
+    margin: 20px;
+    color: var(--secondColor);
+
+  }
+  
+  .articleCard1 span {
+    display: block;
+    font-size: 0.9rem;
+    color: gray;
+    margin: 0 20px 20px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .articlesGrid {
+      grid-template-columns: repeat(2, 1fr); /* Two columns for tablets */
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .articlesGrid {
+      grid-template-columns: 1fr; /* One column for mobile devices */
+    }
+  }
+
+
+
+
+
+
+  /* Section Styles */
+.projectsSection {
+    padding: 50px 20px;
+    background-color: #fff;
+    text-align: center;
+  }
+  
+  .sectionTitle {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    color: var(--secondColor);
+
+  }
+  
+  /* Projects Grid Layout */
+  .projectsGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+    align-items: start;
+  }
+  
+  /* Large Project Card */
+  .projectCardLarge {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+  }
+  
+  .projectCardLarge img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+  }
+  
+  .cardContent {
+    padding: 20px;
+  }
+  
+  .cardContent h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: var(--secondColor);
+  }
+  
+  .cardContent p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #555;
+  }
+  
+  .moreButton {
+    padding: 10px 15px;
+    background-color: #6DC77E;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  /* Small Project Cards */
+  .projectCard {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    text-align: center;
+  }
+  
+  .projectCard img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 12px 12px 0 0;
+  }
+  
+  .projectCard h3 {
+    padding: 15px;
+    font-size: 24px;
+    color: var(--secondColor);
+
+  }
+  
+  /* See More Button */
+  .seeMoreButton {
+    margin-top: 30px;
+    padding: 10px 20px;
+    background-color: #6DC77E;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+
+/* Container */
+.container {
+  font-family: Arial, sans-serif;
+ 
+  margin: 0 auto;
+}
+
+/* Hero Section */
+.heroSection {
+  width: 100%;
+  height: 60vh;
+  overflow: hidden;
+  margin-bottom: 50px;
+}
+
+.heroVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Popular Articles Section */
+.popularArticlesSection {
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.popularArticlesSection h2 {
+  font-size: clamp(1.8rem, 2.5vw, 2.5rem);
+  margin-bottom: 30px;
+}
+
+.articlesLayout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+
+/* Lasted Section */
+.lastedSection {
+  padding: 40px 20px;
+}
+
+.lastedSection h2 {
+  font-size: clamp(1.8rem, 2.5vw, 2.5rem);
+  margin-bottom: 30px;
+}
+
+.articlesGrid {
+  .articlesGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three columns for larger screens */
+    gap: 20px; /* Space between the articles */
+  }
+}
+
+.articleCard img {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Projects Section */
+.projectsSection {
+  padding: 40px 20px;
+  text-align: center;
+  background-color: #fff;
+}
+
+.projectsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.projectCard img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Buttons */
+.moreButton {
+  padding: 10px 20px;
+  font-size: clamp(0.9rem, 1vw, 1rem);
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.moreButton:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container{
+    padding: 20px;
+  }
+  .heroSection {
+    height: 50vh;
+  }
+
+  .heroVideo {
+    height: 100%;
+  }
+
+  .articleCard img {
+    height: auto;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px){
+  .container{
+    padding: 20px;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .container{
+    padding: 20px;
+  }
+} 
+@media (max-width: 1024px) {
+  .container{
+    padding: 20px;
+  }
+  .articlesGrid {
+    grid-template-columns: repeat(2, 1fr); /* Two columns for tablets */
+  }
+}
+
+@media (max-width: 768px) {
+  .articlesGrid {
+    grid-template-columns: 1fr; /* One column for mobile devices */
+  }
+}

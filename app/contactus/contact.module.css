@@ -1,0 +1,129 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    max-width: 900px;
+    margin: 2rem auto;
+    background: #fdfdfd;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-right: 400px;
+  }
+  
+  .contactDetails {
+    flex: 1 1 45%; /* Increased flex-basis for the contact details section */
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+  
+  .contactDetails h4 {
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+    color: #333;
+  }
+  
+  .contactForm {
+    flex: 1 1 50%; /* Adjusted flex-basis for balance */
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .contactForm h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--secondColor);
+  }
+  
+  .formGroup {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .contactForm input,
+  .contactForm textarea {
+    width: 100%;
+    padding: 0.8rem 1rem; /* Increased padding for comfort */
+    font-size: 1rem;
+    border: 1.5px solid #ddd;
+    border-radius: 6px;
+    transition: border-color 0.3s;
+  }
+  
+  .contactForm input:focus,
+  .contactForm textarea:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .contactForm button {
+    padding: 0.8rem 1rem; /* Adjusted button size */
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(45deg, #66b3ff, #3399ff); /* Lighter blue gradient */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s ease, transform 0.2s, box-shadow 0.3s ease; 
+  }
+  
+
+  .contactForm button:hover {
+    background: linear-gradient(45deg, #3399ff, #66b3ff); /* Reversed lighter blue gradient on hover */
+    transform: scale(1.05); /* Slightly larger scale effect on hover */
+    box-shadow: 0 0 15px rgba(51, 153, 255, 0.7), 0 0 30px rgba(51, 153, 255, 0.5); /* Lighter blue glowing effect */
+  }
+  
+  .contactForm button:active {
+    transform: scale(1); /* Button resets to original size when clicked */
+    box-shadow: 0 0 10px rgba(51, 153, 255, 0.5); /* Slight shadow effect when clicked */
+  }
+  @media (max-width: 1024px) {
+    .container {
+      flex-direction: column;
+      max-width: 90%; /* Adjust width for medium screens */
+      margin-right: 50px;
+      margin-top: 200px;
+
+    }
+  
+    .formGroup {
+      flex-direction: column;
+    }
+  }
+  @media (min-width: 992px) and (max-width: 1199px){
+    .container {
+      flex-direction: column;
+      max-width: 90%; /* Adjust width for medium screens */
+      margin-right: 50px;
+      margin-top: 200px;
+    }
+  }
+  @media (min-width: 1200px) and (max-width: 1399px){
+    .container {
+      flex-direction: column;
+      max-width: 90%; /* Adjust width for medium screens */
+      margin-right: 200px;
+      margin-top: 100px;
+
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .contactDetails,
+    .contactForm {
+      flex-basis: 100%;
+    }
+  }
+  

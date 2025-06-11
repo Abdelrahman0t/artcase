@@ -1,0 +1,150 @@
+.pricingContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin-left:100px;
+}
+
+.heading {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #004080;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.cardsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    padding: 0 1rem;
+}
+
+.card {
+    background-color: #ffffff;
+    border: 1px solid #dcdcdc;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    padding:  2rem;
+    flex: 1 1 calc(33.333% - 2rem); /* Three cards per row */
+    max-width: calc(33.333% - 2rem); /* Prevent cards from expanding beyond a row */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.icon {
+    width: 70px;
+    height: 70px;
+    background: url('/icons/chick-icon.png') no-repeat center center;
+    background-size: contain;
+    margin: 0 auto 1rem;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #005b96;
+    margin-bottom: 1rem;
+}
+
+.description {
+    font-size: 1.1rem;
+    color: #6b6b6b;
+    margin-bottom: 1.5rem;
+}
+
+.features {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0;
+    text-align: left;
+}
+
+.features li {
+    font-size: 1.1rem;
+    color: #005b96;
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.features li::before {
+    content: "\2713"; /* Checkmark symbol */
+    color: #0072ce;
+    position: absolute;
+    left: 0;
+}
+
+.price {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #004080;
+    margin: 1.5rem 0;
+}
+
+.button {
+    background-color: #0072ce;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.8rem 1.5rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.button:hover {
+    background-color: #005b96;
+    transform: scale(1.05);
+}
+
+
+.subheading {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #005b96;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    text-align: center;
+    border-bottom: 2px solid #0072ce;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+}
+
+@media (max-width: 992px) {
+    .pricingContainer{
+        margin-top: 300px;
+        margin-left: 0px;
+    }
+    .card {
+        flex: 1 1 calc(50% - 2rem); /* Two cards per row for medium screens */
+        max-width: calc(50% - 2rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .pricingContainer{
+        margin-left: 0px;
+    }
+    .card {
+        flex: 1 1 100%; /* Single card per row for small screens */
+        max-width: 100%;
+    }
+}
+

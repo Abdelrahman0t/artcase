@@ -1,0 +1,88 @@
+
+
+
+.phoneSelectorWrapper {
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  max-height: 100vh;
+  overflow-y: auto;
+  padding: 1rem;
+  scroll-behavior: smooth;
+  border-right: 3px solid var(--thirdColor);
+  background: #fff;
+  z-index: 2;
+  }
+  .phoneSelectorWrapper::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+  .title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 1.4rem;
+    color: var(--secondColor);
+  }
+  
+  .brandSection {
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+
+  }
+  
+  .brandTitle {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: #003366;
+  }
+  
+  .phoneGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+  }
+  
+  .phoneButton {
+    background-color: #ffffff;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 10px 10px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    margin-bottom: 5px;
+  }
+  
+  .phoneButton:hover {
+    background-color: #f1f1f1;
+    transform: scale(1.02);
+  }
+  
+  .selected {
+    background-color: var(--thirdColor);
+    color: #fff !important;
+    border: 3px solid var(--thirdColor);
+    font-weight: bold;
+  }
+  .selected:hover{
+    background-color: var(--thirdColor);
+
+  }
+
+
+@media (max-width: 999px) {
+    .phoneSelectorWrapper {
+        position: fixed;
+        left: -100%; /* hidden to the left */
+        width: 250px;
+        height: 100vh;
+        top:0%;
+        background: white;
+        border-right: 3px solid var(--thirdColor);
+        z-index: 999;
+        transition: 0.7s;
+        overflow-y: auto;
+      }
+      .phoneSelectorWrapper.open2 {
+        left: 0; /* slide in */
+      }
+}

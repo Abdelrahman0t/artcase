@@ -1,0 +1,174 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    max-width: 900px; /* Increased width */
+    margin: 2rem auto;
+    background: #fdfdfd;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-right: 400px;
+}
+
+.designDetails {
+    flex: 1 1 45%; /* Increased flex-basis for a wider design section */
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem;
+
+    border-radius: 12px;
+}
+
+.imageContainer img {
+    max-width: 110%; /* Slightly larger image */
+    height: 60vh;
+    border-radius: 12px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.info h4 {
+    margin: 0.5rem 0;
+    font-size: 1.1rem; /* Slightly larger font for better readability */
+    color: #333;
+}
+
+
+.orderForm {
+    flex: 1 1 50%; /* Adjusted flex-basis for balance */
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.orderForm h2 {
+    text-align: center;
+
+    margin-bottom: 1rem;
+    color: var(--secondColor);
+}
+
+.formGroup {
+    display: flex;
+    gap: 1rem;
+}
+
+.orderForm input {
+    width: 100%;
+    padding: 0.8rem 1rem; /* Increased padding for comfort */
+    font-size: 1rem;
+    border: 1.5px solid #ddd;
+    border-radius: 6px;
+    transition: border-color 0.3s;
+}
+
+.orderForm input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.orderForm button {
+    padding: 0.8rem 1rem; /* Adjusted button size */
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--secondColor);
+    background: linear-gradient(45deg, #7fffd4, #00eeff); /* Lighter gradient with cyan/greenish blue */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s ease, transform 0.2s;
+    box-shadow: 0 3px 6px rgba(0, 198, 255, 0.2); /* Subtle glowing shadow */
+}
+
+/* Hover Effect for "Order Now" Button */
+.orderForm button:hover {
+    background: linear-gradient(45deg, #00eeff, #7fffd4); /* Reversed gradient on hover */
+    transform: scale(1.03);
+    box-shadow: 0 5px 15px rgba(0, 198, 255, 0.4); /* Slightly brighter glow on hover */
+}
+
+/* Active State for "Order Now" Button */
+.orderForm button:active {
+    background: #00c6ff; /* Solid cyan when pressed */
+    box-shadow: 0 2px 4px rgba(0, 198, 255, 0.3); /* Lighter shadow for pressed effect */
+    transform: translateY(2px); /* Button press effect */
+}
+
+.orderForm button:active {
+    transform: scale(1);
+}
+
+@media (max-width: 1024px) {
+    .container {
+        flex-direction: column;
+        max-width: 90%; /* Adjust width for medium screens */
+    }
+
+    .formGroup {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    .designDetails,
+    .orderForm {
+        flex-basis: 100%;
+    }
+
+    .imageContainer img {
+        max-width: 100%; /* Full-width for smaller screens */
+    }
+}
+
+
+
+@media (max-width: 575px){
+    .container{
+        margin-top: 200px;
+        margin-right:15px;
+
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767px){
+    .container{
+        margin-top: 200px;
+        margin-right:30px;
+
+    }
+}
+
+
+@media (min-width: 768px) and (max-width: 991px){
+    .container{
+        margin-top: 200px;
+        margin-right:50px;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px){
+
+    .container{
+        margin-top: 200px;
+        margin-right:100px;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1399px){
+    .container{
+        margin-top: 200px;
+        margin-right:300px;
+    }
+}
+
+.rubberH img{
+    max-width: 100%; /* Slightly larger image */
+    height: auto;
+}

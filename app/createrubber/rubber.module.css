@@ -1,0 +1,1467 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    position: relative;
+    padding-top: 50px;
+    overflow-y: hidden;
+    
+    
+}
+ .deletefinaldesign{
+    background-color: red;
+}
+.stage{
+    width: 400px;
+    height: 520px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding-right: 0px;
+
+}
+
+.biggercontphonestypesbtn{
+    height: 100vh;
+
+    border-right:3px solid var(--thirdColor) ;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    flex-direction: column;
+    gap: 10px;
+    padding: 30px 30px 90px 30px;
+    transition: 0.7s;
+
+
+}
+
+.biggercontphonestypesbtn > button{
+
+    margin-left: 0px;
+width: 400px;
+}
+.biggercontphonestypesbtn > button::before{
+    display: none;
+}
+.biggercontphonestypesbtn h2{
+color: var(--secondColor);
+align-content: start;
+display: flex;
+justify-content: start;
+align-items: center;
+margin-top: 15px;
+
+}
+.phonebtnh h3{
+    color: var(--secondColor);
+    align-content: start;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    }
+.contphonestypesbtn{
+    width: 400px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+  
+
+    gap: 10px;
+    margin-top:0px ;
+
+
+
+
+}
+.phonestypesbtn{
+   width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction:column;
+    gap: 20px;
+    
+
+
+}
+
+
+.contphonestypesbtn button{
+    width: 100%;
+    font-size: 12px;
+align-content: center;
+border-radius: 5px;
+text-transform: uppercase;
+transition: 0.3s;
+
+}
+
+
+
+.controlhead{
+position: fixed;
+top: 0%;
+left:0% ;
+width:100%;
+/*
+background-color: #fffaf9;
+*/
+background-color: #ffffff;
+border-bottom: 3px solid var(--thirdColor);
+
+height: 73px;
+display: flex;
+justify-content: start;
+align-items: center;
+padding: 0px 30px;
+
+
+z-index: 10;
+}
+.controlhead button{
+    background-color: transparent;
+    margin-right: 0px;
+
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+border: none;
+    padding: 30px;
+    border-left: 2px solid var(--thirdColor);
+
+
+    height: 70px;
+
+}
+.controlhead button{
+    color: var(--secondColor);
+    transition: 0.4s;
+}
+.controlhead button:hover{
+    background-color: #f4f2f2;
+}
+
+
+.controlhead button img{
+width: 40px;
+
+
+    }
+
+.controlhead > div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap : 0px;
+    margin-left: -10px;
+}
+
+.colorcont{
+    width: 410px;
+    margin: 0px;
+}
+.colorcont button{
+ margin: 0px 0px 0px 20px;
+ border-right: 2px solid var(--thirdColor);
+}
+.colorcont input {
+    -webkit-appearance: none; /* Remove default styling */
+    appearance: none; /* Remove default styling */
+    border: none;
+    width: 50px; /* Adjust width */
+    height: 50px; /* Adjust height */
+    border-radius: 50%; /* Make it a circle */
+    overflow: hidden; /* Ensure the color stays inside the circle */
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.textbtns{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 50px;
+    width: 900px;
+}
+.textbtns button{
+    border: none;
+    margin: 0px;
+}
+
+
+.textbtns .edittextnum input{
+    width: 80px;
+    height: 30px;
+    text-align: center;
+    border-radius: 9px;
+    border: 3px solid var(--secondColor);
+    background-color: white;
+    color: black;
+    font-size: 16px;
+    outline: none;
+
+}
+
+.textbtns .edittextnum {
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+margin: 30px;
+
+
+}
+.edittext{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.edittext span {
+    font-size: 12px; /* Match the input font size for consistency */
+    line-height: 1; /* Align the text properly */
+    margin: 0; /* Reset any default margin */
+    padding: 0; /* Reset any default padding */
+    color: var(--secondColor);
+    text-transform: uppercase;
+    margin-top: 4px;
+}
+.edittextnum span{
+    font-size: 12px; /* Match the input font size for consistency */
+    line-height: 1; /* Align the text properly */
+    margin: 0; /* Reset any default margin */
+    padding: 0; /* Reset any default padding */
+    color: var(--secondColor);
+    text-transform: uppercase;
+    margin-top: 4px;
+}
+.edittextinput {
+    width: 200px;
+    padding: 2px 15px;
+    border-radius: 9px;
+    outline: none;
+    border: 3px solid var(--thirdColor);
+    transition: 0.5s;
+    font-size: 12px;
+    height: 30px;
+     /* Remove default margins */
+}
+.extras {
+    display:ruby-text;/* Creates two equal columns */
+    gap: 20px; /* Adds space between the columns */
+    justify-items: start; /* Align items horizontally */
+    align-items: center; /* Align items vertically */
+    flex-direction: column;
+    height: 100vh;
+
+    padding: 0px 0px 40px 10px;
+    overflow: scroll;
+    border-left:3px solid var(--thirdColor) ;
+     transition: 0.7s;
+    z-index: 9;
+}
+
+.extras img{
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+
+}
+
+.extras h2{
+align-content: start;
+width: 100%;
+color: var(--secondColor);
+text-transform: uppercase;
+margin: 40px 0px;
+}
+
+.extrastickers{
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Creates two equal columns */
+    gap: 20px; /* Adds space between the columns */
+    justify-items: start; /* Align items horizontally */
+    align-items: start; /* Align items vertically */
+
+    justify-content: space-between;
+    width: 100%;
+    transition: 0.3s;
+    
+
+}
+
+
+.showMoreBtn {
+    display: block;
+    margin: 10px auto;
+    padding: 8px 16px;
+    background-color: var(--secondColor);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+  
+  .showMoreBtn:hover {
+    background-color: var(--thirdColor);
+  }
+  
+
+
+  .fontname{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    justify-content: space-between;
+    gap: 20px
+
+  }
+
+
+.uploadingdiv{
+    display: flex;
+    justify-content:center ;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+
+}
+.uploadfile {
+    display: none; /* Hide the default file input */
+  }
+  .uploadingdiv label{
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .selected{
+    background-image: linear-gradient(to right, #8ee9de 0%, #38cbbb 100%);;
+    color: white;
+
+}
+
+
+.stage0{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.entertext{
+    width: 200px;
+    padding: 2px 20px;
+    border-radius: 100px;
+    outline: none;
+    border: 4px solid var(--secondColor);
+    transition: 0.5s;
+    font-size: 16px;
+    display: none;
+}
+
+
+.entertext:focus {
+    width: 300px;
+    border: 4px solid var(--thirdColor);
+  }
+  
+  .entertext:focus + .enter {
+    background: rgb(11, 210, 224);
+    color: white;
+  }
+  
+
+  .enter {
+    position: absolute;
+    right: 5px;
+    top: 51%;
+    transform: translateY(-50%);
+    background: var(--secondColor);
+    border: none;
+    cursor: pointer;
+    font-size: 10px;
+    border-radius: 100px;
+    width: 25px;
+    height: 25px;
+    color: white;
+    transition: 0.5s;
+    display: none;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /* Main Container */
+.sevedcontainr {
+    display: flex;
+    flex-wrap: wrap; /* Enable wrapping for smaller screens */
+    justify-content: center;
+    align-items: center;
+    gap: 30px; /* Add space between sections */
+    padding: 20px;
+    background: #f9f9f9; /* Subtle background for the container */
+    border-radius: 10px; /* Rounded corners for a polished look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    max-width: 1200px;
+    margin: auto; /* Center align the container */
+    margin-right: 200px;
+}
+
+/* Image Section */
+.savedimgdiv {
+    flex: 1 1 400px; /* Flexible width with a minimum of 400px */
+    max-width: 500px; /* Restrict the max width */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff; /* White background for contrast */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.savedimgdiv .rubberimg {
+    width: 100%; /* Fully responsive */
+    max-width: 350px; /* Limit image size */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px; /* Rounded corners for the image */
+    object-fit: contain; /* Ensure image fits neatly */
+}
+.savedimgdiv .clearimg {
+    width: 250%; /* Fully responsive */
+     /* Limit image size */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px; /* Rounded corners for the image */
+    object-fit: contain; /* Ensure image fits neatly */
+}
+/* Info Section */
+.sevedinfos {
+    position: relative;
+    flex: 1 1 500px; /* Flexible width with a minimum of 500px */
+    max-width: 600px;
+    background: #ffffff; /* White background for text */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.sevedinfos h1 {
+    font-size: 40px;
+    margin-bottom: 25px;
+    color: var(--secondColor); /* Darker text for readability */
+    text-transform: uppercase;
+}
+
+.sevedinfos h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: var(--secondColor); /* Darker text for readability */
+    text-transform: uppercase;
+}
+
+.sevedinfos h3 {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #555; /* Slightly muted color for less focus */
+    line-height: 1.5;
+}
+
+/* Buttons Section */
+/* Buttons Section */
+.savedbuttons {
+    display: flex;
+    flex-direction: row; /* Arrange buttons in a row */
+    justify-content: center; /* Center the buttons */
+    align-items: center; /* Align buttons vertically in the center */
+    gap: 10px; /* Smaller space between buttons */
+    margin-top: 20px;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.sevedinfos button, .savedbuttons button {
+    padding: 10px 20px; /* Reduced padding for smaller buttons */
+    font-size: 14px; /* Slightly smaller font size */
+    font-weight: bold;
+    border: none;
+    border-radius: 12px; /* Softer rounded corners */
+    background: linear-gradient(135deg, #2c3e50, #34495e); /* Attractive gradient */
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); /* Subtle shadow */
+    min-width: 120px; /* Smaller minimum width */
+    position: relative;
+    overflow: hidden; /* For hover effects */
+    flex-grow: 1; /* Buttons will resize equally if the container is constrained */
+}
+
+/* Special Styling for "Order Now" Button */
+.savedbuttons button.order_now {
+    background: linear-gradient(135deg, #9debcf, #a0f4ff); /* Soft but brighter green-blue gradient */
+    color: var(--secondColor); /* Bright text for contrast */
+    border: 2px solid transparent;
+    animation: balancedGlowing 2s infinite; /* Moderate glowing effect */
+    font-weight: bold;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Soft shadow for depth */
+    transition: all 0.3s ease-in-out;
+}
+
+/* Balanced Cool Glowing Animation */
+@keyframes balancedGlowing {
+    0% {
+        border-color: rgba(157, 235, 207, 0.4); /* Soft green glow */
+        box-shadow: 0 0 10px rgba(157, 235, 207, 0.4);
+    }
+    50% {
+        border-color: rgba(160, 244, 255, 0.8); /* Bright cyan-blue glow */
+        box-shadow: 0 0 18px rgba(160, 244, 255, 0.7);
+    }
+    100% {
+        border-color: rgba(157, 235, 207, 0.4); /* Return to softer green glow */
+        box-shadow: 0 0 10px rgba(157, 235, 207, 0.4);
+    }
+}
+
+/* Transparent Button - "Leave It for Now" */
+.sevedinfos button.transparent {
+    background: transparent; /* Transparent background */
+    color: #007BFF; /* Primary blue text */
+    border: 2px solid #007BFF; /* Blue border */
+    box-shadow: none; /* No shadow */
+    transition: all 0.3s ease;
+    border-radius: 15px;
+}
+
+.sevedinfos button.transparent:hover {
+    background: rgba(0, 123, 255, 0.1); /* Subtle hover background */
+    color: #0056b3; /* Darker blue on hover */
+    border-color: #0056b3; /* Darker border on hover */
+}
+
+/* Hover Effects for All Buttons */
+.sevedinfos button:hover {
+    transform: scale(1.05); /* Slightly enlarge button */
+}
+
+/* Active Press Effect */
+.savedbuttons button:active {
+    transform: translateY(2px); /* Pressed-down effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive Design: Smaller Screens */
+@media (max-width: 480px) {
+    .savedbuttons {
+        flex-wrap: wrap; /* Wrap buttons to fit smaller screens */
+        gap: 8px;
+    }
+    .savedbuttons button {
+        font-size: 12px; /* Further reduce font size */
+        padding: 8px 15px; /* Smaller padding */
+        min-width: 100px; /* Smaller minimum width */
+    }
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sevedcontainr {
+        flex-direction: column; /* Stack items vertically */
+        align-items: center;
+    }
+
+    .savedimgdiv, .sevedinfos {
+        width: 100%; /* Full width for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .savedbuttons button {
+        font-size: 14px; /* Smaller font size for smaller screens */
+        padding: 10px 15px;
+    }
+}
+
+
+
+
+
+
+@media (max-width: 575px){
+    .sevedcontainr{
+        margin-top: 120px;
+        margin-right: 0px;
+    }
+    .rubberimg{
+        width: 70%;
+    }
+}
+
+
+@media (min-width: 576px) and (max-width: 767px){
+    .sevedcontainr{
+        margin-top: 200px;
+        margin-right: 0px;
+    }
+    .rubberimg{
+        width: 70%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px){
+
+    .sevedcontainr{
+        margin-top: 200px;
+        margin-right: 0px;
+    }
+    .rubberimg{
+        width: 70%;
+    }
+
+}
+
+@media (min-width: 992px) and (max-width: 1199px){
+.sevedcontainr{
+    margin-top: 200px;
+    margin-right: 0px;
+}
+.rubberimg{
+    width: 70%;
+}
+}
+
+@media (min-width: 1200px) and (max-width: 1399px){
+
+}
+
+
+
+
+
+
+.fab {
+    position: absolute;
+
+    background: rgba(255, 255, 255, 0.8); /* Light background */
+    color: #007BFF;
+    border: 2px solid #007BFF;
+
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 50px; /* Circle-like button */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    z-index: 1; /* Ensure it's above other elements */
+
+}
+
+.fab:hover {
+    background: #007BFF;
+    color: white;
+}
+
+
+
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark translucent effect */
+    z-index: 10; /* Ensure it's behind the sidebar */
+    transition: all 0.7s;
+
+  }
+
+
+/* The main container for the extras section */
+
+/* Sidebar container */
+
+  /* When the sidebar is open, slide it in */
+
+
+  /* On small screens (max-width: 768px) */
+
+
+  
+  .toggleextras{
+    /*clip-path: polygon(100% 50%, 0% 0%, 0% 100%);*/
+    
+    background-color: var(--thirdColor);
+    border: none;
+    cursor: pointer;
+    width: 80px;
+    height: 50px;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    border-top-right-radius: 200px;
+    border-bottom-right-radius: 200px;
+
+    color: white;
+    position: absolute;
+    top: 40%;
+    left: 0%;
+    font-size: 16px;
+    display: none;
+
+  }
+  .togglephone{
+    background-color: var(--thirdColor);
+    border: none;
+    cursor: pointer;
+    width: 80px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 200px;
+    border-bottom-left-radius: 200px;
+
+    color: white;
+    position: absolute;
+    top: 40%;
+    right: 0%;
+    font-size: 16px;
+    display: none;
+  }
+  .toggleextras i, .togglephone i{
+    font-size: 32px;
+  }
+
+
+  
+@media (max-width: 575px){
+    .container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        height: 100vh;
+    }
+    .controlhead{
+        padding: 0px;
+        justify-content: center;
+    }
+    .colorcont{
+        padding-left: 5px;
+        margin-left: 5px;
+
+
+    }
+    .colorcont span{
+        font-size: 8px;
+        display: none;
+    }
+    .colorcont input{
+        margin: 0px 0px 0px 20px;
+        width: 20px;
+        width: 20px; /* Adjust width */
+        height: 20px; /* Adjust height */
+        border-radius: 50%; /* Make it a circle */
+    }
+    .controlhead  button{
+        padding: 10px;
+        width: 10%;
+    }
+    .controlhead button img{
+        width: 10px;
+    }
+    .controlhead button span{
+     font-size: 6px;
+     width: 100%;
+     display: none;
+    }
+    .textbtns{
+        padding-left: 50px;
+    }
+    .textbtns button{
+     width: 10%;
+    }
+    .edittextinput{
+        width: 30px;
+    }
+    .edittext span{
+        font-size: 8px;
+       }
+       .edittextinput{
+           width: 100px;
+       }
+   .edittextnum{
+       width: 70px;
+       margin: 0px 10px;
+   
+   }
+   .edittextnum span{
+   font-size: 10px;
+   }
+
+
+
+   .extras{
+    position: absolute;
+    right: -300px;
+    top: 0%;
+    margin-top:0px;
+    width: 250px;
+    z-index: 10;
+    background-color: white;
+    height: 100vh;
+   }
+   .extras img{
+    width: 50px;
+    height: 50px;
+  }
+  .fontname p{
+    font-size: 11px;
+   }
+   .biggercontphonestypesbtn{
+    position: absolute;
+    right: -600px;
+    top: 0%;
+    z-index: 10;
+    background-color: white;
+    width: 250px;
+   }
+   .contphonestypesbtn{
+    width: 45%;
+    font-size: 6px;
+    gap: 10px;
+  }
+  .contphonestypesbtn button{
+    width: 130%;
+    font-size: 2px;
+ 
+  }
+  .biggercontphonestypesbtn > button{
+    width: 200px;
+    margin-top: 100px;
+  }
+   .biggercontphonestypesbtn.open2{
+    right: 0px;
+
+   }
+   .extras.open {
+     /* Hidden by default on small screens */
+    display: block; /* Ensure it's a block on mobile */
+ /* Slide in from the left when the state is 'open' */
+
+    position: absolute;
+    right: 0px;
+    top: 0%;
+    
+}
+
+
+.contphonestypesbtn button{
+    width: 110%;
+    font-size: 9px;
+ 
+  }
+
+.toggleextras, .togglephone{
+    display: block;
+z-index: 2;
+    width: 50px;
+}
+}
+
+  /* Your other existing styles */
+  @media (min-width: 576px) and (max-width: 767px){
+    .container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-x: hidden;
+        height: 100vh;
+    }
+    .controlhead{
+        padding: 0px;
+        justify-content: center;
+    }
+    .colorcont span{
+        font-size: 12px;
+    }
+    .controlhead  button{
+        padding: 10px;
+        width: 20%;
+    }
+    .controlhead button img{
+        width: 15px;
+    }
+    .controlhead button span{
+     font-size: 7px;
+     width: 100%;
+    }
+    .textbtns{
+        padding-left: 50px;
+    }
+    .textbtns button{
+     width: 10%;
+    }
+    .edittextinput{
+        width: 30px;
+    }
+    .edittext span{
+        font-size: 8px;
+       }
+       .edittextinput{
+           width: 100px;
+       }
+   .edittextnum{
+       width: 70px;
+       margin: 0px 10px;
+   
+   }
+   .edittextnum span{
+   font-size: 10px;
+   }
+
+
+   .extras{
+    position: absolute;
+    right: -400px;
+    top: 0%;
+    margin-top:0px;
+    width: 400px;
+    z-index: 10;
+    background-color: white;
+    height: 100vh;
+   }
+   .biggercontphonestypesbtn{
+    position: absolute;
+    right: -600px;
+    top: 0%;
+    z-index: 10;
+    background-color: white;
+   }
+   .biggercontphonestypesbtn.open2{
+    right: 0px;
+
+   }
+   .extras.open {
+     /* Hidden by default on small screens */
+    display: block; /* Ensure it's a block on mobile */
+ /* Slide in from the left when the state is 'open' */
+
+    position: absolute;
+    right: 0px;
+    top: 0%;
+    
+}
+
+
+  .contphonestypesbtn button{
+    width: 100%;
+    font-size: 10px;
+ 
+  }
+
+.toggleextras, .togglephone{
+    display: block;
+
+}
+
+  }
+  @media (min-width: 768px) and (max-width: 991px){
+    .container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        height: 100vh;
+    }
+    .controlhead{
+        padding: 0px;
+        justify-content: center;
+    }
+    .colorcont span{
+        font-size: 12px;
+    }
+    .controlhead div button{
+        padding: 10px;
+        width: 20%;
+    }
+    .controlhead button img{
+        width: 20px;
+    }
+    .controlhead button span{
+     font-size: 10px;
+     width: 100%;
+    }
+    .textbtns{
+        padding-left: 50px;
+    }
+    .textbtns button{
+     width: 10%;
+    }
+    .edittextinput{
+        width: 30px;
+    }
+    .edittext span{
+        font-size: 8px;
+       }
+       .edittextinput{
+           width: 100px;
+       }
+   .edittextnum{
+       width: 70px;
+       margin: 0px 10px;
+   
+   }
+   .edittextnum span{
+   font-size: 10px;
+   }
+   .extras{
+    position: absolute;
+    right: -400px;
+    top: 0%;
+    margin-top:0px;
+    width: 400px;
+    z-index: 10;
+    background-color: white;
+   }
+   .biggercontphonestypesbtn{
+    position: absolute;
+    right: -600px;
+    top: 0%;
+    z-index: 10;
+    background-color: white;
+   }
+   .biggercontphonestypesbtn.open2{
+    right: 0px;
+
+   }
+   .extras.open {
+     /* Hidden by default on small screens */
+    display: block; /* Ensure it's a block on mobile */
+ /* Slide in from the left when the state is 'open' */
+
+    position: absolute;
+    right: 0px;
+    top: 0%;
+    
+}
+
+
+  .contphonestypesbtn button{
+    width: 100%;
+    font-size: 10px;
+ 
+  }
+
+.toggleextras, .togglephone{
+    display: block;
+
+}
+  }
+  @media (min-width: 992px) and (max-width: 1199px){
+    .controlhead{
+        padding: 0px 0px 0px 25px;
+    }
+    .colorcont span{
+        font-size: 12px;
+        width: 25%;
+    }
+    .controlhead button img{
+        width: 25px;
+    }
+    .controlhead button span{
+     font-size: 10px;
+     width: 100%;
+    }
+    .edittext span{
+     font-size: 10px;
+    }
+    .edittextinput{
+        width: 100px;
+    }
+.edittextnum{
+    width: 70px;
+
+}
+.edittextnum span{
+font-size: 10px;
+}
+
+
+.extras img{
+    width: 50px;
+    height: 50px;
+  }
+  .extras h2{
+    font-size: 24px;
+  }
+  .fontname p{
+   font-size: 11px;
+  }
+  .biggercontphonestypesbtn{
+    width: 350px;
+    justify-content: center;
+    padding-top: 0px;
+  }
+  .biggercontphonestypesbtn h2{
+    font-size: 27px;
+  }
+  .contphonestypesbtn{
+    width: 60%;
+    font-size: 9px;
+    gap: 10px;
+  }
+  .contphonestypesbtn button{
+    width: 110%;
+    font-size: 9px;
+ 
+  }
+  .biggercontphonestypesbtn > button{
+    width: 250px;
+    margin-top: 100px;
+  }
+  .toggleextras{
+    display: none;
+}
+  }
+  @media (min-width: 1200px) and (max-width: 1399px){
+    .controlhead button img{
+        width: 25px;
+    }
+    .controlhead button span{
+     font-size: 10px;
+     width: 100%;
+    }
+    .toggleextras{
+        display: none;
+    }
+    .sevedinfos .deletefinaldesign{
+        background-color: red;
+    }
+  }
+
+
+  .sevedinfos .deletefinaldesign {
+    background: linear-gradient(135deg, #ff5c5c, #ff7373); /* Lighter red gradient */
+    color: white; /* Keep text readable */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); /* Subtle shadow */
+}
+
+/* Hover Effect for Delete Button */
+.sevedinfos .deletefinaldesign:hover {
+    background: linear-gradient(135deg, #ff7373, #ff5c5c); /* Reverse gradient for interaction */
+    box-shadow: 0 5px 10px rgba(255, 92, 92, 0.4); /* Brighter shadow on hover */
+    transform: scale(1.03); /* Slight zoom for interactivity */
+}
+
+/* Active State for Delete Button */
+.sevedinfos .deletefinaldesign:active {
+    background: #ff4040; /* Slightly darker red for active state */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Reduced shadow for pressed effect */
+    transform: translateY(2px); /* Button press effect */
+}
+
+
+
+
+
+
+.sevedcontainr {
+    display: flex;
+    flex-wrap: wrap; /* Enable wrapping for smaller screens */
+    justify-content: center;
+    align-items: center;
+    gap: 30px; /* Add space between sections */
+    padding: 20px;
+    background: #f9f9f9; /* Subtle background for the container */
+    border-radius: 10px; /* Rounded corners for a polished look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    max-width: 1200px;
+    margin: auto; /* Center align the container */
+    margin-right: 200px;
+}
+
+/* Image Section */
+.savedimgdiv {
+    flex: 1 1 400px; /* Flexible width with a minimum of 400px */
+    max-width: 500px; /* Restrict the max width */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff; /* White background for contrast */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.savedimgdiv .rubberimg {
+    width: 100%; /* Fully responsive */
+    max-width: 350px; /* Limit image size */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px; /* Rounded corners for the image */
+    object-fit: contain; /* Ensure image fits neatly */
+}
+.savedimgdiv .clearimg {
+    width: 250%; /* Fully responsive */
+     /* Limit image size */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px; /* Rounded corners for the image */
+    object-fit: contain; /* Ensure image fits neatly */
+}
+/* Info Section */
+.sevedinfos {
+    position: relative;
+    flex: 1 1 500px; /* Flexible width with a minimum of 500px */
+    max-width: 600px;
+    background: #ffffff; /* White background for text */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.sevedinfos h1 {
+    font-size: 40px;
+    margin-bottom: 25px;
+    color: var(--secondColor); /* Darker text for readability */
+    text-transform: uppercase;
+}
+
+.sevedinfos h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: var(--secondColor); /* Darker text for readability */
+    text-transform: uppercase;
+}
+
+.sevedinfos h3 {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #555; /* Slightly muted color for less focus */
+    line-height: 1.5;
+}
+
+/* Buttons Section */
+/* Buttons Section */
+.savedbuttons {
+    display: flex;
+    flex-direction: row; /* Arrange buttons in a row */
+    justify-content: center; /* Center the buttons */
+    align-items: center; /* Align buttons vertically in the center */
+    gap: 10px; /* Smaller space between buttons */
+    margin-top: 20px;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.sevedinfos button, .savedbuttons button {
+    padding: 10px 20px; /* Reduced padding for smaller buttons */
+    font-size: 14px; /* Slightly smaller font size */
+    font-weight: bold;
+    border: none;
+    border-radius: 12px; /* Softer rounded corners */
+    background: linear-gradient(135deg, #2c3e50, #34495e); /* Attractive gradient */
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); /* Subtle shadow */
+    min-width: 120px; /* Smaller minimum width */
+    position: relative;
+    overflow: hidden; /* For hover effects */
+    flex-grow: 1; /* Buttons will resize equally if the container is constrained */
+}
+
+/* Special Styling for "Order Now" Button */
+.savedbuttons button.order_now {
+    background: linear-gradient(135deg, #9debcf, #a0f4ff); /* Soft but brighter green-blue gradient */
+    color: var(--secondColor); /* Bright text for contrast */
+    border: 2px solid transparent;
+    animation: balancedGlowing 2s infinite; /* Moderate glowing effect */
+    font-weight: bold;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Soft shadow for depth */
+    transition: all 0.3s ease-in-out;
+}
+
+/* Balanced Cool Glowing Animation */
+@keyframes balancedGlowing {
+    0% {
+        border-color: rgba(157, 235, 207, 0.4); /* Soft green glow */
+        box-shadow: 0 0 10px rgba(157, 235, 207, 0.4);
+    }
+    50% {
+        border-color: rgba(160, 244, 255, 0.8); /* Bright cyan-blue glow */
+        box-shadow: 0 0 18px rgba(160, 244, 255, 0.7);
+    }
+    100% {
+        border-color: rgba(157, 235, 207, 0.4); /* Return to softer green glow */
+        box-shadow: 0 0 10px rgba(157, 235, 207, 0.4);
+    }
+}
+
+/* Transparent Button - "Leave It for Now" */
+.sevedinfos button.transparent {
+    background: transparent; /* Transparent background */
+    color: #007BFF; /* Primary blue text */
+    border: 2px solid #007BFF; /* Blue border */
+    box-shadow: none; /* No shadow */
+    transition: all 0.3s ease;
+    border-radius: 15px;
+}
+
+.sevedinfos button.transparent:hover {
+    background: rgba(0, 123, 255, 0.1); /* Subtle hover background */
+    color: #0056b3; /* Darker blue on hover */
+    border-color: #0056b3; /* Darker border on hover */
+}
+
+/* Hover Effects for All Buttons */
+.sevedinfos button:hover {
+    transform: scale(1.05); /* Slightly enlarge button */
+}
+
+/* Active Press Effect */
+.savedbuttons button:active {
+    transform: translateY(2px); /* Pressed-down effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive Design: Smaller Screens */
+@media (max-width: 480px) {
+    .savedbuttons {
+        flex-wrap: wrap; /* Wrap buttons to fit smaller screens */
+        gap: 8px;
+    }
+    .savedbuttons button {
+        font-size: 12px; /* Further reduce font size */
+        padding: 8px 15px; /* Smaller padding */
+        min-width: 100px; /* Smaller minimum width */
+    }
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sevedcontainr {
+        flex-direction: column; /* Stack items vertically */
+        align-items: center;
+    }
+
+    .savedimgdiv, .sevedinfos {
+        width: 100%; /* Full width for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .savedbuttons button {
+        font-size: 14px; /* Smaller font size for smaller screens */
+        padding: 10px 15px;
+    }
+}
+
+.stage0{
+    margin-top: 20px;
+}
+
+
+
+
+
+
+
+.uploadingdiv{
+    display: flex;
+    justify-content:center ;
+    align-items: center;
+    flex-direction: column;
+    gap: 0px;
+    
+
+}
+.uploadfile {
+    display: none; /* Hide the default file input */
+  }
+  .uploadingdiv label{
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .savediv{
+    width: 100%;
+    margin: 10px 0px;
+}
+.savediv button{
+    width: 100%;
+}
+
+
+.extras::-webkit-scrollbar{
+    display: none;
+}

@@ -1,0 +1,19 @@
+.catacontainer {
+  padding: 3% 7% 5% 5%;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;       /* allow wrapping */
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  justify-content: flex-start;
+
+
+}
+.catacontainer > h1{
+    color: var(--secondColor);
+    width: 100%;
+    font-weight: bolder;
+    text-align: center;
+    
+}

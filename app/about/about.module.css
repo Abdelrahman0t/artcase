@@ -1,0 +1,775 @@
+.thebody{
+    /* background: linear-gradient(78deg, rgba(215,222,225,1) 0%, rgba(148,167,173,1) 75%); */
+   /* background: linear-gradient(90deg, rgba(179,206,213,1) 34%, rgba(126,163,179,1) 100%); */
+ 
+    
+     color: white;
+     text-transform: capitalize;
+     background-color: #ffffff;
+ }
+
+
+
+
+
+ .intro {
+    position: relative;
+ 
+     padding-left: 0%;
+     padding-right: 0%;
+ 
+     padding-top: 3%; /* Optional, adjust padding to make text appear lower */
+     background : linear-gradient(87deg,  rgba(10, 10, 10, 0.712) 9%, rgba(14, 16, 17, 0.712) 100%), url('/TheStyle/Leonardo_Phoenix_09_A_sleek_modern_smartphone_with_a_vibrant_a_1.jpg'); 
+    /* background:linear-gradient(90deg, rgba(14, 28, 30, 0.159) 15%, rgba(14, 28, 30, 0.159) 100%),url('/TheStyle/catsanddogs.png') ;*/
+     background-size: cover; /* Make the image cover the entire element */
+     background-position: center; /* Start with the image positioned at the bottom */
+     background-repeat: no-repeat; /* Ensure the image doesn't repeat */
+     height: 80vh; /* Full viewport height */
+     width: 111%;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-direction: row;
+     color: #ffffff;
+ 
+     opacity: 1;
+     overflow: hidden; /* Prevent the wave from overflowing */
+     display: hidden;
+   
+    /* clip-path: path("M0,150 C150,50 350,250 500,150 S800,250 1000,150 V300 H0 Z"); */
+ 
+    font-optical-sizing: auto;
+ 
+    font-optical-sizing: auto;
+    top: 0%;
+    left: -5%;
+   }
+   .intro h1, .intro h3, .intro h2,.intro p{
+     width: 100%;
+     text-align:center ;
+     
+     font-weight: 300;
+   }
+ 
+   .intro .btn5{
+     border: 3px solid var(--thirdColor);
+   }
+
+   
+
+
+
+ 
+ .btn5 {
+    width: 9em;
+    height: 3em;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    border: 3px solid var(--secondColor);
+    position: relative;
+    overflow: hidden;
+    outline: none;
+    z-index: 1;
+    /*
+    box-shadow: 6px 6px 12px #c5c5c5,
+                -6px -6px 12px #ffffff;
+                */
+    transition: .3s;
+    font-weight:bold ;
+    color:var(--secondColor) ;
+
+  }
+  
+  .btn5::before {
+    content: '';
+    width: 0;
+    height: 3em;
+    border-radius: inherit;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: linear-gradient(to right, #8ee9de 0%, #38cbbb 100%);
+    transition: .5s ease;
+    display: block;
+    z-index: -1;
+   }
+   
+   .btn5:hover::before {
+    width: 111%;
+ 
+
+   
+   }
+   .btn5:hover{
+    color: white;
+    border: 3px solid var(--thirdColor);
+    
+   }
+  
+  .Mainbtn5 {
+    width: 9em;
+    height: 3em;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    border: 3px solid #3893cb;
+    position: relative;
+    overflow: hidden;
+    outline: none;
+    z-index: 1;
+    box-shadow: 6px 6px 12px #c5c5c5,
+                -6px -6px 12px #ffffff;
+    transition: .3s;
+    font-weight:bold ;
+    color:var(--secondColor) ;
+    background-color: #3893cb;
+    color: white;
+    transition: .5s ease;
+      
+  }
+
+  
+  .Mainbtn5::before {
+    content: '';
+    width: 0;
+    height: 3em;
+    border-radius: 5px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /*
+    background-image: linear-gradient(to right, var(--thirdColor) 0%, var(--secondColor) 100%);
+   */
+    background-image: linear-gradient(to right, #8ee9de 0%, #38cbbb 100%);
+    transition: .5s ease;
+    display: block;
+    z-index: -1;
+   }
+   
+   .Mainbtn5:hover::before {
+    width: 110%;
+   
+   }
+   .Mainbtn5:hover{
+    color: white;
+    border: 3px solid var(--thirdColor);
+
+   }
+
+ 
+   .textContent {
+     margin-top: 150px; /* Adjust vertical spacing */
+     padding-left: 1%; /* Horizontal spacing to replace margin */
+     padding-right: 0%; /* Ensure responsiveness */
+     text-transform: capitalize;
+     animation: fadeInUp 2.5s ease-out forwards; /* Animation for text */
+     width: 100%;
+     border-radius:30px;
+     margin-left: 20%;
+     color : white;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+    
+   }
+
+   .textContent h1{
+     font-size: 40px;
+     font-weight: 600;
+     width: 110%;
+   }
+ 
+   .textContent h2{
+   font-size: 16px;
+   opacity: 0.8;
+   }
+ 
+ 
+
+   .secaboutcont{
+    margin-top: 200px;
+    margin-left: -100px;
+    padding: 0px 200px;
+   }
+ 
+   
+ .text1{
+     color: inherit;
+     
+     background-repeat: no-repeat;
+     background-position: center;
+     background-size: cover;
+     height: 750px;
+     display: flex;
+     align-items: left;
+     flex-direction: column;
+     justify-content: center;
+     text-align: left;
+     position: relative;
+     z-index: 10;
+     line-break: 10px;
+     padding : 0px 50px;
+     
+      width: 40%;
+ color : rgb(0, 0, 0)
+ }
+
+ .text2{
+   color: inherit;
+   
+   background-repeat: no-repeat;
+   background-position: center;
+   background-size: cover;
+   height: 750px;
+   display: flex;
+   align-items: left;
+   flex-direction: column;
+   justify-content: center;
+   text-align: left;
+   position: relative;
+   z-index: 10;
+   line-break: 10px;
+   padding : 30px;
+   width: 50%;
+color : rgb(1, 22, 44);
+margin-left: 300px;
+ }
+
+ .text1::after{
+   background-image: url('/TheStyle/blueShape.png');
+   background-repeat: no-repeat;
+   background-size: cover;
+   left : -0%;
+   top: 5%;
+   content: '';
+   height: 600px;
+   width: 600px;
+   position:absolute;
+   z-index: -1;
+   transform: rotate(20deg);
+ 
+ }
+ 
+ .text2::after{
+   background-image: url('/TheStyle/blueShape.png');
+   background-repeat: no-repeat;
+   background-size: cover;
+   left : -13%;
+   top: 14%;
+   content: '';
+   height: 600px;
+   width: 600px;
+   position:absolute;
+   z-index: -1;
+   transform: rotate(-160deg);
+ }
+ 
+ .sec1{
+   color: black;
+   /*
+   font-family: "Oswald", sans-serif;
+   */font-family: "Mulish", sans-serif;
+   
+   text-transform: uppercase;
+   font-size: 24px;
+   line-height: 2.5;
+ }
+ .sec1 h1 {
+   text-transform: uppercase;
+   font-size: 34px;
+   line-height: 1.5;
+   font-weight: bolder;
+ }
+ .sec1 h3{
+   font-size: 16px;
+   line-break: normal;
+   line-height: 1.4rem;
+   text-align :center
+ }
+ .sec1 img{
+   position: relative;
+   z-index: 10;
+   width: 400px;
+   border-radius: 20px;
+   position: relative;
+   z-index: 2;
+ }
+ .image_wrapper {
+   position: relative; /* Enables pseudo-element positioning */
+   display: inline-block; /* Ensures the wrapper fits tightly around the image */
+ }
+ 
+ .image_wrapper2 {
+   position: relative; /* Enables pseudo-element positioning */
+   display: inline-block; /* Ensures the wrapper fits tightly around the image */
+ }
+ 
+ /* Pseudo-element decoration */
+ .image_wrapper::after {
+   content: '';
+   position: absolute;
+   top: -10%; /* Adjust to control positioning */
+   left: -10%;
+   width: 110%; /* Extend beyond the image */
+   height: 110%;
+   background-color: #98dcfed3; /* Light red background for effect */
+   border-radius: 20px; /* Matches the image's rounded corners */
+   z-index: 1; /* Ensures it's behind the image */
+   transform: rotate(-5deg); /* Adds a slight rotation */
+ }
+ 
+ .image_wrapper2::after {
+   content: '';
+   position: absolute;
+   top: -5%; /* Adjust to control positioning */
+   left: -3%;
+   width: 105%; /* Extend beyond the image */
+   height: 105%;
+   background-color: #98dcfed3; /* Light red background for effect */
+   border-radius: 20px; /* Matches the image's rounded corners */
+   z-index: 1; /* Ensures it's behind the image */
+   transform: rotate(5deg); /* Adds a slight rotation */
+ }
+ 
+ 
+ 
+.team{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    margin-bottom: 300px;
+    padding-top: 100px;
+    padding-left: 50px;
+    gap: 30px;
+
+}
+.teamCard{
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #3893cb52;
+    padding: 20px;
+    border-radius: 24px;
+
+}
+.teamCard img{
+    width: 300px;
+    height: 300px;
+
+    border-radius: 24px;
+}
+
+.teamdesc{
+    margin-top: 50px;
+    color: var(--secondColor);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.teamdesc h2, .teamdesc h3, .teamdesc p{
+    text-align: center;
+}
+.icone{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 20px;
+    font-size:24px ;
+}
+
+
+@media (max-width: 575px){
+  .intro{
+    margin-top: 105px;
+    
+
+  }
+  .textContent{
+    margin-top: 200px;
+    margin-bottom: 0px;
+
+  }
+  .textContent h1{
+    font-size: 24px;
+  }
+  .textContent h2{
+  font-size: 12px;
+  }
+  .secaboutcont{
+    padding: 50px;
+    margin-left: 100px;
+    flex-direction: column;
+  }
+  .text1{
+   width: 60%;
+
+  }
+  .text1 h1{
+    font-size: 24px;
+  }
+  .text1::after{
+    width: 400px;
+    height: 400px;
+    top: 20%;
+    left: -13%;
+
+  }
+  .text1 h3{
+    font-size: 8px;
+    line-height: 1rem;
+  }
+  .image_wrapper img{
+    width: 300px;
+  }
+
+  .sec1{
+    margin-left: -100px;
+    flex-direction: column;
+    margin-bottom: 100px;
+  }
+  .text2{
+    width: 420px;
+    margin-left: 0px;
+  }
+  .text2::after{
+    width: 400px;
+    height: 400px;
+    top: 25%;
+    left: 0%;
+  }
+  .text2 h1{
+    font-size: 24px;
+
+  }
+  .text2 h3{
+    font-size: 8px;
+    line-height: 1rem;
+
+  }
+  .image_wrapper2{
+    margin-left: 100px;
+    margin-right: 150px;
+
+  }
+  .team{
+    margin-left: 10px;
+    flex-direction: column;
+  }
+
+  .teamCard{
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #3893cb52;
+    padding: 20px;
+    border-radius: 24px;
+
+}
+  .teamCard img{
+   width: 200px;
+   height: 200px;
+
+  }
+  .teamdesc h4{
+  font-size: 16px;
+  }
+  .teamdesc p{
+    font-size: 14px;
+    }
+    .icone{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+      gap: 20px;
+      font-size:16px ;
+  }
+
+}
+ @media (min-width: 576px) and (max-width: 767px){
+  .intro{
+    margin-top: 165px;
+    
+
+  }
+  .textContent{
+    margin-top: 200px;
+  }
+  .textContent h1{
+    font-size: 30px;
+  }
+  .textContent h2{
+  font-size: 14px;
+  }
+  .secaboutcont{
+    padding: 50px;
+    margin-left: 100px;
+    flex-direction: column;
+  }
+  .text1{
+   width: 60%;
+  }
+  .text1::after{
+    width: 500px;
+    height: 500px;
+    top: 10%;
+    left: -15%;
+
+  }
+  .text1 h3{
+    font-size: 12px;
+  }
+  .image_wrapper img{
+    width: 300px;
+  }
+
+  .sec1{
+    margin-left: -100px;
+    flex-direction: column;
+    margin-bottom: 100px;
+  }
+  .text2{
+    width: 420px;
+    margin-left: 0px;
+  }
+  .text2::after{
+    width: 500px;
+    height: 500px;
+    top: 20%;
+    left: -10%;
+  }
+  .text2 h1{
+    font-size: 28px;
+  }
+  .text2 h3{
+    font-size: 12px;
+  }
+  .image_wrapper2{
+    margin-left: 100px;
+    margin-right: 150px;
+
+  }
+  .team{
+    margin-left: 10px;
+    flex-direction: column;
+  }
+
+  .teamCard{
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #3893cb52;
+    padding: 20px;
+    border-radius: 24px;
+
+}
+  .teamCard img{
+   width: 300px;
+   height: 300px;
+
+  }
+  .teamdesc h4{
+  font-size: 16px;
+  }
+  .teamdesc p{
+    font-size: 14px;
+    }
+    .icone{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+      gap: 20px;
+      font-size:16px ;
+  }
+ } 
+ @media (min-width: 768px) and (max-width: 991px) {
+  .intro{
+    margin-top: 165px;
+    
+
+  }
+  .textContent{
+    margin-top: 200px;
+  }
+  .textContent h1{
+    font-size: 30px;
+  }
+  .textContent h2{
+  font-size: 14px;
+  }
+  .secaboutcont{
+    padding: 50px;
+    margin-left: 100px;
+    flex-direction: column;
+  }
+  .text1{
+   width: 60%;
+  }
+  .text1::after{
+    width: 500px;
+    height: 500px;
+    top: 10%;
+    left: 10%;
+
+  }
+  .text1 h3{
+    font-size: 12px;
+  }
+  .image_wrapper img{
+    width: 300px;
+  }
+
+  .sec1{
+    margin-left: -100px;
+    flex-direction: column;
+    margin-bottom: 100px;
+  }
+  .text2{
+    width: 420px;
+    margin-left: 0px;
+  }
+  .text2::after{
+    width: 500px;
+    height: 500px;
+    top: 20%;
+    left: -10%;
+  }
+  .text2 h1{
+    font-size: 32px;
+  }
+  .text2 h3{
+    font-size: 12px;
+  }
+  .image_wrapper2{
+    margin-left: 100px;
+    margin-right: 150px;
+
+  }
+  .team{
+    margin-left: 10px;
+    flex-direction: row;
+  }
+  .teamCard img{
+   width: 150px;
+   height: 150px;
+
+  }
+  .teamdesc h4{
+  font-size: 11px;
+  }
+  .teamdesc p{
+    font-size: 9px;
+    }
+    .icone{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+      gap: 20px;
+      font-size:16px ;
+  }
+
+ }
+ @media (min-width: 992px) and (max-width: 1199px) {
+  .intro{
+    margin-top: 185px;
+    
+
+  }
+  .textContent{
+    margin-top: 200px;
+  }
+  .textContent h1{
+    font-size: 30px;
+  }
+  .textContent h2{
+  font-size: 14px;
+  }
+  .secaboutcont{
+    padding: 50px;
+    margin-left: 20px;
+  }
+  .text1{
+   width: 60%;
+  }
+  .text1::after{
+    width: 500px;
+    height: 500px;
+    top: 10%;
+    left: 10%;
+
+  }
+  .text1 h3{
+    font-size: 12px;
+  }
+  .image_wrapper img{
+    width: 300px;
+  }
+
+  .sec1{
+    margin-left: -100px;
+  }
+  .text2{
+    width: 720px;
+    margin-left: 0px;
+  }
+  .text2::after{
+    width: 500px;
+    height: 500px;
+    top: 20%;
+    left: -10%;
+  }
+  .text2 h1{
+    font-size: 32px;
+  }
+  .text2 h3{
+    font-size: 12px;
+  }
+  .image_wrapper2{
+    margin-left: 100px;
+    margin-right: 150px;
+
+  }
+  .team{
+    margin-left: 30px;
+  }
+  .teamCard img{
+   width: 200px;
+   height: 200px;
+
+  }
+  .teamdesc h4{
+  font-size: 16px;
+  }
+  .teamdesc p{
+    font-size: 12px;
+    }
+ }
+
+ @media (min-width: 1200px) and (max-width: 1399px){
+
+ }
+ @media (min-width: 1400px){
+  
+ }
+
+
+
+
+
+
+
+
+ 

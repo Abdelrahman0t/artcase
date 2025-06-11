@@ -1,0 +1,244 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,900);
+
+
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 90px;
+  background-color: rgb(85, 80, 92);
+  color: white;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  opacity: 0.8;
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
+}
+
+.navButton {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.signInButton {
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.logInButton {
+  background-color: #fff;
+  color: black;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  
+}
+
+
+.intro {
+  padding-left: 3%;
+  padding-top: 10%; /* Optional, adjust padding to make text appear lower */
+  /*  
+  background: linear-gradient(
+      112deg,
+      rgba(18, 18, 18, 1) 25%,
+      rgba(9, 9, 9, 0.726) 70%
+    ),
+    url('/TheStyle/BEST-IPHONE-16-CASES-2048px-4822.webp'); 
+    */
+    background : linear-gradient(120deg, rgb(0 0 0 / 48%) 53.5%, rgba(113, 113, 113, 0.478) 50%), url('/TheStyle/caleb-george-9FoLKcubrfg-unsplash.jpg');
+  background-size: cover; /* Make the image cover the entire element */
+  background-position: center; /* Start with the image positioned at the bottom */
+  background-repeat: no-repeat; /* Ensure the image doesn't repeat */
+  height: 100vh; /* Full viewport height */
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  color: white;
+  opacity: 1;
+
+ /* clip-path: path("M0,150 C150,50 350,250 500,150 S800,250 1000,150 V300 H0 Z"); */
+}
+
+
+
+
+
+@keyframes fadeInUpp {
+  0% {
+    background-position: bottom;
+  }
+  50% {
+    background-position: center; /* Move to the center */
+  }
+  100% {
+    background-position: center; /* Final position at center */
+  }
+}
+
+.textContent {
+  margin-top: 70px; /* Adjust vertical spacing */
+  padding-left: 1%; /* Horizontal spacing to replace margin */
+  padding-right: 0%; /* Ensure responsiveness */
+  text-transform: capitalize;
+  animation: fadeInUp 2.5s ease-out forwards; /* Animation for text */
+  width: 50%;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0; /* Initially hidden */
+  }
+  100% {
+    opacity: 1; /* Fade-in effect */
+  }
+}
+
+.subheading {
+  font-size: 1.3rem; /* Adjust font size for readability */
+  line-height: 1.; /* Increase line height for spacing */
+  margin-top: 20px; /* Add margin for spacing from the heading */
+  color: rgba(255, 255, 255, 0.9); /* Slightly lighter color for better contrast */
+}
+
+.container {
+        /*background-color: #f0f0f0;*/
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+.title {
+        color: #ff0000;
+        font-size: 64px;
+      }
+
+      .responsiveMargins {
+       
+        margin-top: -250px;
+    }
+
+    
+    @media (max-width: 1400px) {
+      .responsiveMargins {
+          
+          margin-top: -200px;
+      }
+  }
+  
+  @media (max-width: 1200px) {
+      .responsiveMargins {
+          
+          margin-top: -180px;
+      }
+  }
+  
+  @media (max-width: 992px) {
+      .responsiveMargins {
+          
+          margin-top: -150px;
+      }
+  }
+  
+  @media (max-width: 768px) {
+      .responsiveMargins {
+          
+          margin-top: -100px;
+      }
+  }
+  
+  @media (max-width: 576px) {
+      .responsiveMargins {
+            margin-top: 0;
+      }
+  }
+  
+  .subheading {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-top: 20px;
+      color: rgba(255, 255, 255, 0.9);
+  }
+  
+  @media (max-width: 768px) {
+      .subheading {
+          font-size: 1.1rem;
+          line-height: 1.6;
+          margin-top: 15px;
+      }
+  }
+
+
+
+
+
+  .btn5 {
+    border: 1px solid rgba(255, 255, 255, 0.5); /* Semi-transparent border */
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0); /* Transparent box-shadow */
+    background: rgba(209, 255, 3, 0); /* Transparent background */
+    color: #fff; /* White text */
+    padding: 10px 20px; /* Add padding for better sizing */
+    font-size: 16px; /* Ensure proper font size */
+    text-transform: uppercase; /* Optional: Make text uppercase */
+    outline: 1px solid rgba(255, 255, 255, 0.5); /* Semi-transparent outline */
+    outline-offset: 0px;
+    text-shadow: none;
+    transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+    cursor: pointer; /* Add a pointer cursor on hover */
+    border-radius: 5px; /* Optional: Add rounded corners */
+
+  }
+  
+  .btn5:hover {
+    border: 1px solid rgba(255, 255, 255, 0.8); /* Slightly more opaque border on hover */
+    background: rgba(255, 255, 255, 0.1); /* Add subtle background on hover */
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 
+                0 0 20px rgba(255, 255, 255, 0.2); /* Glow effect */
+    outline-color: rgba(255, 255, 255, 0);
+    outline-offset: 15px;
+    text-shadow: 1px 1px 2px #427388; 
+  }
+  
+  .Mainbtn5 {
+    border: 1px solid rgba(255, 255, 255, 0.5); /* Semi-transparent border */
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0); /* Transparent box-shadow */
+    background: rgba(16, 161, 147, 0.848); /* Transparent background */
+    color: #fff; /* White text */
+    padding: 10px 20px; /* Add padding for better sizing */
+    font-size: 16px; /* Ensure proper font size */
+    text-transform: uppercase; /* Optional: Make text uppercase */
+    outline: 1px solid rgba(255, 255, 255, 0.5); /* Semi-transparent outline */
+    outline-offset: 0px;
+    text-shadow: none;
+    transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+    cursor: pointer; /* Add a pointer cursor on hover */
+    border-radius: 5px; /* Optional: Add rounded corners */
+
+  }
+  
+  .Mainbtn5:hover {
+    border: 1px solid rgba(255, 255, 255, 0.8); /* Slightly more opaque border on hover */
+    background: rgba(11, 206, 187, 0.163); /* Add subtle background on hover */
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 
+                0 0 20px rgba(255, 255, 255, 0.2); /* Glow effect */
+    outline-color: rgba(255, 255, 255, 0);
+    outline-offset: 15px;
+    text-shadow: 1px 1px 2px #427388; 
+  }
+  

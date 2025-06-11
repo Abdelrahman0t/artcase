@@ -1,0 +1,421 @@
+.container {
+  padding: 40px;
+  padding-left: 0px;
+  width: 100%;
+  margin: 0 auto;
+  margin-left: 20px;
+  padding-top: 0px;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--secondColor);
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.noOrdersMessage {
+  font-size: 1.2rem;
+  color: #888;
+  text-align: center;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.ordersTable {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-top: 20px;
+}
+
+.ordersTable th,
+.ordersTable td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.8rem;
+}
+.ordersTable td{
+text-align: center;
+cursor: pointer;
+color: var(--secondColor);
+}
+.ordersTable th {
+  background-color: #333;
+  color: #fff;
+  font-weight: 600;
+}
+
+.ordersTable td {
+  background-color: #fff;
+}
+
+.ordersTable img {
+  max-width: 50px;
+  max-height: 50px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.status {
+  padding: 8px 16px;
+  border-radius: 20px;
+  text-transform: capitalize;
+  font-size: 1rem;
+}
+
+.status.completed {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.status.pending {
+  background-color: #FF9800;
+  color: white;
+}
+
+.status.canceled {
+  background-color: #F44336;
+  color: white;
+}
+ 
+
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+
+
+
+
+
+.orderDetails {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  display: flex;
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.cardImage {
+  flex: 0 0 320px;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+.cardImage img {
+  max-width: 100%;
+  height: 70vh;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.cardContent {
+  flex: 1;
+  padding: 30px;
+}
+
+.cardTitle {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--secondColor);
+  margin-bottom: 15px;
+}
+
+.cardSubtitle {
+  font-size: 1.4rem;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+.cardInfo {
+  font-size: 1.1rem;
+  color: #444;
+}
+
+.cardInfo p {
+  margin: 12px 0;
+}
+
+.cardFooter {
+  margin-top: 40px;
+  text-align: right;
+}
+
+.backButton {
+  padding: 12px 30px;
+  background-color: var(--secondColor);
+  color: #fff;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.backButton:hover {
+  background-color: #555;
+}
+
+.loading, .error {
+  font-size: 1.2rem;
+  text-align: center;
+  color: #888;
+  margin-top: 20px;
+}
+
+
+.cancelButton {
+    padding: 8px 20px;
+    background-color: #FF4B5C;
+    color: #fff;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cancelButton:hover {
+    background-color: #D23A47;
+  }
+  
+
+
+
+
+
+@media (max-width: 575px){
+  .title{
+    font-size: 1.5rem;
+  }
+  .ordersTable th,
+  .ordersTable td {
+    padding: 2px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.2rem;
+  }
+
+
+  .card {
+    flex-direction: column;
+    justify-content: center;
+
+  }
+.cardImage{
+  display: flex;
+  justify-content: center;
+
+  flex-direction: column;
+}
+.cardImage{
+  max-width: 100%;
+  align-items: center;
+}
+.cardImage img{
+  width: 70%;
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+ 
+}
+
+.cardSubtitle {
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+}
+
+.cardInfo {
+  font-size: 0.8rem;
+
+}
+
+
+.backButton {
+  padding: 10px 25px;
+
+  font-size: 0.8rem;
+
+}
+
+
+
+}
+
+
+@media (min-width: 576px) and (max-width: 767px){
+  .title{
+    font-size: 1.5rem;
+  }
+  .ordersTable th,
+  .ordersTable td {
+    padding: 3px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.4rem;
+  }
+
+  .card {
+    flex-direction: column;
+    justify-content: center;
+
+  }
+.cardImage{
+  display: flex;
+  justify-content: center;
+
+  flex-direction: column;
+}
+.cardImage{
+  max-width: 100%;
+  align-items: center;
+}
+.cardImage img{
+  width: 70%;
+}
+
+}
+
+
+@media (min-width: 768px) and (max-width: 991px){
+  .ordersTable th,
+  .ordersTable td {
+    padding: 5px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.6rem;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .container {
+    padding: 40px;
+    padding-left: 0px;
+    width: 100%;
+    margin: 0 auto;
+    margin-left: 20px;
+    padding-top: 0px;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--secondColor);
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  .noOrdersMessage {
+    font-size: 1.2rem;
+    color: #888;
+    text-align: center;
+  }
+  
+  .tableWrapper {
+    overflow-x: auto;
+  }
+  
+  .ordersTable {
+    width: 50%;
+    border-collapse: collapse;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-top: 20px;
+  }
+  
+  .ordersTable th,
+  .ordersTable td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.8rem;
+  }
+  .ordersTable td{
+  text-align: center;
+  cursor: pointer;
+  color: var(--secondColor);
+  }
+  .ordersTable th {
+    background-color: #333;
+    color: #fff;
+    font-weight: 600;
+  }
+  
+  .ordersTable td {
+    background-color: #fff;
+  }
+  
+  .ordersTable img {
+    max-width: 50px;
+    max-height: 50px;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+  
+  .status {
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-transform: capitalize;
+    font-size: 1rem;
+  }
+  
+  .status.completed {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .status.pending {
+    background-color: #FF9800;
+    color: white;
+  }
+  
+  .status.canceled {
+    background-color: #F44336;
+    color: white;
+  }
+
+}
+
+@media (min-width: 1200px) and (max-width: 1399px){
+.container{
+  padding-top: 100px;
+  padding-left: 0%;
+}
+}
+@media (min-width: 1400px){
+
+}
+
+
+
+
+
+.container2{
+  padding-top: 60px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+
+.rubberH img{
+  height: 70vh;
+}

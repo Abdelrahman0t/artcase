@@ -1,0 +1,484 @@
+.thebody{
+   /* background: linear-gradient(78deg, rgba(215,222,225,1) 0%, rgba(148,167,173,1) 75%); */
+  /* background: linear-gradient(90deg, rgba(179,206,213,1) 34%, rgba(126,163,179,1) 100%); */
+
+   
+    color: white;
+    text-transform: capitalize;
+    background-color: #ffffff;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    background: transparent;
+    color: white;
+    position: relative;
+    z-index: 1000;
+    width: 100%;
+    opacity: 0.8;
+    background-color: #0b2239;
+}
+
+.nav {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.navButton {
+    background: transparent;
+    border: none;
+    color: white;
+
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.signInButton {
+    background-color: transparent;
+    border: 1px solid white;
+    color: black;
+
+    cursor: pointer;
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.logInButton {
+    background-color: #fff;
+    color: black;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    
+}
+
+.subheading {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-top: 20px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.btn5 {
+    border: 1px solid rgba(255, 255, 255, 0.5); /* Semi-transparent border */
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0); /* Transparent box-shadow */
+    background: rgba(209, 255, 3, 0); /* Transparent background */
+    color: #fff; /* White text */
+    padding: 10px 20px; /* Add padding for better sizing */
+    font-size: 16px; /* Ensure proper font size */
+    text-transform: uppercase; /* Optional: Make text uppercase */
+    outline: 1px solid rgba(255, 255, 255, 0.5); /* Semi-transparent outline */
+    outline-offset: 0px;
+    text-shadow: none;
+    transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+    cursor: pointer; /* Add a pointer cursor on hover */
+    border-radius: 5px; /* Optional: Add rounded corners */
+
+}
+
+.btn5:hover {
+    border: 1px solid rgba(255, 255, 255, 0.8); /* Slightly more opaque border on hover */
+    background: rgba(255, 255, 255, 0.1); /* Add subtle background on hover */
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 
+                0 0 20px rgba(255, 255, 255, 0.2); /* Glow effect */
+    outline-color: rgba(255, 255, 255, 0);
+    outline-offset: 15px;
+    text-shadow: 1px 1px 2px #427388; 
+}
+
+.Mainbtn5 {
+    border: 1px solid rgba(255, 255, 255, 0.5); /* Semi-transparent border */
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0); /* Transparent box-shadow */
+    background: #012d5d; /* Transparent background */
+    color: #fff; /* White text */
+    padding: 10px 20px; /* Add padding for better sizing */
+    font-size: 16px; /* Ensure proper font size */
+    text-transform: uppercase; /* Optional: Make text uppercase */
+    outline: 1px solid rgba(255, 255, 255, 0.5); /* Semi-transparent outline */
+    outline-offset: 0px;
+    text-shadow: none;
+    transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+    cursor: pointer; /* Add a pointer cursor on hover */
+    border-radius: 5px; /* Optional: Add rounded corners */
+
+}
+
+.Mainbtn5:hover {
+    border: 1px solid rgba(255, 255, 255, 0.8); /* Slightly more opaque border on hover */
+    background: #2293a4b4; /* Add subtle background on hover */
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 
+                0 0 20px rgba(255, 255, 255, 0.2); /* Glow effect */
+    outline-color: rgba(255, 255, 255, 0);
+    outline-offset: 15px;
+    text-shadow: 1px 1px 2px #427388; 
+}
+
+.textContent {
+    margin-top: 100px;
+    padding: 0 5%;
+    text-transform: capitalize;
+    animation: fadeInUp 2.5s ease-out forwards;
+    width: 100%;
+    max-width: 600px;
+    color: white;
+}
+
+.intro {
+    padding: 5% 5%;
+    background: url('/TheStyle/blueWave.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #ffffff;
+    opacity: 1;
+    overflow: hidden;
+    font-family: "Mulish", sans-serif;
+    font-optical-sizing: auto;
+}
+
+.float_animation{
+    animation: float 3s ease-in-out infinite;
+
+}
+.image_container {
+    position: relative; /* Required for ::after to position relative to this div */
+    display: inline-block; /* Ensures the container wraps tightly around the image */
+}
+.image_container::after {
+    content: ''; /* Ensures the ::after pseudo-element is rendered */
+    position: absolute; /* Positioned relative to .image_container */
+    top: 0; /* Place the bar at the bottom */
+    left: 0; /* Align the bar to the left */
+    
+    width: 100%; /* Full width of the container */
+    height: 30px; /* Adjust for a "thick bar" appearance */
+    background-color: rgba(135, 206, 235, 0.8); /* A semi-transparent blue bar */
+    border-radius: 8px; /* Add rounded edges to the bar */
+    pointer-events: none; /* Ensure it doesn't interfere with user interactions */
+    z-index: -1; /* Ensure it appears behind the image */
+    transform: translate(-50%, 50%) rotate(45deg);
+}
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0); /* Start and end at the same position */
+    }
+    50% {
+        transform: translateY(-3px); /* Move 20px up */
+    }
+}
+
+.wave_background {
+    width: 100%;
+    height: 300px;
+    background: #4CAF50;
+    clip-path: path("M0,200 Q300,100 600,200 T1200,200 L1200,300 L0,300 Z");
+}
+
+.container {
+    /*background-color: #f0f0f0;*/
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.text1{
+    color: inherit;
+    
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 750px;
+    display: flex;
+    align-items: left;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    position: relative;
+    z-index: 10;
+    line-break: 10px;
+
+}
+
+.text2{
+  color: inherit;
+  
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 750px;
+  display: flex;
+  align-items: left;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  position: relative;
+  z-index: 10;
+  line-break: 10px;
+}
+.text1::after{
+  background-image: url('/TheStyle/blueShape.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  left : -0%;
+  top: -12%;
+  content: '';
+  height: 800px;
+  width: 800px;
+  position:absolute;
+  z-index: -1;
+  transform: rotate(20deg);
+
+}
+
+.text2::after{
+  background-image: url('/TheStyle/blueShape.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  left : -15%;
+  top: 5%;
+  content: '';
+  height: 800px;
+  width: 800px;
+  position:absolute;
+  z-index: -1;
+  transform: rotate(-160deg);
+}
+
+.sec1{
+  color: black;
+  /*
+  font-family: "Oswald", sans-serif;
+  */font-family: "Mulish", sans-serif;
+  
+  text-transform: uppercase;
+  font-size: 24px;
+  line-height: 2.5;
+}
+.sec1 h1 {
+  text-transform: uppercase;
+  font-size: 34px;
+  line-height: 1.5;
+  font-weight: bolder;
+}
+.sec1 h3{
+  font-size: 16px;
+  line-break: normal;
+  line-height: 1.4rem;
+  text-align :center
+}
+.sec1 img{
+  position: relative;
+  z-index: 10;
+}
+.image_wrapper {
+  position: relative; /* Enables pseudo-element positioning */
+  display: inline-block; /* Ensures the wrapper fits tightly around the image */
+}
+
+.image_wrapper2 {
+  position: relative; /* Enables pseudo-element positioning */
+  display: inline-block; /* Ensures the wrapper fits tightly around the image */
+}
+
+/* Pseudo-element decoration */
+.image_wrapper::after {
+  content: '';
+  position: absolute;
+  top: -10%; /* Adjust to control positioning */
+  left: -10%;
+  width: 110%; /* Extend beyond the image */
+  height: 110%;
+  background-color: #98dcfed3; /* Light red background for effect */
+  border-radius: 20px; /* Matches the image's rounded corners */
+  z-index: 1; /* Ensures it's behind the image */
+  transform: rotate(-5deg); /* Adds a slight rotation */
+}
+
+.image_wrapper2::after {
+  content: '';
+  position: absolute;
+  top: -5%; /* Adjust to control positioning */
+  left: -3%;
+  width: 105%; /* Extend beyond the image */
+  height: 105%;
+  background-color: #98dcfed3; /* Light red background for effect */
+  border-radius: 20px; /* Matches the image's rounded corners */
+  z-index: 1; /* Ensures it's behind the image */
+  transform: rotate(5deg); /* Adds a slight rotation */
+}
+
+.cards_container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 20px 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card {
+  width: 500px;
+
+  padding: 50px;
+  border-radius: 15px;
+  background-color: #38cbbac5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+  margin: 20px;
+  
+}
+
+.card:hover {
+  transform: translateY(-10px);
+}
+
+.card img {
+  width: 80px;
+  margin-bottom: 20px;
+}
+
+.card h3 {
+  color: white;
+  margin: 10px 10px 15px 10px;
+}
+
+.card p {
+  color: #333333;
+}
+
+.trending_container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.trending_container::after{
+  position: absolute;
+  z-index: -1;
+  content: "";
+ background:linear-gradient(78deg, #03101d86 50%, #03101d86 50%), url('/TheStyle/realwaves.png');
+ background-position: center;
+ background-repeat: no-repeat;
+ background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+  width: 100%;
+  height: 100%;
+  top : 0;
+  left: 0;
+}
+.trending_card{
+  display: flex;
+  flex-direction:row ;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+    z-index: 2;
+}
+
+.trending_card img{
+  width: 15%;
+  transition: transform 0.3s ease;
+  border-radius: 10px;
+  
+}
+
+.trending_card img:hover{
+  transform: scale(1.1); /* Scale the image to 110% of its size */
+}
+@media (max-width: 768px) {
+    .header {
+        padding: 15px 20px;
+    }
+
+    .nav {
+        display: none;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: #0b2239;
+        flex-direction: column;
+        padding: 20px;
+        gap: 15px;
+    }
+
+    .nav.active {
+        display: flex;
+    }
+
+    .textContent {
+        margin-top: 50px;
+        text-align: center;
+    }
+
+    .intro {
+        padding: 20px;
+    }
+
+    .image_container img {
+        height: 300px;
+        margin-top: 20px;
+    }
+
+    .sec1 {
+        flex-direction: column;
+        margin: 50px 20px;
+        padding: 20px;
+    }
+
+    .text1, .text2 {
+        width: 100%;
+        height: auto;
+        padding: 20px;
+    }
+
+    .image_wrapper img, .image_wrapper2 img {
+        width: 100%;
+        max-width: 400px;
+        margin: 20px auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 10px 15px;
+    }
+
+    .textContent h1 {
+        font-size: 28px;
+    }
+
+    .textContent h3 {
+        font-size: 18px;
+    }
+
+    .btn5, .Mainbtn5 {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+
+    .cards_container, .trending_container {
+        grid-template-columns: 1fr;
+        padding: 15px;
+    }
+}
