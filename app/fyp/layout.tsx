@@ -392,10 +392,10 @@ interface LayoutProps {
 
 */}
     <div className={`${styles.hamburgerH}`}>
-    <button className={styles.navButton}>
+    <button className={styles.navButton} onClick={() => {console.log("clicked");router.push('/BuyingChart')}}>
       <i className="fas fa-shopping-cart"></i>
     </button>
-    <button className={styles.navButton}>
+    <button className={styles.navButton} onClick={() => router.push('/profile')}>
       <i className="fas fa-user"></i>
     </button>
     <div className={styles.headerbuttonscontainer}>
