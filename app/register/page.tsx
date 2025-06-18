@@ -73,7 +73,7 @@ export default function RegisterPage() {
       formData.append("username", username);
       formData.append("password", password);
 
-      const loginResponse = await fetch("http://127.0.0.1:8000/api/token/", {
+      const loginResponse = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/token/`, {
         method: "POST",
         body: formData,
       });
