@@ -6440,3 +6440,27 @@ height: fit-content;
     margin: 0 auto;
   }
 }
+
+
+@media (max-width: 362px){
+  .addToCartButton{
+    font-size: 0.7rem;
+  }
+  .cardsContent .title{
+    font-size: 0.9rem;
+    white-space:nowrap;
+    overflow: hidden; 
+        text-overflow: ellipsis;
+  }
+  .cardsContent .price{
+    font-size: 1rem;
+  }
+  .likeButton, .saveButton{
+    height: 30px;
+    width: 30px;
+
+  }
+  .quickViewButton{
+    font-size: 0.6rem;
+  }
+} 
