@@ -787,7 +787,7 @@ margin: 30px;
         align-items: center;
         overflow: scroll;
         overflow-x: hidden;
-        height: 100vh;
+        height: fit-content;
     }
     .stage0{
         margin-top: 100px;
