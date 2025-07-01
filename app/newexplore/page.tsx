@@ -3,7 +3,7 @@
 import { useState, useEffect , useRef} from 'react';
 import Image from 'next/image';
 import { FiSearch, FiShoppingCart, FiArrowRight, FiTruck, FiRefreshCw, FiShield, FiCreditCard, FiMenu, FiX, FiFilter, FiTrendingUp, FiStar, FiClock, FiHeart, FiBookmark, FiEye, FiUser, FiGrid, FiAward, FiPenTool } from 'react-icons/fi';
-import { FaArrowRight } from 'react-icons/fa';
+
 import styles from './newexplore.module.css';
 import styles1 from '../newui/newui.module.css';
 import ccardStyles from './categorycards.module.css';
