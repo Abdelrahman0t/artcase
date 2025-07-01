@@ -1515,7 +1515,7 @@ onChange={handleColorChange} />
 
 
 
-<div className={`${style1.phoneSelectorWrapper} ${isSidebarPhoneOpen ? styles1.open2 : ""}`}> 
+<div className={`${styles1.phoneSelectorWrapper} ${isSidebarPhoneOpen ? styles1.open2 : ""}`}> 
   {/* Phone Categories Header */}
   <div className={styles1.phoneCategoriesHeader}>
     <h2>Phone Models</h2>
