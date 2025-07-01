@@ -11,12 +11,16 @@ import * as Phones from '../createclear/phons';
 import 'react-image-crop/dist/ReactCrop.css';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css'; // Import the cropperjs CSS
-import styles1 from './rubber.module.css'; // Import the CSS module
-import styles from '../fyp/fyp.module.css'; // Import the CSS module
-import style6 from './styles6.module.css'; // Import the CSS module
+import styles1 from '../newdesign/newdesign.module.css'; // Import the CSS module
 
-import Layoutt from '../fyp/layout';
+import styles from '../newui/newui.module.css'; // Import the CSS module
+import style6 from '../createclear/styles6.module.css'; // Import the CSS module
+
+import Layoutt from '../newui/layout';
 import { Merriweather, Roboto, Oswald } from 'next/font/google';
+import { setRedirectUrl, getCurrentPageUrl } from '../utils/apiUtils';
+import { Check, ShoppingCart, Share2, Clock, Star } from "lucide-react"
+
 
 import Link from 'next/link'
 
@@ -28,6 +32,17 @@ interface UserText {
     fontSize: number;
     fontFamily: string;
     fill: string;
+  }
+
+interface SavedDesign {
+    id: number;
+    image_url: string;
+    price: number;
+    user: string;
+    type: string;
+    modell: string;
+    stock: boolean | string;
+    is_anonymous?: boolean;
   }
 
   const stickerList = [
@@ -116,55 +131,7 @@ const PhoneCaseDesigner: React.FC = () => {
 
 
 
-    /*
-
-    const [containerSize, setContainerSize] = useState({ width: window.innerWidth, height: window.innerHeight });
-    const containerRef = useRef<HTMLDivElement>(null);
-
-    // Full size of the phone case design
-    const canvasWidth = thebwidth; // Full width of iPhone design
-    const canvasHeight = thebhieght; // Full height of iPhone design
-
-   // Scale down display for preview (adjust this as needed)
-
-
-
-    useEffect(() => {
-      const updateSize = () => {
-        if (containerRef.current) {
-          const { clientWidth, clientHeight } = containerRef.current;
-          setContainerSize({ width: clientWidth, height: clientHeight });
-        }
-      };
-  
-      window.addEventListener('resize', updateSize);
-      updateSize(); // Initial calculation
-  
-      return () => window.removeEventListener('resize', updateSize);
-    }, []);
-  
-    // Calculate responsive displayScale
-    const displayScale = Math.min(
-      containerSize.width / thebwidth,
-      containerSize.height / thebhieght
-    );
    
-    const handleAddSticker = (stickerUrl: string) => {
-        const img = new Image();
-        img.src = stickerUrl;
-      
-        img.onload = () => {
-          const maxWidth = 200;
-          const maxHeight = 200;
-          const scaleFactor = Math.min(maxWidth / img.width, maxHeight / img.height, 1);
-          img.width *= scaleFactor; // Scale width
-          img.height *= scaleFactor; // Scale height
-      
-          setUserImages((prevImages) => [...prevImages, img]);
-        };
-      };
-
- */
     // Full size of the phone case design
     const canvasWidth = thebwidth; // Full width of iPhone design
     const canvasHeight = thebhieght; // Full height of iPhone design
@@ -223,75 +190,164 @@ const PhoneCaseDesigner: React.FC = () => {
 
   const router = useRouter();  // Initialize the router inside the component
 
-  const [theSavedDesign, setTheSavedDesign] = useState()
+  const [theSavedDesign, setTheSavedDesign] = useState<SavedDesign | null>(null)
+  const [isAssociating, setIsAssociating] = useState<boolean>(false);
 
-/*
-  useEffect(() => {
-    const fetchStickers = async () => {
-      try {
-        const response = await fetch("http://127.0.0.1:8000/stickers/"); // Replace with your Django API URL
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        
-        // Extracting the URL for the first sticker
-        const imageUrl = data.data[0].thumbnails[0].url;
-        console.log(imageUrl);  // Logging the URL
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("iPhone");
+  const [openBrand, setOpenBrand] = useState<string | null>(null);
 
-        // Convert image URL to a data URL (PNG format)
-        const stickerList1 = await Promise.all(
-          data.data.map(async (item) => {
-            const url = item.thumbnails[0].url;
-            const base64Data = await convertImageToBase64(url);
-            return base64Data; // Return the base64 data URL
-          })
-        );
+  // Function to get current page URL for redirect after login
+  const getCurrentPageUrl = () => {
+    return window.location.pathname + window.location.search;
+  };
 
-        setStickerList1(stickerList1);  // Update state with the list of base64 image URLs
-        console.log(stickerList1);  // Log the base64 image URLs
-
-      } catch (err) {
-        setError(err.message);
-      }
-    };
-
-    fetchStickers();
-  }, []);
-
-
-useEffect(() => {
-  const fetchStickers = async () => {
+  // Function to associate anonymous designs with user account
+  const associateAnonymousDesigns = async () => {
+    console.log('Starting association process...');
+    setIsAssociating(true);
+    
     try {
-      const response = await fetch("http://127.0.0.1:8000/emoji/"); // Replace with your Django API URL
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const data = await response.json();
+      const anonymousDesigns = JSON.parse(localStorage.getItem('anonymousDesigns') || '[]');
+      console.log('Anonymous designs in localStorage:', anonymousDesigns);
       
-      // Extracting the URL for the first sticker
-      console.log(data.data)
+      if (anonymousDesigns.length === 0) {
+        console.log('No anonymous designs to associate');
+        return;
+      }
 
-      // Convert image URL to a data URL (PNG format)
-      const stickerList1 = await Promise.all(
-        data.data.map(async (item) => {
-          const url = item.thumbnails[0].url;
-          const base64Data = await convertImageToBase64(url);
-          return base64Data; // Return the base64 data URL
-        })
-      );
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.log('No token found, skipping association');
+        return;
+      }
 
-      setStickerList1(stickerList1);  // Update state with the list of base64 image URLs
-      console.log(stickerList1);  // Log the base64 image URLs
+      for (const design of anonymousDesigns) {
+        console.log('Associating design:', design);
+        
+        // Use the direct update endpoint that we know works
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/design/${design.id}/update-user/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          }
+        });
 
-    } catch (err) {
-      setError(err.message);
+        if (response.ok) {
+          const result = await response.json();
+          console.log('Association successful:', result);
+          
+          // Update the current design if it matches
+          if (theSavedDesign !== null && theSavedDesign.id === design.id) {
+            console.log('Updating current design state');
+            setTheSavedDesign({
+              ...theSavedDesign,
+              user: result.user,
+              is_anonymous: false
+            });
+          }
+        } else {
+          console.error('Association failed for design:', design.id);
+        }
+      }
+
+      // Clear the anonymous designs from localStorage after association
+      localStorage.removeItem('anonymousDesigns');
+      console.log('Cleared anonymous designs from localStorage');
+      
+    } catch (error) {
+      console.error('Error during association:', error);
+    } finally {
+      setIsAssociating(false);
+      console.log('Association process completed');
     }
   };
 
-  fetchStickers();
-}, []);
-*/
+  // Check for anonymous designs to associate when component mounts
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const anonymousDesigns = JSON.parse(localStorage.getItem('anonymousDesigns') || '[]');
+      if (anonymousDesigns.length > 0) {
+        console.log('Found anonymous designs, starting association');
+        // Get the latest design for immediate display
+        const latestDesign = anonymousDesigns[anonymousDesigns.length - 1];
+        setTheSavedDesign({
+          ...latestDesign,
+          user: 'Anonymous',
+          is_anonymous: true
+        });
+        
+        // Associate all anonymous designs immediately
+        associateAnonymousDesigns();
+      }
+    }
+  }, []);
+
+  // Also check for anonymous designs when token changes (user logs in)
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'token' && e.newValue) {
+        const anonymousDesigns = JSON.parse(localStorage.getItem('anonymousDesigns') || '[]');
+        if (anonymousDesigns.length > 0 && theSavedDesign !== null && theSavedDesign.is_anonymous) {
+          console.log('User logged in with anonymous design, associating...');
+          associateAnonymousDesigns();
+        }
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Also check immediately when component mounts with token
+    const token = localStorage.getItem('token');
+    if (token) {
+      const anonymousDesigns = JSON.parse(localStorage.getItem('anonymousDesigns') || '[]');
+      if (anonymousDesigns.length > 0 && theSavedDesign !== null && theSavedDesign.is_anonymous) {
+        console.log('User already logged in with anonymous design, associating...');
+        associateAnonymousDesigns();
+      }
+    }
+
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, [theSavedDesign]);
+
+  const allPhones = [
+    {
+      brand: "iPhone",
+      models: [
+        { name: "iPhone 14", phone: Phones.iphone_14_t },
+        { name: "iPhone 14 Plus", phone: Phones.iphone_14_plus_t },
+        { name: "iPhone 14 Pro", phone: Phones.iphone_14_pro_t },
+        { name: "iPhone 14 Pro Max", phone: Phones.iphone_14_pro_max_t },
+        { name: "iPhone 15", phone: Phones.iphone_15_t },
+        { name: "iPhone 15 Plus", phone: Phones.iphone_15_plus_t },
+        { name: "iPhone 15 Pro", phone: Phones.iphone_15_pro_t },
+        { name: "iPhone 15 Pro Max", phone: Phones.iphone_15_pro_max_t },
+        { name: "iPhone 16 Pro", phone: Phones.iphone_16_pro_t },
+        { name: "iPhone 16 Pro Max", phone: Phones.iphone_16_pro_max_t },
+      ],
+    },
+  ];
+
+  const filteredPhones = allPhones
+    .filter(group => selectedCategory === "iPhone" || group.brand === selectedCategory)
+    .map(group => ({
+      ...group,
+      models: group.models.filter(item =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    }))
+    .filter(group => group.models.length > 0);
+
+  const toggleBrand = (brand: string) => {
+    setOpenBrand(openBrand === brand ? null : brand);
+  };
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+    setOpenBrand(null);
+  };
 
   const convertImageToBase64 = (url) => {
     return new Promise((resolve, reject) => {
@@ -672,12 +728,6 @@ const handleCrop = () => {
       
 
   const handleSendToCloudinary = async () => {
-    const token = localStorage.getItem('token')
-    if (!token) {
-      alert('You must be logged in');
-      window.location.href = '/login'; // or '/auth/login' if that's your route
-      return;
-    }
     if (!stageRef.current) return;
 
     // Deselect the image to hide the transformer
@@ -764,27 +814,7 @@ const handleCrop = () => {
         setLoading(true);
 
         try {
-          // Fetch the latest product data before saving
-          const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/phone-products/`, {
-              headers: {
-                  Authorization: `Bearer ${token}`,
-              }
-          });
-          if (!response.ok) {
-              throw new Error('Failed to fetch phone products');
-          }
-          const products = await response.json();
-          const product = products.find((p: any) => p.modell === themodell && p.type === thetype);
-          
-          if (!product) {
-              throw new Error('Product not found in database');
-          }
-
-          // Use the database values for stock and price
-          const dbStock = product.stock;
-          const dbPrice = product.price;
-
-          // Upload to Cloudinary
+          // Upload to Cloudinary first
           const cloudinaryResponse = await fetch("https://api.cloudinary.com/v1_1/daalfrqob/image/upload", {
               method: "POST",
               body: formData,
@@ -799,7 +829,31 @@ const handleCrop = () => {
           const result = await cloudinaryResponse.json();
           console.log("Design uploaded successfully:", result);
   
-          // Save the Cloudinary URL and additional data to your backend using database values
+          // Get product data for price and stock
+          let dbStock = false; // Default to false (out of stock)
+          let dbPrice = 30.00; // Default price
+          
+          const token = localStorage.getItem('token');
+          
+          // Fetch product data regardless of authentication status
+          try {
+              const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/phone-products/`);
+              if (response.ok) {
+                  const products = await response.json();
+                  const product = products.find((p: any) => p.modell === themodell && p.type === thetype);
+                  
+                  if (product) {
+                      dbStock = product.stock;
+                      dbPrice = product.price;
+                  }
+              }
+          } catch (error) {
+              console.error("Error fetching product data:", error);
+          }
+
+          // Check if user is authenticated
+          if (token) {
+              // User is logged in - save to backend with user association
           const djangoResponse = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/designs/`, {
               method: "POST",
               headers: {
@@ -809,11 +863,11 @@ const handleCrop = () => {
               body: JSON.stringify({
                   image_url: result.secure_url,
                   position: { x: 0, y: 0 }, // Example position
-                  stock : dbStock,
-                  modell : themodell, 
-                  type : thetype,
-                  sku : 'none',
-                  price : dbPrice
+                      stock: dbStock,
+                      modell: themodell, 
+                      type: thetype,
+                      sku: 'none',
+                      price: dbPrice
               }),
           });
   
@@ -826,37 +880,80 @@ const handleCrop = () => {
           const savedDesign = await djangoResponse.json();
           console.log("Design saved successfully:", savedDesign);
 
-          
-
-
-
-          let callid =savedDesign.id;
+              // Fetch the complete design data
+              let callid = savedDesign.id;
           try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/design/${callid}`, {
               headers: {
-                'Authorization': `Bearer ${token}`, // Pass the token in the Authorization header
+                          'Authorization': `Bearer ${token}`,
               }
             });
             if (response.ok) {
               const data = await response.json();
-              
-              console.log('Fetched Design:', data.price);  // Log the fetched design data
-              setTheSavedDesign(data)
+                      console.log('Fetched Design:', data.price);
+                      setTheSavedDesign({
+                          ...data,
+                          is_anonymous: data.is_anonymous === true
+                      });
             } else {
               console.error('Failed to fetch design data');
             }
           } catch (error) {
             console.error('Error fetching data:', error);
-          } finally {
-            setLoading(false);
+              }
+          } else {
+              // User is not logged in - create anonymous design
+              const anonymousResponse = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/designs/anonymous/`, {
+                  method: "POST",
+                  headers: {
+                      "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                      image_url: result.secure_url,
+                      stock: dbStock,
+                      modell: themodell, 
+                      type: thetype,
+                      sku: 'none',
+                      price: dbPrice
+                  }),
+              });
+  
+              if (!anonymousResponse.ok) {
+                  const error = await anonymousResponse.text();
+                  console.error("Error saving anonymous design:", error);
+                  return;
+              }
+               
+              const savedDesign = await anonymousResponse.json();
+              console.log("Anonymous design saved successfully:", savedDesign);
+
+              // Store the anonymous design in localStorage for later association
+              const anonymousDesigns = JSON.parse(localStorage.getItem('anonymousDesigns') || '[]');
+              anonymousDesigns.push({
+                  id: savedDesign.id,
+                  temp_id: savedDesign.temp_id,
+                  image_url: savedDesign.image_url,
+                  price: savedDesign.price,
+                  type: savedDesign.type,
+                  modell: savedDesign.modell,
+                  stock: savedDesign.stock,
+                  created_at: new Date().toISOString(),
+                  is_anonymous: savedDesign.is_anonymous
+              });
+              localStorage.setItem('anonymousDesigns', JSON.stringify(anonymousDesigns));
+
+              // Set the saved design for display
+              setTheSavedDesign({
+                  ...savedDesign,
+                  user: 'Anonymous',
+                  is_anonymous: savedDesign.is_anonymous
+              });
           }
-      }  catch (error) {
+        } catch (error) {
             console.error("Error:", error);
         } finally {
             setLoading(false);
         }
-
-       
     };
 };
 
@@ -989,21 +1086,38 @@ const handleDecreaseImageSize = () => {
 
 
 const addToCart = async (designId : any) => {
+  if (!theSavedDesign) {
+    alert("Design not found!");
+    return;
+  }
 
-  const token = localStorage.getItem('token')
+  // Check if item is out of stock
+  if (theSavedDesign.stock === 'Out of Stock') {
+    alert("Sorry, this item is currently out of stock and cannot be added to cart.");
+    return;
+  }
+
+  const token = localStorage.getItem('token');
+  
+  if (!token) {
+    // User is not logged in, redirect to login with current URL
+    setRedirectUrl(getCurrentPageUrl());
+    window.location.href = '/login';
+    return;
+  }
+
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/cart/add/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      "Authorization": `Bearer ${localStorage.getItem("token")}`,
-
+      "Authorization": `Bearer ${token}`,
     },
     body: JSON.stringify({ design_id: designId }),
   });
 
   if (response.ok) {
     alert('Item added to cart!');
-    router.push('/BuyingChart');
+    router.push('/');
   } else {
     const data = await response.json();
     alert(data.error);
@@ -1022,56 +1136,214 @@ const addToCart = async (designId : any) => {
 
 
 
-if(theSavedDesign){
-  return(
-    <div>
+
+if(theSavedDesign !== null){
+  const token = localStorage.getItem('token');
+  const isAnonymous = theSavedDesign.is_anonymous === true;
+  
+  // Debug logging
+  console.log('Design state:', {
+    token: !!token,
+    isAnonymous,
+    user: theSavedDesign.user,
+    is_anonymous: theSavedDesign.is_anonymous,
+    isAssociating,
+    fullDesignData: theSavedDesign
+  });
+  
+  return (
     <Layoutt>
-    <div className={styles1.sevedcontainr}>
-        <div className={styles1.savedimgdiv}> 
-        <img src={theSavedDesign.image_url} className={styles1.rubberimg} alt="rubber case" />
+    <div className={styles1.savedcontainer}>
+      <div className={styles1.previewCard}>
+        <div className={styles1.imageSection}>
+          <div className={styles1.trendingBadge}>
+            <svg className={styles1.starIcon} viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            Trending
+          </div>
+          
+          <div className={styles1.imageContainer}>
+            <img 
+              src={theSavedDesign.image_url} 
+              alt="phone case design" 
+              className={styles1.designImage}
+            />
+          </div>
+          
+          <div className={styles1.customMadeLabel}>Custom Made</div>
+          <div className={styles1.priceLabel}>${theSavedDesign.price}</div>
         </div>
 
-        <div className={styles1.sevedinfos}>
+        <div className={styles1.detailsSection}>
+          <div className={styles1.header}>
+            <h1 className={styles1.title}>Design Preview</h1>
+          </div>
 
-        <h1>preview : </h1>
-
-        <h2>price : {theSavedDesign.price}$</h2>
-        <h3>Created By : {theSavedDesign.user}</h3>
-        
-        <h3>type : {theSavedDesign.type}</h3>
-        <h3>model : {theSavedDesign.modell}</h3>
-
-            <h3>product id : {theSavedDesign.id}</h3>
-            
-
-
-            <h3   style={{
-    color: theSavedDesign.stock === "Out of Stock" ? "red" : "var(--thirdColor)",
-    fontWeight: "bolder",
-    textTransform: "uppercase"
-  }}>{theSavedDesign.stock}</h3>
-            <div className={styles1.savedbuttons}>
-            
-            <Link href={`/makepost/${theSavedDesign.id}`}>
-  <button><span>Post It On Your Profile</span></button>
-</Link>
-    
-    <button onClick={() => addToCart(theSavedDesign.id)}><span>Add to Chart</span></button>
-   <Link href="/fyp"> <button className={`${styles1.transparent} ${styles1.fab}`}><span>Leave It for Now</span></button></Link>
-
-   
-  
- 
-
+          <div className={styles1.productInfo}>
+            <div className={styles1.priceSection}>
+              <span className={styles1.priceText}>Price</span>
+              <span className={styles1.price}>${theSavedDesign.price}</span>
             </div>
 
-           
+            <div className={styles1.infoGrid}>
+              <div className={styles1.infoItem}>
+                <span className={styles1.label}>Created By</span>
+                <span className={styles1.value}>{theSavedDesign.user}</span>
+              </div>
+              <div className={styles1.infoItem}>
+                <span className={styles1.label}>Type</span>
+                <span className={styles1.value}>{theSavedDesign.type}</span>
+              </div>
+              <div className={styles1.infoItem}>
+                <span className={styles1.label}>Model</span>
+                <span className={styles1.value}>{theSavedDesign.modell}</span>
+              </div>
+              <div className={styles1.infoItem}>
+                <span className={styles1.label}>Product ID</span>
+                <span className={styles1.value}>#{theSavedDesign.id}</span>
+              </div>
+            </div>
+
+            <div className={styles1.statusSection}>
+              <span className={styles1.label}>Status</span>
+              <div className={`${styles1.statusBadge} ${theSavedDesign.stock == "In Stock" ? styles1.statusBadge : styles1.outofStockBadge}`}>
+                <svg className={styles1.statusIcon} viewBox="0 0 24 24" fill="currentColor">
+                  {theSavedDesign.stock == "In Stock" ? (
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                  ) : (
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                  )}
+                </svg>
+                {theSavedDesign.stock == "In Stock" ? "In Stock" : "Out of Stock"}
+              </div>
+            </div>
+
+            {/* Status Alert */}
+            {isAnonymous && (
+              <div className={styles1.anonymousAlert}>
+                <div className={styles1.alertIcon}>
+                  <svg viewBox="0 0 24 24" fill="currentColor" style={{width: '12px', height: '12px'}}>
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                  </svg>
+            </div>
+                <div className={styles1.alertContent}>
+                  <div className={styles1.alertTitle}>Anonymous Design</div>
+                  <div className={styles1.alertText}>
+                    This design was created without an account. To post it or add it to your cart, you'll need to log in first.
+                  </div>
+                </div>
+              </div>
+            )}
+            {isAssociating && (
+              <div className={styles1.successAlert}>
+                <div className={styles1.alertIcon}>
+                  <svg viewBox="0 0 24 24" fill="currentColor" style={{width: '12px', height: '12px'}}>
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                  </svg>
+                </div>
+                <div className={styles1.alertContent}>
+                  <div className={styles1.alertTitle}>Associating Design...</div>
+                  <div className={styles1.alertText}>
+                    Your design is being associated with your account. Please wait...
+                  </div>
+                </div>
+              </div>
+            )}
+            {!isAnonymous && !isAssociating && token && (
+              <div className={styles1.successAlert}>
+                <div className={styles1.alertIcon}>
+                  <svg viewBox="0 0 24 24" fill="currentColor" style={{width: '12px', height: '12px'}}>
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                  </svg>
+                </div>
+                <div className={styles1.alertContent}>
+                  <div className={styles1.alertTitle}>Design Associated!</div>
+                  <div className={styles1.alertText}>
+                    Your design is now associated with your account. You can post it or add it to your cart.
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Action Buttons */}
+            <div className={styles1.actionButtons}>
+              {token && !isAnonymous && !isAssociating ? (
+                <>
+                  <Link style={{textDecoration: "none"}} href={`/makepost/${theSavedDesign.id}`}>
+                    <button className={styles1.primaryButton}>
+                    <Share2 className={styles1.buttonIcon} />
+                      Post Design
+                    </button>
+                  </Link>
+                  <button
+                    className={styles1.secondaryButton}
+                    onClick={() => addToCart(theSavedDesign.id)}
+                  >
+                    <svg className={styles1.buttonIcon} viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+                    </svg>
+                    Add to Cart
+                  </button>
+                </>
+              ) : isAnonymous && !isAssociating ? (
+                <>
+                  <button
+                    className={styles1.primaryButton}
+                    onClick={() => {
+                      setRedirectUrl(getCurrentPageUrl());
+                      window.location.href = '/login';
+                    }}
+                  >
+                    <svg className={styles1.buttonIcon} viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-8v2h8v14z"/>
+                    </svg>
+                    Login to Post
+                  </button>
+                  <button
+                    className={styles1.secondaryButton}
+                    onClick={() => {
+                      setRedirectUrl(getCurrentPageUrl());
+                      window.location.href = '/register';
+                    }}
+                  >
+                    <svg className={styles1.buttonIcon} viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                    Sign Up
+                  </button>
+                </>
+              ) : isAssociating ? (
+                <button className={styles1.primaryButton} disabled>
+                  <svg className={styles1.buttonIcon} viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                  </svg>
+                  Associating...
+                </button>
+              ) : (
+                <button className={styles1.primaryButton} disabled>
+                  <svg className={styles1.buttonIcon} viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                  </svg>
+                  Design belongs to another user
+                </button>
+              )}
         </div>
         
+            <Link style={{textDecoration: "none"}} href="/">
+              <button className={styles1.laterButton}>
+                <svg className={styles1.laterIcon} viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                </svg>
+                Leave for now
+              </button>
+            </Link>
+    </div>
+    </div>
+      </div>
     </div>
     </Layoutt>
-    </div>
-  )
+  );
 }
     return (
         <div className={styles1.container}>
@@ -1086,8 +1358,8 @@ if(theSavedDesign){
 type="color"
 onChange={handleColorChange} />
 
-<button onClick={handleEyeDropperClick}>
-<img src="TheStyle/color-picker.png" alt="" />
+<button className="headerActionBtn" onClick={handleEyeDropperClick}>
+<i className="fa-solid fa-eye-dropper"></i>
 <span>Eye Dropper</span>
 </button>
 
@@ -1097,55 +1369,66 @@ onChange={handleColorChange} />
 
 {selectedImage && !isCropMode && (
   <div className={styles1.imgbtns}>
-      <button
+      <button className="headerActionBtn"
           onClick={() => {
               setIsCropMode(true);
               setCropImageSrc(selectedImage.attrs.image.src);
           }}
       >
-          <img src="TheStyle/crop.png" alt="" />
+          <i className="fa-solid fa-crop"></i>
    <span>Crop</span>
 
       </button>
-      <button onClick={handleInvertImage}>
-   <img src="TheStyle/flip.png" alt="" />
+      <button className="headerActionBtn" onClick={handleInvertImage}>
+   <i className="fa-solid fa-arrows-left-right"></i>
    <span>Flip</span>
   </button>
 
-      <button onClick={handleMoveImageToTopRight} >
-      <img src="TheStyle/arrowtopright.png" alt="" />
+      <button className="headerActionBtn" onClick={handleMoveImageToTopRight} >
+      <i
+    className="fa-solid fa-arrow-up-right-from-square"
+    style={{ transform: 'rotate(0deg)' }}
+  ></i>
    <span>top right</span>
 
       </button>
 
-      <button onClick={handleMoveImageToBottomRight}>
-      <img src="TheStyle/arrowbottomright.png" alt="" />
+      <button className="headerActionBtn" onClick={handleMoveImageToBottomRight}>
+      <i
+    className="fa-solid fa-arrow-up-right-from-square"
+    style={{ transform: 'rotate(90deg)' }}
+  ></i>
    <span>bottom right</span>
 
       </button>
-    <button onClick={handleMoveImageToBottomLeft}>
-    <img src="TheStyle/arrowbotttomleft.png" alt="" />
+    <button className="headerActionBtn" onClick={handleMoveImageToBottomLeft}>
+    <i
+    className="fa-solid fa-arrow-up-right-from-square"
+    style={{ transform: 'rotate(180deg)' }}
+  ></i>
    <span>bottom left</span>
 
    </button>
 
 
         <button
+        className="headerActionBtn"
         onClick={handleIncreaseImageSize}
 
       >
-        <img src="TheStyle/expand.png" alt="" />
+        <i className="fa-solid fa-expand"></i>
         <span>Size Up</span>
       </button>
               <button
+        className="headerActionBtn"
         onClick={handleDecreaseImageSize }
 
       >
-        <img src="TheStyle/compress.png" alt="" />
+        <i className="fa-solid fa-compress"></i>
         <span>Size down</span>
         </button>
-        <button onClick={handleDeleteImage}>
-      <img src="TheStyle/delete.png" alt="" />
+        <button className="headerActionBtn" onClick={handleDeleteImage}>
+      <i style={{color : "red"}} className="fa-solid fa-trash"></i>
         <span style={{color : "red"}}>Delete</span>
         </button>
   </div>
@@ -1206,8 +1489,8 @@ onChange={handleColorChange} />
     />
     <span>font Color</span>
     </div>
-    <button onClick={handleDeleteImage}>
-      <img src="TheStyle/delete.png" alt="" />
+    <button className="headerActionBtn" onClick={handleDeleteImage}>
+      <i className="fa-solid fa-trash"></i>
       <span style={{ color: "red" }}>Delete</span>
     </button>
   </div>
@@ -1232,46 +1515,91 @@ onChange={handleColorChange} />
 
 
 
-<div className={`${style6.phoneSelectorWrapper} ${isSidebarPhoneOpen ? style6.open2 : ""}`}>
-  {[
-    {
-      brand: "iPhone",
-      models: [
-        { name: "iPhone 14", phone: Phones.iphone_14_t },
-        { name: "iPhone 14 Plus", phone: Phones.iphone_14_plus_t },
-        { name: "iPhone 14 Pro", phone: Phones.iphone_14_pro_t },
-        { name: "iPhone 14 Pro Max", phone: Phones.iphone_14_pro_max_t },
-        { name: "iPhone 15", phone: Phones.iphone_15_t },
-        { name: "iPhone 15 Plus", phone: Phones.iphone_15_plus_t },
-        { name: "iPhone 15 Pro", phone: Phones.iphone_15_pro_t },
-        { name: "iPhone 15 Pro Max", phone: Phones.iphone_15_pro_max_t },
-        { name: "iPhone 16 Pro", phone: Phones.iphone_16_pro_t },
-        { name: "iPhone 16 Pro Max", phone: Phones.iphone_16_pro_max_t },
-      ],
-    },
-  ].map((group, index) => (
-    <div key={index} className={style6.brandSection}>
-      <h3 className={style6.brandTitle}>{group.brand}</h3>
-      <div className={style6.phoneGrid}>
+<div className={`${style6.phoneSelectorWrapper} ${isSidebarPhoneOpen ? styles1.open2 : ""}`}> 
+  {/* Phone Categories Header */}
+  <div className={styles1.phoneCategoriesHeader}>
+    <h2>Phone Models</h2>
+    {/* Search Bar */}
+    <div className={styles1.searchContainer}>
+      <div className={styles1.searchInputWrapper}>
+        <i className="fa-solid fa-search"></i>
+        <input
+          type="text"
+          placeholder="Search phones..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className={styles1.searchInput}
+        />
+        {searchQuery && (
+          <button 
+            onClick={() => setSearchQuery("")}
+            className={styles1.clearSearch}
+          >
+            <i className="fa-solid fa-times"></i>
+          </button>
+        )}
+      </div>
+    </div>
+    {/* Category Tabs (if needed, for rubber models you can keep just one tab or add more if you have more brands) */}
+    <div className={styles1.categoryTabs}>
+      <button className={`${styles1.categoryTab} ${selectedCategory === "iPhone" ? styles1.active : ""}`}
+        onClick={() => handleCategoryChange("iPhone")}
+      >
+        iPhone
+        <span className={styles1.categoryCount}>{filteredPhones.reduce((total, group) => total + group.models.length, 0)}</span>
+      </button>
+      
+      <div className={styles1.rubberDesignerSection}>
+        <div className={styles1.rubberDesignerContent}>
+            <div className={styles1.rubberDesignerIcon}>
+                <i className="fa-solid fa-eye"></i>
+            </div>
+            <div className={styles1.rubberDesignerText}>
+                <h3>Clear Case Designer</h3>
+                <p>Switch to our specialized clear case creator for transparent, elegant protection</p>
+            </div>
+            <Link href="/newdesign" className={styles1.rubberDesignerBtn}>
+                <span>Open Clear Designer</span>
+                <i className="fa-solid fa-external-link-alt"></i>
+            </Link>
+        </div>
+    </div>
+
+
+
+    
+    </div>
+    
+  </div>
+
+  {/* Brand Sections */}
+  {filteredPhones.map((group, index) => (
+    <div key={index} className={styles1.brandSection}>
+      <h3 className={styles1.brandTitle} onClick={() => toggleBrand(group.brand)}>
+        {group.brand}
+        <i className={`fa-solid fa-chevron-${openBrand === group.brand ? 'up' : 'down'}`}></i>
+      </h3>
+      <div className={`${styles1.phoneGrid} ${openBrand === group.brand ? styles1.open : ""}`}>
         {group.models.map((item, idx) => (
           <button
             key={idx}
-            className={`${style6.phoneButton} ${
-              currentPhone === item.phone ? style6.selected : ""
-            }`}
+            className={`${styles1.phoneButton} ${currentPhone === item.phone ? styles1.selected : ""}`}
             onClick={() => {
               handlebackground(item.phone);
               setIsSidebarPhoneOpen(false);
             }}
           >
-            {item.name}
+            <div className={styles1.phoneButtonContent}>
+              <span className={styles1.phoneName}>{item.name}</span>
+              <div className={styles1.phonePreview}>
+                <img src={item.phone.url} alt={item.name} />
+              </div>
+            </div>
           </button>
         ))}
       </div>
     </div>
   ))}
-
-
 </div>
 
 
@@ -1292,6 +1620,7 @@ onChange={handleColorChange} />
 <i  className="fa-solid fa-mobile-screen"></i>
 
       </button>
+      
       <button className={styles1.togglephone} onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
       <i  className="fa-solid fa-face-smile"></i>
     
@@ -1536,27 +1865,35 @@ onChange={handleColorChange} />
 
             <div className={styles1.uploadingdiv}>
 
-<input
+            <input
 type="file"
 id="file-upload"
 className={styles1.uploadfile}
 onChange={handleImageUpload}
 accept="image/*"
 />
-<label  htmlFor="file-upload" className={`${styles.btn5} `}>
+<label  htmlFor="file-upload" className={`${styles.secondaryButton} `}>
 Upload Your Image
 </label>
+
 
 <div style={{ position: "relative" }}>
 </div>
 <div className={styles1.savediv}>
-  <button
-  className={styles.Mainbtn5}
+<button
+  className={styles.primaryButton}
+  style={{
+    textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    opacity: loading ? 0.3 : 1
+  }}
   onClick={handleSendToCloudinary}
   disabled={loading}  // Disable the button while loading
 >
   {loading ? 'Uploading...' : 'Save Design'}
-</button>
+</button> 
   </div>
 
 </div>
@@ -1635,50 +1972,29 @@ Upload Your Image
  
 </div>
 
-
-<div
-      className={`${styles1.extras} ${isSidebarOpen ? styles1.open : ""}`}
-      >
+<div className={`${styles1.extras} ${isSidebarOpen ? styles1.open : ""}`}>
       {/* Stickers Section */}
-      <h2>Pick A Sticker</h2>
+      <h2><i className="fa-solid fa-sticky-note"></i> Pick A Sticker</h2>
       <div
         ref={stickersRef}
         className={styles1.extrastickers}
-        style={{
-          maxHeight: showAllStickers
-            ? `${stickersRef.current?.scrollHeight}px`
-            : "240px",
-          transition: "max-height 0.5s ease",
-          overflow: "hidden",
-        }}
       >
         {stickerList1.map((sticker, index) => (
           <img
             key={index}
             src={sticker}
             alt={`Sticker ${index + 1}`}
-            onClick={() => {handleAddSticker(sticker); setIsSidebarOpen(false)}}
-            
+            onClick={() => {handleAddSticker(sticker);setIsSidebarOpen(false)}}
+            style={{ cursor: "pointer", width: "100px", height: "100px" }}
           />
         ))}
       </div>
-      <button
-        className={styles1.showMoreBtn}
-        onClick={() => setShowAllStickers(!showAllStickers)}
-      >
-        {showAllStickers ? "Show Less" : "Show More"}
-      </button>
 
       {/* Fonts Section */}
-      <h2>Pick A Font</h2>
+      <h2><i className="fa-solid fa-font"></i> Pick A Font</h2>
       <div
         ref={fontsRef}
         className={styles1.fontname}
-        style={{
-          maxHeight: showAllFonts ? `${fontsRef.current?.scrollHeight}px` : "240px",
-          transition: "max-height 0.5s ease",
-          overflow: "hidden",
-        }}
       >
         {[
           { font: "'Arial', sans-serif", label: "ARTCASE" },
@@ -1701,21 +2017,14 @@ Upload Your Image
             onClick={() => {
               handleTextChange("fontFamily", item.font);
               handleAddText("ARTCASE", item.font);
-              setIsSidebarOpen(false)
+              setIsSidebarOpen(false);
             }}
           >
             {item.label}
           </p>
         ))}
       </div>
-      <button
-        className={styles1.showMoreBtn}
-        onClick={() => setShowAllFonts(!showAllFonts)}
-      >
-        {showAllFonts ? "Show Less" : "Show More"}
-      </button>
     </div>
-
 
 
 

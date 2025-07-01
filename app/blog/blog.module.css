@@ -2,7 +2,7 @@
     font-family: Arial, sans-serif;
     padding: 0;
     margin: 0;
-    padding: 0px 100px 100px 0px;
+    padding: 0px 0px 100px 0px;
   }
   
   .heroSection {
@@ -131,7 +131,6 @@
   .projectCard h3 {
     font-size: 1.4rem;
     margin: 20px;
-    color: var(--secondColor);
 
   }
   
@@ -256,7 +255,6 @@
   .articleCard h3 {
     font-size: 1.4rem;
     margin: 20px;
-    color: var(--secondColor);
 
   }
   
@@ -294,7 +292,7 @@
     font-size: 2.5rem;
     margin-bottom: 30px;
     font-weight: bold;
-    color: var(--secondColor);
+
 
   }
   
@@ -323,7 +321,7 @@
   .largeArticle h3 {
     font-size: 1.3rem;
     margin: 15px 0;
-    color: var(--secondColor);
+
     font-weight: 600;
 
   }
@@ -375,7 +373,7 @@
   .articleContent h4 {
     font-size: 1.1rem;
     margin: 0 0 10px;
-    color: var(--secondColor);
+
     font-weight: 600;
 
   }
@@ -417,7 +415,7 @@
     font-size: 2.2rem;
     margin-bottom: 30px;
     text-align: center;
-    color: var(--secondColor);
+
     font-weight: bold;
 
   }
@@ -449,7 +447,7 @@
   .articleCard1 h3 {
     font-size: 1.4rem;
     margin: 20px;
-    color: var(--secondColor);
+
 
   }
   
@@ -489,7 +487,7 @@
     font-size: 36px;
     font-weight: bold;
     margin-bottom: 40px;
-    color: var(--secondColor);
+ 
 
   }
   
@@ -527,7 +525,7 @@
   .cardContent h3 {
     font-size: 24px;
     margin-bottom: 10px;
-    color: var(--secondColor);
+
   }
   
   .cardContent p {
@@ -566,7 +564,6 @@
   .projectCard h3 {
     padding: 15px;
     font-size: 24px;
-    color: var(--secondColor);
 
   }
   

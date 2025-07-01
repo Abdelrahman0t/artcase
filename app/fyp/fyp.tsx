@@ -629,7 +629,7 @@ if (showAllTrendingCases) {
                     : post.design.modell}
                 </h2>
                 <p className={styles.disc}>{post.design.type}</p>
-                <p className={styles.title2}>Price: {post.design.price}$</p>
+                
                 <p className={styles.disc}>
                   By:
                   <img
@@ -639,7 +639,11 @@ if (showAllTrendingCases) {
                   />
                   {post.first_name}
                 </p>
+                <p className={styles.title2}>Price: {post.design.price}$</p>
               </div>
+              <button className={styles.btn5} onClick={() => handleAddToCart(post.design.id)}>
+                Add to cart
+              </button>
             </div>
           ))}
         </div>

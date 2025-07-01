@@ -22,7 +22,7 @@ export interface Post {
   like_count: number;
   favorite_count: number;
   is_liked: boolean;
-  is_favorite: boolean;
+  is_favorited: boolean; // Changed from is_favorite to is_favorited
   comments: Comment[];
 }
 
@@ -104,13 +104,20 @@ export const fetchPublicPosts = async (): Promise<Post[]> => {
   return response.json();
 };
 
-export const fetchMostLikedDesigns = async (): Promise<Post[]> => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts/most-liked-designs/`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch most liked designs");
+export async function fetchMostLikedDesigns() {
+  const token = localStorage.getItem('token');
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
   }
-  return response.json();
-};
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts/most-liked-designs/`, {
+    headers,
+  });
+  if (!res.ok) throw new Error('Failed to fetch most liked designs');
+  return await res.json();
+}
 
 export const fetchMostAddedToCartDesigns = async (): Promise<Post[]> => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts/most-added-to-cart-designs/`);
@@ -291,4 +298,31 @@ export const fetchComments = async (postId: number): Promise<Comment[]> => {
 
   const data = await response.json();
   return data.comments || [];
+};
+
+// Utility functions for redirect handling
+export const setRedirectUrl = (url: string) => {
+  localStorage.setItem('redirectUrl', url);
+};
+
+export const getRedirectUrl = (): string | null => {
+  return localStorage.getItem('redirectUrl');
+};
+
+export const clearRedirectUrl = () => {
+  localStorage.removeItem('redirectUrl');
+};
+
+export const getCurrentPageUrl = (): string => {
+  if (typeof window !== 'undefined') {
+    return window.location.pathname + window.location.search;
+  }
+  return '/';
 }; 
+
+
+export async function fetchTopUsersByLikes() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/top-users-by-likes/`);
+  if (!res.ok) throw new Error('Failed to fetch top users');
+  return await res.json();
+}

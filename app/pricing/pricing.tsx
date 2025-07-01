@@ -1,5 +1,5 @@
 "use client";
-import Layout from "../fyp/layout";
+import Layout from "../newui/layout"
 import styles from "./pricing.module.css";
 
 export default function Pricing() {
@@ -24,7 +24,7 @@ export default function Pricing() {
                                 "Monthly Design Challenges",
                                 "Basic Photo Filters",
                             ],
-                            price: "9.99DZ/month",
+                            price: "9.99 USD/month",
                             buttonText: "Get Started",
                             icon: "/icons/basic-icon.png",
                         },
@@ -41,7 +41,7 @@ export default function Pricing() {
                                 "Early Access to New Features",
                                 "Monthly Giveaways",
                             ],
-                            price: "19.99DZ/month",
+                            price: "19.99 USD/month",
                             buttonText: "Choose Pro",
                             icon: "/icons/pro-icon.png",
                         },
@@ -50,15 +50,13 @@ export default function Pricing() {
                             description: "Ideal for businesses or creators.",
                             features: [
                                 "Unlimited Phone Case Designs",
-     
                                 "VIP Support",
-
                                 "Lifetime Access to New Features",
                                 "Custom Branding Options",
                                 "Access to Exclusive Collaborations",
                                 "Personalized Marketing Assistance",
                             ],
-                            price: "49.99DZ/month",
+                            price: "49.99 USD/month",
                             buttonText: "Go Premium",
                             icon: "/icons/premium-icon.png",
                         },

@@ -1,0 +1,369 @@
+/* Container */
+.container {
+  min-height: 100vh;
+  background: #f8f9fa;
+  font-family: 'Roboto', 'Inter', 'Geist', 'Segoe UI', Arial, sans-serif;
+}
+
+/* Header */
+.header {
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.headerContainer {
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+  .headerContainer {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .headerContainer {
+    padding: 0 2rem;
+  }
+}
+
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 4rem;
+}
+
+/* Logo Section */
+.logoSection {
+  display: flex;
+  align-items: center;
+  margin-left: 2rem;
+}
+
+.logo {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  transition: transform 0.2s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.logoText {
+  color: #2d3436;
+  position: relative;
+}
+
+.logoText::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #007bff, #00b894);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover .logoText::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.logoHighlight {
+  color: #007bff;
+  background: linear-gradient(120deg, #007bff, #00b894);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding-left: 2px;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.headerButton {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .headerButton {
+    display: flex;
+  }
+}
+
+.headerButtonIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #2d3436;
+}
+
+.header .headerButton:hover .headerButtonIcon {
+  color: #007bff;
+}
+
+/* Main Container */
+.mainContainer {
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+@media (min-width: 640px) {
+  .mainContainer {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mainContainer {
+    padding: 2rem 2rem;
+  }
+}
+
+/* Page Header */
+.pageHeader {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.pageTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+}
+
+.pageSubtitle {
+  font-size: 1.125rem;
+  color: #475569;
+}
+
+/* Notifications Container */
+.notificationsContainer {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Notification Card */
+.notificationCard {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.notificationCard:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+.notificationCard.unread {
+  background: linear-gradient(135deg, rgba(29, 209, 161, 0.05), rgba(13, 148, 136, 0.05));
+  border-left: 4px solid #00b894;
+}
+
+.notificationCard.read {
+  opacity: 0.7;
+}
+
+/* Notification Content */
+.notificationContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.notificationText {
+  flex: 1;
+}
+
+.notificationMessage {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.notificationTime {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+/* Notification Actions */
+.notificationActions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.actionButton {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.markReadButton {
+  background: #00b894;
+  color: white;
+}
+
+.markReadButton:hover {
+  background: #009e7a;
+}
+
+.markReadButton:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+}
+
+.deleteButton {
+  background: #ef4444;
+  color: white;
+}
+
+.deleteButton:hover {
+  background: #dc2626;
+}
+
+.actionIcon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Empty State */
+.emptyState {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  border-radius: 1rem;
+  border: 1px solid #e2e8f0;
+}
+
+.emptyIcon {
+  width: 4rem;
+  height: 4rem;
+  color: #00b894;
+  margin: 0 auto 1rem;
+}
+
+.emptyTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 0.5rem;
+}
+
+.emptyText {
+  color: #64748b;
+  font-size: 1rem;
+}
+
+/* Loading State */
+.loadingState {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  border-radius: 1rem;
+  border: 1px solid #e2e8f0;
+}
+
+.loadingSpinner {
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid #e2e8f0;
+  border-top: 2px solid #00b894;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loadingText {
+  color: #64748b;
+  font-size: 1rem;
+}
+
+/* Filter Buttons */
+.filterContainer {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.filterButton {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #38cbbb;
+  background: transparent;
+  color: #38cbbb;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filterButton:hover {
+  background: #38cbbb;
+  color: white;
+}
+
+.filterButton.active {
+  background: #38cbbb;
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .pageTitle {
+    font-size: 2rem;
+  }
+  
+  .notificationContent {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .notificationActions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  .filterContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+} 

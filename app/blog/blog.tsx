@@ -1,10 +1,18 @@
-
 'use client';
 import { useState, useEffect,useRef } from 'react';
 import styles from './blog.module.css';
+import { motion } from 'framer-motion';
 
-import Layout from '../fyp/layout';
+import Layout from '../newui/layout';
 import styles1 from '../explore/explore.module.css';
+
+// Animation config for scroll-in-view
+const fadeInUp = {
+  initial: { opacity: 0, y: 40 },
+  whileInView: { opacity: 1, y: 0 },
+  transition: { duration: 0.7 }
+};
+
 const BlogPage = () => {
   const images = [
     'Leonardo_Phoenix_09_A_series_of_visually_striking_and_vibrant_1.jpg',
@@ -18,8 +26,14 @@ const BlogPage = () => {
   return (
     <Layout>
 <div className={styles.container}>
-  {/* Hero Section */}
-  <div className={styles1.sliderContainer}>
+  {/* Hero Section with scroll-in animation */}
+  <motion.div
+    className={styles1.sliderContainer}
+    initial={fadeInUp.initial}
+    whileInView={fadeInUp.whileInView}
+    transition={{ ...fadeInUp.transition, delay: 0.1 }}
+    viewport={{ once: true, amount: 0.3 }}
+  >
                 {images.map((image, index) => (
                     <div
                         key={index}
@@ -41,10 +55,16 @@ const BlogPage = () => {
                         />
                     ))}
                 </div>
-            </div>
+            </motion.div>
 
   {/* Popular Articles Section */}
-  <section className={styles.popularArticlesSection}>
+  <motion.section
+    className={styles.popularArticlesSection}
+    initial={fadeInUp.initial}
+    whileInView={fadeInUp.whileInView}
+    transition={{ ...fadeInUp.transition, delay: 0.2 }}
+    viewport={{ once: true, amount: 0.3 }}
+  >
     <h2>Popular Blog Posts</h2>
     <div className={styles.articlesLayout}>
       {/* Large Article */}
@@ -80,16 +100,22 @@ const BlogPage = () => {
           <div className={styles.articleContent}>
             <h4>How to Create Your Own Custom Phone Case with ArtCase</h4>
             <p>
-              Our easy-to-use design tool lets you personalize your phone case in minutes. Here’s how to get started with ArtCase.
+              Our easy-to-use design tool lets you personalize your phone case in minutes. Here's how to get started with ArtCase.
             </p>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </motion.section>
 
   {/* Latest Blog Posts Section */}
-  <section className={styles.lastedSection}>
+  <motion.section
+    className={styles.lastedSection}
+    initial={fadeInUp.initial}
+    whileInView={fadeInUp.whileInView}
+    transition={{ ...fadeInUp.transition, delay: 0.3 }}
+    viewport={{ once: true, amount: 0.3 }}
+  >
     <h2>Latest Blog Posts</h2>
     <div className={styles.articlesGrid}>
       <div className={styles.articleCard1}>
@@ -105,7 +131,7 @@ const BlogPage = () => {
       </div>
       <div className={styles.articleCard1}>
         <img src="TheStyle/catsanddogs.png" alt="Personalized Phone Accessories" />
-        <h3>Designing Your Dream Phone Case: ArtCase’s Customization Process</h3>
+        <h3>Designing Your Dream Phone Case: ArtCase's Customization Process</h3>
         <span>Thursday, Jan 8 2024</span>
       </div>
 
@@ -125,10 +151,16 @@ const BlogPage = () => {
         <span>Thursday, Jan 8 2024</span>
       </div>
     </div>
-  </section>
+  </motion.section>
 
   {/* Customization Projects Section */}
-  <section className={styles.projectsSection}>
+  <motion.section
+    className={styles.projectsSection}
+    initial={fadeInUp.initial}
+    whileInView={fadeInUp.whileInView}
+    transition={{ ...fadeInUp.transition, delay: 0.4 }}
+    viewport={{ once: true, amount: 0.3 }}
+  >
     <h2 className={styles.sectionTitle}>Discover ArtCase Customization Projects</h2>
     <div className={styles.projectsGrid}>
       {/* First Project Card (Large) */}
@@ -155,7 +187,7 @@ const BlogPage = () => {
         </p>
       </div>
     </div>
-  </section>
+  </motion.section>
 </div>
 
 </Layout>

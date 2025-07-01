@@ -392,6 +392,7 @@ interface LayoutProps {
 
 */}
     <div className={`${styles.hamburgerH}`}>
+      
     <button className={styles.navButton} onClick={() => {console.log("clicked");router.push('/BuyingChart')}}>
       <i className="fas fa-shopping-cart"></i>
     </button>

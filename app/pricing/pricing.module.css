@@ -1,5 +1,4 @@
 .pricingContainer {
-    max-width: 1200px;
     margin: 0 auto;
     padding: 3rem 1rem;
     text-align: center;
@@ -7,144 +6,256 @@
     flex-direction: column;
     align-items: center;
     gap: 2rem;
-    margin-left:100px;
+    background: linear-gradient(120deg, #f8f9fa 60%, #e0f7fa 100%);
+    border-radius: 32px;
+    box-shadow: 0 8px 32px rgba(56, 203, 187, 0.08);
+    max-width: 1200px;
 }
 
 .heading {
-    font-size: 3rem;
-    font-weight: bold;
-    color: #004080;
-    margin-bottom: 2rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(45deg, #2c3e50, #38cbbb, #3498db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.08);
+    display: inline-block;
+    position: relative;
+}
+
+.heading::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #38cbbb, #3498db, transparent);
+    border-radius: 2px;
+}
+
+.subheading {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 700px;
+    margin: 25px auto 0;
+    line-height: 1.8;
+    position: relative;
+    padding: 0 20px;
+    background: none;
+    border: none;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-align: center;
 }
 
 .cardsContainer {
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 2.5rem;
     justify-content: center;
     padding: 0 1rem;
 }
 
 .card {
-    background-color: #ffffff;
-    border: 1px solid #dcdcdc;
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    padding:  2rem;
-    flex: 1 1 calc(33.333% - 2rem); /* Three cards per row */
-    max-width: calc(33.333% - 2rem); /* Prevent cards from expanding beyond a row */
+    background: linear-gradient(145deg, #ffffff, #f5f7fa);
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0, 139, 186, 0.10);
+    border: 1px solid rgba(56, 203, 187, 0.13);
+    padding: 2.5rem 2rem 2rem 2rem;
+    flex: 1 1 320px;
+    max-width: 340px;
+    min-width: 280px;
     text-align: center;
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: space-between;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    transition: box-shadow 0.3s, transform 0.3s;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(56, 203, 187, 0.08), rgba(0, 139, 186, 0.04));
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.4s;
 }
 
 .card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 20px 40px rgba(56, 203, 187, 0.18);
+}
+
+.card:hover::before {
+    opacity: 1;
 }
 
 .icon {
     width: 70px;
     height: 70px;
-    background: url('/icons/chick-icon.png') no-repeat center center;
+    background: var(--icon-bg, url('/icons/basic-icon.png')) no-repeat center center;
     background-size: contain;
-    margin: 0 auto 1rem;
+    margin: 0 auto 1.2rem;
+    z-index: 2;
 }
 
 .title {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #005b96;
-    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(45deg, #38cbbb, #008bba);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    z-index: 2;
 }
 
 .description {
     font-size: 1.1rem;
-    color: #6b6b6b;
-    margin-bottom: 1.5rem;
+    color: #4a5568;
+    margin-bottom: 1.2rem;
+    opacity: 0.85;
+    z-index: 2;
 }
 
 .features {
     list-style: none;
     padding: 0;
-    margin: 1.5rem 0;
+    margin: 1.5rem 0 1.2rem 0;
     text-align: left;
+    z-index: 2;
 }
 
 .features li {
-    font-size: 1.1rem;
-    color: #005b96;
+    font-size: 1.08rem;
+    color: #008bba;
     margin: 0.5rem 0;
-    padding-left: 1.5rem;
+    padding-left: 1.7rem;
     position: relative;
+    font-weight: 500;
+    opacity: 0.95;
 }
 
 .features li::before {
-    content: "\2713"; /* Checkmark symbol */
-    color: #0072ce;
+    content: "\2713";
+    color: #38cbbb;
     position: absolute;
     left: 0;
+    font-size: 1.1rem;
+    font-weight: bold;
 }
 
 .price {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #004080;
-    margin: 1.5rem 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #38cbbb;
+    background: rgba(56, 203, 187, 0.08);
+    border-radius: 20px;
+    padding: 8px 18px;
+    margin: 1.2rem 0 1.5rem 0;
+    display: inline-block;
+    box-shadow: 0 2px 8px rgba(56, 203, 187, 0.07);
+    z-index: 2;
 }
 
 .button {
-    background-color: #0072ce;
-    color: #ffffff;
-    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(120deg, #007bff, #00b894);
+    color: white;
     border-radius: 8px;
-    padding: 0.8rem 1.5rem;
-    font-size: 1.2rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 123, 255, 0.13);
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 2;
+}
+
+.button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+    transition: 0.5s;
+    z-index: 1;
+}
+
+.button:hover::before {
+    left: 100%;
 }
 
 .button:hover {
-    background-color: #005b96;
-    transform: scale(1.05);
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 8px 20px rgba(56, 203, 187, 0.18);
 }
 
-
-.subheading {
-    font-size: 1rem;
-    font-weight: 500;
-    color: #005b96;
-    margin-bottom: 1.5rem;
-    letter-spacing: 1px;
-    text-transform: capitalize;
-    text-align: center;
-    border-bottom: 2px solid #0072ce;
-    display: inline-block;
-    padding-bottom: 0.5rem;
+@media (max-width: 1200px) {
+    .pricingContainer {
+        max-width: 100%;
+        padding: 2rem 0.5rem;
+    }
+    .card {
+        max-width: 320px;
+        min-width: 220px;
+        padding: 2rem 1rem 1.5rem 1rem;
+    }
 }
 
 @media (max-width: 992px) {
-    .pricingContainer{
-        margin-top: 300px;
-        margin-left: 0px;
+    .pricingContainer {
+        margin-top: 120px;
+        margin-left: 0;
+        padding: 1.5rem 0.2rem;
+    }
+    .cardsContainer {
+        gap: 1.5rem;
     }
     .card {
-        flex: 1 1 calc(50% - 2rem); /* Two cards per row for medium screens */
-        max-width: calc(50% - 2rem);
+        flex: 1 1 260px;
+        max-width: 260px;
+        min-width: 180px;
+        padding: 1.5rem 0.5rem 1rem 0.5rem;
     }
 }
 
 @media (max-width: 768px) {
-    .pricingContainer{
-        margin-left: 0px;
+    .pricingContainer {
+        margin-left: 0;
+        padding: 1rem 0.1rem;
+        border-radius: 18px;
+    }
+    .cardsContainer {
+        flex-direction: column;
+        gap: 1.2rem;
+        align-items: center;
     }
     .card {
-        flex: 1 1 100%; /* Single card per row for small screens */
-        max-width: 100%;
+        flex: 1 1 100%;
+        max-width: 98vw;
+        min-width: 0;
+        padding: 1.2rem 0.5rem 1rem 0.5rem;
     }
 }
 

@@ -1,0 +1,250 @@
+/* CategoryCard styles */
+
+
+.catagoryContainer{
+
+
+  padding: 0 5rem;
+  position: relative;
+  z-index: 1;
+}
+.categoryCard {
+  overflow: hidden;
+  border: 0;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease-in-out;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.categoryCard:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.imageContainer {
+  position: relative;
+  height: 12rem; /* h-48 */
+  overflow: hidden;
+}
+
+.gradientOverlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0.9;
+}
+
+.iconContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  font-size: 3.75rem; /* text-6xl */
+  transition: transform 0.3s ease-in-out;
+}
+
+.categoryCard:hover .icon {
+  transform: scale(1.1);
+}
+
+.badgeContainer {
+  position: absolute;
+  top: 1rem; /* top-4 */
+  right: 1rem; /* right-4 */
+}
+
+.badge {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #4A5568; /* text-gray-700 */
+  font-size: 0.75rem; /* text-xs */
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.cardContent {
+  padding: 1rem; /* p-4 */
+  text-align: center;
+}
+
+.cardTitle {
+  font-weight: 700; /* font-bold */
+  color: #1a202c; /* text-gray-900 */
+  margin-bottom: 0.5rem; /* mb-2 */
+  font-size: 1.125rem; /* text-lg */
+}
+
+.cardDescription {
+  font-size: 0.875rem; /* text-sm */
+  color: #718096; /* text-gray-600 */
+}
+
+/* CategorySlideCard styles */
+.slideCard {
+  flex-shrink: 0;
+  width: 20rem; /* w-80 */
+  overflow: hidden;
+  border: 0;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+  transition: all 0.3s ease-in-out;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.slideCard:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); /* shadow-xl */
+}
+
+.slideImageContainer {
+  position: relative;
+  height: 16rem; /* h-64 */
+  overflow: hidden;
+}
+
+.slideImage {
+  object-fit: cover;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slideCard:hover .slideImage {
+  transform: scale(1.05);
+}
+
+.slideGradientOverlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.7;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.slideCard:hover .slideGradientOverlay {
+  opacity: 0.6;
+}
+
+.slideBadgeContainer {
+  position: absolute;
+  top: 1.5rem; /* top-6 */
+  right: 1.5rem; /* right-6 */
+}
+
+.slideBadge {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #2D3748; /* text-gray-800 */
+  font-weight: 500;
+  padding: 0.25rem 0.75rem; /* px-3 py-1 */
+  border-radius: 0.25rem;
+}
+
+.slideInfoContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem; /* p-6 */
+  background-image: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+}
+
+.slideTitle {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.5rem; /* text-2xl */
+  margin-bottom: 0.5rem; /* mb-2 */
+  transition: color 0.3s ease-in-out;
+}
+
+
+
+.slideDescription {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.875rem; /* text-sm */
+  line-height: 1.625; /* leading-relaxed */
+}
+
+.slideHoverOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(56, 178, 172, 0.2); /* bg-teal-500/20 */
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slideCard:hover .slideHoverOverlay {
+  opacity: 1;
+}
+
+.slideButton {
+  color: #fff;
+  font-weight: 500;
+  transform: translateY(1rem); /* translate-y-4 */
+  transition: transform 0.3s ease-in-out;
+  background-color: #4ECDC4;
+  padding: 0.75rem 1.5rem; 
+  border-radius: 0.5rem;
+  border: none;
+}
+
+.slideCard:hover .slideButton {
+  transform: translateY(0);
+}
+
+/* Animated Slider Styles */
+.sliderContainer {
+  overflow-x: auto;
+  padding: 2rem 0;
+  position: relative;
+  width: 100%;
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.sliderContainer::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
+.sliderTrack {
+  display: flex;
+  gap: 1.5rem; /* gap between cards */
+  padding: 1rem 0;
+  animation: scrollAnimation 20s linear infinite;
+}
+
+.sliderContainer:hover .sliderTrack {
+  animation-play-state: paused;
+}
+
+@keyframes scrollAnimation {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+} 
+
+
+
+@media (max-width: 900px) {
+
+  .slideCard {
+   width: 18rem;
+  }
+
+}
+
+@media (max-width: 778px) {
+
+  .slideCard {
+    width: 14rem;
+   }
+}

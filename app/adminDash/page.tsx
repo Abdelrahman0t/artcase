@@ -73,6 +73,7 @@ interface Report {
     content?: string;
     created_at: string;
     user: string;
+    user_id: number;  // Ensure this is required for comments
     profile_pic?: string;
     image_url?: string;
     post_id?: number;
@@ -80,6 +81,7 @@ interface Report {
     post_description?: string;
     post_image_url?: string;
     post_user?: string;
+    post_user_id?: number;  // Add post user ID
     post_created_at?: string;
     design__modell?: string;
     design__type?: string;
@@ -565,14 +567,22 @@ export default function AdminDashboard() {
   const fetchPhoneProducts = async (token: string) => {
     try {
       console.log('Fetching phone products...');
+      console.log('API URL:', `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/phone-products/`);
+      console.log('Token:', token ? 'Present' : 'Missing');
+      
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/phone-products/`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
 
+      console.log('Response status:', response.status);
+      console.log('Response ok:', response.ok);
+
       if (!response.ok) {
-        throw new Error('Failed to fetch phone products');
+        const errorText = await response.text();
+        console.error('Error response:', errorText);
+        throw new Error(`Failed to fetch phone products: ${response.status} ${errorText}`);
       }
 
       const data = await response.json();
@@ -1005,6 +1015,8 @@ export default function AdminDashboard() {
       // Update post with engagement metrics and ensure design data exists
       const postWithMetrics = {
         ...post,
+        user__id: postDetails.user_id,
+        user__username: postDetails.user,
         like_count: postDetails.like_count || 0,
         comment_count: postDetails.comment_count || 0,
         favorite_count: postDetails.favorite_count || 0,
@@ -1070,6 +1082,10 @@ export default function AdminDashboard() {
       // Update post with engagement metrics and ensure design data exists
       const postWithMetrics = {
         ...post,
+
+        user_username: postDetails.user_username,
+
+        user__id: postDetails.user_id,
         like_count: postDetails.like_count || 0,
         comment_count: postDetails.comment_count || 0,
         favorite_count: postDetails.favorite_count || 0,
@@ -1465,13 +1481,26 @@ export default function AdminDashboard() {
               </div>
               <div className={styles.usersModalRight}>
                 <p className={styles.usersModalEmail}>Email : {user.email}</p>
-                <span className={`${styles.usersModalStatus} ${
-                  user.status === 'active' ? styles.usersPageStatusActive :
-                  user.status === 'suspended' ? styles.usersPageStatusSuspended :
-                  styles.usersPageStatusBanned
-                }`}>
-                  {(user.status || 'active').charAt(0).toUpperCase() + (user.status || 'active').slice(1)}
-                </span>
+                {user.username !== 'admin' && (
+  <select
+    className={`${styles.usersModalStatus} ${
+      user.status === 'active' ? styles.usersPageStatusActive :
+      user.status === 'suspended' ? styles.usersPageStatusSuspended :
+      styles.usersPageStatusBanned
+    }`}
+    value={user.status}
+    onChange={(e) => {
+      setSelectedUser(user);
+      setSelectedStatus(e.target.value as User['status']);
+      setShowConfirmModal(true);
+    }}
+  >
+    <option value="active">Active</option>
+    <option value="suspended">Suspended</option>
+    <option value="banned">Banned</option>
+  </select>
+)}
+
               </div>
             </div>
 
@@ -1982,40 +2011,7 @@ export default function AdminDashboard() {
 
                   {expandedChart === 'design-class' && (
                     <div className={styles.chartContent}>
-                      <div className={styles.dateFilter}>
-                        <span className={styles.dateRangeLabel}>Filter by date range:</span>
-                        <input
-                          type="date"
-                          value={dateRange.start}
-                          onChange={(e) => setDateRange(prev => ({ ...prev, start: e.target.value }))}
-                          max={dateRange.end || undefined}
-                          placeholder="Start Date"
-                        />
-                        <input
-                          type="date"
-                          value={dateRange.end}
-                          onChange={(e) => setDateRange(prev => ({ ...prev, end: e.target.value }))}
-                          min={dateRange.start || undefined}
-                          placeholder="End Date"
-                        />
-                        <div className={styles.filterButtons}>
-                          <button 
-                            className={`${styles.button} ${styles.applyButton}`}
-                            onClick={handleDateRangeChange}
-                          >
-                            Apply Filter
-                          </button>
-                          <button 
-                            className={`${styles.button} ${styles.clearButton}`}
-                            onClick={() => {
-                              setDateRange({ start: '', end: '' });
-                              handleDateRangeChange();
-                            }}
-                          >
-                            Clear Filters
-                          </button>
-                        </div>
-                      </div>
+
                     </div>
                   )}
 
@@ -2505,7 +2501,24 @@ export default function AdminDashboard() {
                             alt={post.user__username}
                             className={styles.usersPageAvatar}
                           />
-                          <p>{post.user__username}</p>
+                                          <p onClick={async () => {
+                  const token = localStorage.getItem('token');
+                  if (token) {
+                    try {
+                      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/${post.user__id}/`, {
+                        headers: {
+                          'Authorization': `Bearer ${token}`
+                        }
+                      });
+                      if (response.ok) {
+                        const userData = await response.json();
+                        handleUserClick(userData);
+                      }
+                    } catch (error) {
+                      console.error('Error fetching user data:', error);
+                    }
+                  }
+                }} style={{cursor: 'pointer'}}>{post.user__username}</p>
                         </div>
                         <div className={styles.postMeta}>
                           <div className={styles.postStats}>
@@ -2813,7 +2826,7 @@ export default function AdminDashboard() {
       )}
 
       {selectedPost && (
-        <div className={styles.modalOverlay} onClick={() => setSelectedPost(null)}>
+        <div className={`${styles.modalOverlay} ${styles.neededIndex}`} onClick={() => setSelectedPost(null)}>
           <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
             <button className={styles.closeButton} onClick={() => setSelectedPost(null)}>×</button>
             <div className={`${styles.selectedPostContent} ${selectedPost.design__type === 'customed rubber case' ? styles.wideImagePostContent : ''}`}>
@@ -2838,8 +2851,8 @@ export default function AdminDashboard() {
                 <div className={styles.postInfo}>
                   <div className={styles.postHeader}>
                     <h3>{selectedPost.caption}</h3>
-                    <button
-                      onClick={() => handleDeletePost(selectedPost.id)}
+                    <button 
+                      onClick={() => {if(window.confirm('Are you sure you want to delete this post? This action cannot be undone.')){handleDeletePost(selectedPost.id)}}}
                       className={`${styles.deleteButton} ${styles.deletePostButton}`}
                       title="Delete post"
                     >
@@ -2849,7 +2862,24 @@ export default function AdminDashboard() {
                   <div className={styles.postMeta}>
                     <p className={styles.posterName}>
                       <i className="fas fa-user"></i>
-                      <span>@{selectedPost.user__username}</span>
+                      <span onClick={async () => {
+                        const token = localStorage.getItem('token');
+                        if (token) {
+                          try {
+                            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/${selectedPost.user__id}/`, {
+                              headers: {
+                                'Authorization': `Bearer ${token}`
+                              }
+                            });
+                            if (response.ok) {
+                              const userData = await response.json();
+                              handleUserClick(userData);
+                            }
+                          } catch (error) {
+                            console.error('Error fetching user data:', error);
+                          }
+                        }
+                      }} style={{cursor: 'pointer'}}>@{selectedPost.user__username}</span>
                     </p>
                     <p className={styles.postDate}>
                       <i className="fas fa-clock"></i>
@@ -2981,7 +3011,7 @@ export default function AdminDashboard() {
                   <div className={styles.postMeta}>
                     <p className={styles.posterName}>
                       <i className="fas fa-user"></i>
-                      <span>@{selectedPost2.user.username}</span>
+                      <span>@{selectedPost2.user}</span>
                     </p>
                     <p className={styles.postDate}>
                       <i className="fas fa-clock"></i>
@@ -3193,9 +3223,26 @@ export default function AdminDashboard() {
                                       </div>
                                     </div>
                                     <div className={styles.reportPostMeta}>
-                                      <span className={styles.reportPosterName}>
+                                      <span className={styles.reportPosterName}  onClick={async () => {
+                                                          const token = localStorage.getItem('token');
+                                                          if (token) {
+                                                            try {
+                                                              const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/${selectedReport.content_details?.user_id}/`, {
+                                                                headers: {
+                                                                  'Authorization': `Bearer ${token}`
+                                                                }
+                                                              });
+                                                              if (response.ok) {
+                                                                const userData = await response.json();
+                                                                handleUserClick(userData);
+                                                              }
+                                                            } catch (error) {
+                                                              console.error('Error fetching user data:', error);
+                                                            }
+                                                          }
+                                                        }} style={{cursor: 'pointer'}}>
                                         <i className="fas fa-user"></i>
-                                        <span>{selectedReport.content_details.user}</span>
+                                        <span >{selectedReport.content_details.user}</span>
                                       </span>
                                       <span className={styles.reportPostDate}>
                                         <i className="fas fa-clock"></i>

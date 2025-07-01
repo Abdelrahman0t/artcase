@@ -1,43 +1,38 @@
 // app/category/[category]/page.tsx
 'use client';
-import styles from '../../fyp/fyp.module.css';
-import styles0 from './category.module.css';
-import Link from 'next/link'
-import Layout from '../../ordernow/layout' ;
+import styles from '../../newexplore/newexplore.module.css';
+import styles1 from '../../newui/newui.module.css';
+import Link from 'next/link';
+import Layout from '../../newui/layout';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FiHeart, FiBookmark, FiEye, FiShoppingCart, FiArrowRight, FiPenTool } from 'react-icons/fi';
+import { FaHeart, FaRegHeart, FaBookmark, FaRegBookmark, FaComment, FaShoppingCart, FaMobile, FaTag, FaTrash, FaCalendarAlt, FaDollarSign, FaUpload, FaMobileAlt, FaEye, FaLock, FaShare, FaPlane, FaUndo, FaMapMarkerAlt, FaEnvelope, FaInstagram, FaTiktok, FaPinterest } from 'react-icons/fa';
 import {
   fetchPublicPosts,
-  fetchMostLikedDesigns,
-  fetchMostAddedToCartDesigns,
-  fetchRecentPosts,
   handleLike,
   handleFavorite,
   handleCommentSubmit,
   handleDeleteComment,
   addToCart,
-  fetchLeaderboardData,
   fetchComments,
-  Post,
+  Post as ApiPost,
   Comment,
-  LeaderboardData,
-  LeaderboardUser
 } from '../../utils/apiUtils';
-
-import { useEffect, useState ,useRef} from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { useRouter, useParams } from 'next/navigation';
 
 const decodeJwt = (token: string) => {
-    const base64Url = token.split(".")[1];  // Get the payload part of the JWT (middle part)
-    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");  // Fix the URL-safe base64 encoding
+  const base64Url = token.split(".")[1];
+  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
     const jsonPayload = decodeURIComponent(
       atob(base64)
         .split("")
-        .map((c) =>
-          "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)
-        )
+      .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
         .join("")
     );
-
-    return JSON.parse(jsonPayload);  // Parse and return the decoded payload
+  return JSON.parse(jsonPayload);
   };
+
 interface Design {
   theclass: string;
   image_url: string;
@@ -48,144 +43,101 @@ interface Design {
   type: string;
 }
 
-interface Post {
-  id: number;
-  caption: string;
-  description: string;
-  design: Design;
-  first_name: string;
-  profile_pic: string;
-  user_id: string;
-  created_at: string;
-  is_liked: boolean;
-  is_favorite: boolean;
-  like_count: number;
-  favorite_count: number;
-  comments?: Array<{
+interface Post extends ApiPost {
+  hashtag_names?: string[];
+  comment_count?: number;
+  user_details?: {
     id: number;
-    content: string;
-    user_id: string;
+    username: string;
+    email: string;
     first_name: string;
+    last_name: string;
     profile_pic: string;
-  }>;
-}
-
-interface CategoryPageProps {
-  params: {
-    category: string;
+    status: string;
+    is_staff: boolean;
+    date_joined: string;
+    last_login: string;
+  };
+  user?: {
+    id: number;
+    username: string;
+    profile_pic: string;
   };
 }
 
-const CategoryPage = ({ params }: CategoryPageProps) => {
-  const category = decodeURIComponent(params.category);
+interface ExtendedComment extends Comment {
+  username: string;
+}
+
+const CategoryPage = () => {
+  const params = useParams();
+  const category = params.category as string;
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  const slidersRef = useRef<(HTMLDivElement | null)[]>([]);
-
-      const [currentIndex, setCurrentIndex] = useState(0);
-      const [recentPosts, setRecentPosts] = useState([]);
-
-
-        const [selectedPost, setSelectedPost] = useState<any | null>(null); // Track the selected post
-        const [historyStack, setHistoryStack] = useState([]);
-          const isFirstRender = useRef(true);
-          const topRef = useRef<HTMLDivElement | null>(null);
-          const [commentsVisible, setCommentsVisible] = useState(false);
-          const [commentContent, setCommentContent] = useState<string>("");
-        const [isFavorite, setIsFavorite] = useState(false);
-          const [loggedInUsername, setLoggedInUsername] = useState<string | null>(null);
-    const [mostLiked, setMostLiked] = useState(false);
-    const [mostAddedToCart, setMostAddedToCart] = useState(false);
-    const [reportReason, setReportReason] = useState('');
-    const [showReportModal, setShowReportModal] = useState(false);
-    const [reportingType, setReportingType] = useState<'post' | 'comment' | null>(null);
-    const [reportingId, setReportingId] = useState<number | null>(null);
-
-
-    const [mostLikedPosts, setMostLikedPosts] = useState<Post[]>([]);
-    const [mostAddedToCartPosts, setMostAddedToCartPosts] = useState<Post[]>([]);
-
-
-    const handleReport = async (type: 'post' | 'comment', id: number) => {
-      setReportingType(type);
-      setReportingId(id);
-      setShowReportModal(true);
-    };
-  
-    const handleReportSubmit = async () => {
-      if (!reportReason || !reportingType || !reportingId) return;
-  
-      try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          alert('Please log in to submit a report');
-          return;
-        }
-  
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/reports/`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({
-            content_id: reportingId,
-            content_type: reportingType,
-            reason: reportReason,
-          }),
-        });
-  
-        if (response.ok) {
-          alert('Report submitted successfully');
-          setShowReportModal(false);
-          setReportReason('');
-          setReportingType(null);
-          setReportingId(null);
-        } else {
-          const errorData = await response.json();
-          alert(errorData.error || 'Failed to submit report');
-        }
-      } catch (error) {
-        console.error('Error submitting report:', error);
-        alert('Error submitting report');
-      }
-    };
-          const [leaderboardData, setLeaderboardData] = useState({
-              likesData: [],
-              postsData: [],
-            });
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+  const [isLiked, setIsLiked] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+  const [showAllPosts, setShowAllPosts] = useState(false);
+  const visiblePosts = 12;
+  const router = useRouter();
+  const [currentUserId, setCurrentUserId] = useState<number | null>(null);
   useEffect(() => {
-    const token = localStorage.getItem("token"); // Retrieve the token from localStorage
-
-    console.log("Token in localStorage:", token); // Log to see if token exists in localStorage
-
+    const token = localStorage.getItem('token');
     if (token) {
-      try {
-        const decodedToken = decodeJwt(token); // Decode the JWT manually
-        console.log("Decoded Token:", decodedToken); // Log the decoded token structure
-
-        // Set the loggedInUsername to the `user_id` from the token
-        setLoggedInUsername(decodedToken.user_id.toString()); // You can use .toString() to make sure it's a string
-      } catch (error) {
-        console.error("Error decoding token", error); // Log any decoding errors
-      }
-    } else {
-      console.log("No token found in localStorage"); // Log if no token is found
+      fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/profile/`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      })
+        .then(res => res.json())
+        .then(data => setCurrentUserId(data.id))
+        .catch(() => setCurrentUserId(null));
     }
-  }, []); // Runs once when the component mounts
+  }, []);
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/public-posts/`);
-        const data: Post[] = await res.json();
+        setLoading(true);
+        const token = localStorage.getItem('token');
+        const headers: Record<string, string> = {
+          'Content-Type': 'application/json',
+        };
+        
+        if (token) {
+          headers['Authorization'] = `Bearer ${token}`;
+        }
 
-        // ✅ Correct filtering based on nested design.theclass
-        const filtered = data.filter((post) => post.design?.theclass === category);
-        setPosts(filtered);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/public-posts/?as_user=${token ? JSON.parse(atob(token.split('.')[1])).user_id : ''}`, {
+          headers,
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch posts');
+        }
+
+        const data = await response.json();
+        
+        // Decode the category name from URL
+        const decodedCategory = decodeURIComponent(category);
+        
+        // Filter by hashtags (case-insensitive, partial match)
+        const filteredPosts = data.filter((post: Post) => {
+          if (!post.hashtag_names || post.hashtag_names.length === 0) return false;
+          const searchCategory = decodedCategory.toLowerCase();
+          return post.hashtag_names.some((tag: string) =>
+            tag.toLowerCase() === searchCategory ||
+            tag.toLowerCase().includes(searchCategory) ||
+            searchCategory.includes(tag.toLowerCase())
+          );
+        });
+        
+        console.log('Category:', decodedCategory);
+        console.log('Total posts:', data.length);
+        console.log('Filtered posts:', filteredPosts.length);
+        console.log('Available categories:', [...new Set(data.map((post: Post) => post.design.theclass))]);
+        
+        setPosts(filteredPosts);
       } catch (err) {
-        setError('Failed to fetch posts.');
+        setError(err instanceof Error ? err.message : 'An error occurred');
       } finally {
         setLoading(false);
       }
@@ -194,662 +146,643 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
     fetchPosts();
   }, [category]);
 
-
-
-
-    const addToCart = async (designId : any) => {
-    
-    const token = localStorage.getItem('token')
-
-    if (!token) {
-      alert('You must be logged');
-      window.location.href = '/login'; // or '/auth/login' if that's your route
-      return;
-    }
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/cart/add/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        "Authorization": `Bearer ${localStorage.getItem("token")}`,
-
-      },
-      body: JSON.stringify({ design_id: designId }),
-    });
-
-
-
-    if (response.ok) {
-      alert('Item added to cart!');
-    } else {
-      const data = await response.json();
-      alert(data.error);
-    }
+  const handlePostClick = async (post: Post) => {
+    setSelectedPost(post);
+    setIsLiked(post.is_liked);
+    setIsSaved(post.is_favorited);
   };
 
-
-
-
-
-  const scrollSlider = (direction, index) => {
-    const slider = slidersRef.current[index];
-    if (slider) {
-      const scrollAmount = slider.clientWidth; // Scroll by the width of the visible area
-      const currentScroll = slider.scrollLeft;
-
-      if (direction === 'left') {
-        slider.scrollTo({
-          left: currentScroll - scrollAmount,
-          behavior: 'smooth',
-        });
-      } else if (direction === 'right') {
-        slider.scrollTo({
-          left: currentScroll + scrollAmount + 10,
-          behavior: 'smooth',
-        });
-      }
-    }
+  const handleCloseModal = () => {
+    setSelectedPost(null);
   };
-
-  const handleBack = () => {
-    if (historyStack.length > 0) {
-      // Navigate back to the last post in the history stack
-      const previousPost = historyStack[historyStack.length - 1];
-      setHistoryStack((prevStack) => prevStack.slice(0, -1)); // Remove the last post
-      setSelectedPost(previousPost);
-      console.log("Navigated back, current post:", previousPost);
-    } else {
-      setSelectedPost(null); // If no history, go to homepage
-      console.log("Navigated back to homepage");
-    }
-    isFirstRender.current = true; // Reset isFirstRender to true
-    
-  };
-
 
   const handleLike = async (postId: number) => {
-    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    const token = localStorage.getItem('token');
     if (!token) {
-      alert('You must be logged');
-      window.location.href = '/login'; // or '/auth/login' if that's your route
+      alert('Please log in to like posts');
       return;
     }
+
+    try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts/${postId}/like/`, {
-      method: "POST",
+        method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`,
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
       },
     });
   
-    let data = {};
-    try {
-      if (response.status !== 204 && response.status !== 404) {
-        data = await response.json();
+      if (response.ok) {
+        const data = await response.json();
+
+        // Update posts list
+        setPosts(prev =>
+          prev.map(post =>
+            post.id === postId
+              ? {
+                  ...post,
+                  like_count: data.like_count,
+                  is_liked: data.is_liked,
+                }
+              : post
+          )
+        );
+
+        // Update selected post if it's the one being liked
+        if (selectedPost && selectedPost.id === postId) {
+          setSelectedPost(prev =>
+            prev
+              ? {
+                  ...prev,
+                  like_count: data.like_count,
+                  is_liked: data.is_liked,
+                }
+              : null
+          );
+          setIsLiked(data.is_liked);
+        }
+      } else {
+        const errorData = await response.json();
+        console.error('Failed to like post:', errorData);
       }
     } catch (error) {
-      console.error("Failed to parse response as JSON:", error);
-    }
-  
-    if (response.ok) {
-      const newLikeState = data.message === "Like added." ? true : false;
-      localStorage.setItem(`like_${postId}`, JSON.stringify(newLikeState)); // Persist state
-      setSelectedPost((prevPost) => ({
-        ...prevPost,
-        like_count: data.message === "Like added." ? prevPost.like_count + 1 : prevPost.like_count - 1,
-        is_liked: newLikeState,
-      }));
-    } else {
-      console.error("Error toggling like:", data);
+      console.error('Error liking post:', error);
     }
   };
   
   const handleFavorite = async (postId: number) => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('token');
     if (!token) {
-      alert('You must be logged');
-      window.location.href = '/login'; // or '/auth/login' if that's your route
+      alert('Please log in to favorite posts');
       return;
     }
+
+    try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts/${postId}/favorite/`, {
-      method: "POST",
+        method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`,
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
       },
     });
   
-    let data = {};
-    try {
-      if (response.status !== 204 && response.status !== 404) {
-        data = await response.json();
-      
+      if (response.ok) {
+        const data = await response.json();
+
+        // Update posts list
+        setPosts(prev =>
+          prev.map(post =>
+            post.id === postId
+              ? {
+                  ...post,
+                  favorite_count: data.favorite_count,
+                  is_favorited: data.is_favorited,
+                }
+              : post
+          )
+        );
+
+        // Update selected post if it's the one being favorited
+        if (selectedPost && selectedPost.id === postId) {
+          setSelectedPost(prev =>
+            prev
+              ? {
+                  ...prev,
+                  favorite_count: data.favorite_count,
+                  is_favorited: data.is_favorited,
+                }
+              : null
+          );
+          setIsSaved(data.is_favorited);
+        }
+      } else {
+        const errorData = await response.json();
+        console.error('Failed to favorite post:', errorData);
       }
     } catch (error) {
-      console.error("Failed to parse response as JSON:", error);
-    }
-  
-    if (response.ok) {
-      setIsFavorite((prevState) => !prevState);
-      const newFavoriteState = data.message === "Favorite added." ? true : false;
-      localStorage.setItem(`favorite_${postId}`, JSON.stringify(newFavoriteState)); // Persist state
-      setSelectedPost((prevPost) => ({
-        ...prevPost,
-        favorite_count: data.message === "Favorite added." ? prevPost.favorite_count + 1 : prevPost.favorite_count - 1,
-        is_favorite: newFavoriteState,
-      }));
-    } else {
-      console.error("Error toggling favorite:", data);
+      console.error('Error favoriting post:', error);
     }
   };
-  
 
-  const handleCommentSubmitClick = async (postId: number) => {
-    try {
-const response = await handleCommentSubmit(postId, commentContent);
-
-setSelectedPost(prev => {
-if (!prev) return null;
-return {
-  ...prev,
-  comments: [...(prev.comments || []), response.comment]
-};
-});
-
-setPosts(prev => prev.map(post => 
-post.id === postId
-  ? { ...post, comments: [...(post.comments || []), response.comment] }
-  : post
-));
-
-setCommentContent("");
-setCommentsVisible(true);
-    } catch (error) {
-console.error("Error adding comment:", error);
+  const handleComment = async (e: React.FormEvent<HTMLFormElement>, postId: number) => {
+    e.preventDefault();
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('Please log in to comment');
+      return;
     }
-};
 
+    const formData = new FormData(e.currentTarget);
+    const content = formData.get('content') as string;
 
-const handleAddToCart = async (designId: number) => {
-  try {
-    await addToCart(designId);
-    // Show success message
-    alert("Item added to cart successfully!");
-  } catch (error) {
-    // Handle the "already in cart" error specifically
-    if (error instanceof Error && error.message === "This item is already in your cart.") {
-      alert("This item is already in your cart.");
-    } else {
-      // Handle other errors
-      alert("Failed to add item to cart. Please try again.");
+    if (!content.trim()) {
+      alert('Please enter a comment');
+      return;
     }
-  }
-};
 
-const handleDeleteCommentClick = async (postId: number, commentId: number) => {
-try {
-await handleDeleteComment(commentId);
-
-setSelectedPost(prev => {
-if (!prev) return null;
-return {
-  ...prev,
-  comments: prev.comments?.filter(comment => comment.id !== commentId) || []
-};
-});
-
-setPosts(prev => prev.map(post => 
-post.id === postId
-  ? { ...post, comments: post.comments?.filter(comment => comment.id !== commentId) || [] }
-  : post
-));
-} catch (error) {
-console.error("Error deleting comment:", error);
-}
-};
-
-const handleLikeClick = async (postId: number) => {
-try {
-const response = await handleLike(postId);
-const newLikeState = response.message === "Like added.";
-
-setSelectedPost(prev => {
-if (!prev) return null;
-return {
-  ...prev,
-  like_count: newLikeState ? prev.like_count + 1 : prev.like_count - 1,
-  is_liked: newLikeState
-};
-});
-
-setPosts(prev => prev.map(post => 
-post.id === postId
-  ? { ...post, like_count: newLikeState ? post.like_count + 1 : post.like_count - 1, is_liked: newLikeState }
-  : post
-));
-} catch (error) {
-console.error("Error toggling like:", error);
-}
-};
-
-const handleFavoriteClick = async (postId: number) => {
-try {
-const response = await handleFavorite(postId);
-const newFavoriteState = response.message === "Favorite added.";
-
-setSelectedPost(prev => {
-if (!prev) return null;
-return {
-  ...prev,
-  favorite_count: newFavoriteState ? prev.favorite_count + 1 : prev.favorite_count - 1,
-  is_favorite: newFavoriteState
-};
-});
-
-setPosts(prev => prev.map(post => 
-  post.id === postId
-  ? { ...post, favorite_count: newFavoriteState ? post.favorite_count + 1 : post.favorite_count - 1, is_favorite: newFavoriteState }
-    : post
-));
-} catch (error) {
-console.error("Error toggling favorite:", error);
-}
-};
-  // Fetch comments for the selected post
-  const fetchComments = async (postId: number) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts/${postId}/comments/`, {
-        method: "GET",
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts/${postId}/comment/`, {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        
+        // Add the new comment to the post
+        const newComment = {
+          id: data.comment.id,
+          content: content,
+          created_at: new Date().toISOString(),
+          user_id: data.comment.user_id,
+          username: data.comment.username,
+          profile_pic: data.comment.profile_pic,
+          first_name: data.comment.first_name,
+        };
+
+        // Update posts with new comment
+        setPosts(prevPosts => 
+          prevPosts.map(post => 
+post.id === postId
+              ? { 
+                  ...post, 
+                  comment_count: post.comment_count + 1,
+                  comments: [...(post.comments || []), newComment]
+                }
+  : post
+          )
+        );
+        
+        // Update selected post if it's the one being commented on
+        if (selectedPost && selectedPost.id === postId) {
+          setSelectedPost(prev => prev ? { 
+            ...prev, 
+            comment_count: prev.comment_count + 1,
+            comments: [...(prev.comments || []), newComment]
+          } : null);
+        }
+
+        // Clear the comment input
+        e.currentTarget.reset();
+      } else {
+        console.error('Failed to add comment');
+      }
+    } catch (error) {
+      console.error('Error adding comment:', error);
+    }
+  };
+
+  const handleDeleteComment = async (commentId: number, postId: number) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('Please log in to delete comments');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/comments/${commentId}/delete/`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
         },
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch comments.");
+      if (response.ok) {
+        // Remove the comment from the posts list
+        setPosts(prevPosts => 
+          prevPosts.map(post => 
+            post.id === postId 
+              ? { 
+                  ...post, 
+                  comment_count: post.comment_count - 1,
+                  comments: post.comments.filter(comment => comment.id !== commentId)
+                }
+              : post
+          )
+        );
+        
+        // Remove the comment from the selected post
+        if (selectedPost && selectedPost.id === postId) {
+          setSelectedPost(prev => prev ? { 
+            ...prev, 
+            comment_count: prev.comment_count - 1,
+            comments: prev.comments.filter(comment => comment.id !== commentId)
+          } : null);
+        }
+      } else {
+        console.error('Failed to delete comment');
       }
-
-      const data = await response.json();
-      return data.comments || []; // Return the comments array instead of setting state
     } catch (error) {
-      console.log("Error fetching comments:", error);
-      return []; // Return empty array in case of error
+      console.error('Error deleting comment:', error);
     }
   };
 
-  const handlePostClick = async (post: Post) => {
-    setSelectedPost(post);
-    try {
-      const comments = await fetchComments(post.id);
-      setSelectedPost(prev => prev ? { ...prev, comments } : null);
-      // Scroll after the post content is loaded
-      const selectedPostElement = document.querySelector(`.${styles.selectedClearDesignBox}`);
-      if (selectedPostElement) {
-        selectedPostElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    } catch (error) {
-      console.error("Error fetching comments:", error);
+  const handleAddToCart = (product: any) => {
+    const cartItem = {
+      id: product.design.id,
+      name: product.caption,
+      image: product.design.image_url,
+      price: product.design.price,
+      type: product.design.type,
+      modell: product.design.modell,
+      quantity: 1,
+    };
+
+    const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const index = existingCart.findIndex((item: any) => item.id === cartItem.id);
+
+    if (index > -1) {
+      existingCart[index].quantity += 1;
+    } else {
+      existingCart.push(cartItem);
     }
-    setHistoryStack(prev => [...prev, selectedPost as Post]);
+
+    localStorage.setItem("cart", JSON.stringify(existingCart));
+    alert('Added to cart successfully!');
   };
-  useEffect(() => {
-    if (isFirstRender.current && selectedPost) {
-      // Scroll to the top if this is the first render of the selectedPost
-      if (topRef.current) {
-        topRef.current.scrollIntoView({
-          behavior: 'auto', // Smooth scrolling
-          block: 'start',     // Align to the top of the element
-          inline: 'nearest',  // Prevent horizontal scrolling
-        });
-      }
-      isFirstRender.current = false; // After the first render, set it to false
-    }
-  }, [selectedPost])
-    if (loading) return <div>Loading...</div>;
 
+  const handleShowMore = () => {
+    setShowAllPosts((prev) => !prev);
+  };
 
+  if (loading) return (
+    <Layout>
+      <div style={{textAlign: 'center', width: '100%', color: '#888', fontSize: 18, padding: '2rem 0'}}>
+        Loading designs...
+      </div>
+    </Layout>
+  );
 
-    
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
-
-
-  if (selectedPost) {
-    // Check if selectedPost is an array or an object
-    const post = Array.isArray(selectedPost) ? selectedPost[0] : selectedPost;
-  
-    // Access 'design' dynamically (in case 'design' is inside 'post' or 'post' inside 'design')
-    const postDesign = post.design ? post.design : post.post ? post.post.design : null;
-  
-    if (!postDesign) return <p>No design data available</p>;  // Handle case if no design data exists
-  
-    // Filter posts with the same 'theclass'
-    const sameTypePosts = posts.filter(postItem => postItem.design?.theclass === postDesign.theclass);
-    
-    // Filter posts with the same 'theclass' but same type
-    const sameClassSameTypePosts = sameTypePosts.filter(postItem => postItem.design?.type === postDesign.type);
-    
-    // Filter posts with the same 'theclass' but different type
-    const sameClassDifferentTypePosts = sameTypePosts.filter(postItem => postItem.design?.type !== postDesign.type);
+  if (error) return (
+    <Layout>
+      <div style={{textAlign: 'center', width: '100%', color: '#ff6b6b', fontSize: 18, padding: '2rem 0'}}>
+        Error: {error}
+      </div>
+    </Layout>
+  );
   
     return (
       <Layout>
-      <div style={{ padding: "16px", position: "relative" }} className={styles.selectedClearDesignBox}>
-      <div>
-        <button onClick={handleBack} className={styles.backb}>
-          <i className="fas fa-arrow-left"></i>
-        </button>
-        <div className={post.design.type === 'customed rubber case' ? styles.selectedRubberDesignMain : styles.selectedClearDesignMain}>
-          <div className={post.design.type === 'customed rubber case' ? styles.rubberr : styles.clear}>
+      {/* Category Header Section */}
+      <section className={styles.browseSection}>
+        <div className={styles.browsecontainer}>
+          <motion.div 
+            className={styles.sectionHeader}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <motion.h1 
+              className={styles.sectionTitle}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <span className={styles1.highlight2}>{decodeURIComponent(category)}</span> Designs
+            </motion.h1>
+            <motion.p 
+              className={styles.sectionSubtitle}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              Discover amazing {decodeURIComponent(category).toLowerCase()} phone case designs created by talented artists
+            </motion.p>
+          </motion.div>
+
+          {/* Designs Grid */}
+          <motion.div 
+            className={styles.designsGrid}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            {posts.length === 0 ? (
+              <div style={{textAlign: 'center', width: '100%', color: '#888', fontSize: 18, padding: '2rem 0'}}>
+                No designs available in this category.
+              </div>
+            ) : (
+              posts.slice(0, showAllPosts ? posts.length : visiblePosts).map((post, index) => (
+                <motion.div 
+                  key={post.id}
+                  className={styles.cards}
+                  initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true, margin: "-20px" }}
+                  transition={{ 
+                    type: 'spring', 
+                    stiffness: 300, 
+                    damping: 25,
+                    delay: index * 0.1,
+                    duration: 0.6
+                  }}
+                  whileHover={{ 
+                    y: -8,
+                    transition: { duration: 0.2 }
+                  }}
+                >
+                  <motion.div 
+                    className={styles.imgBack}
+                    transition={{ duration: 0.3 }}
+                  >
             <img
               src={post.design.image_url}
-              className={post.design.type === 'customed rubber case' ? styles.rubber : styles.clear}
-              alt={`Post ${post.id}`}
-              style={{ paddingLeft: post.design.type === 'customed rubber case' ? "0px" : "0%", height: "auto" }}
-            />
+                      alt={post.caption} 
+                      className={post.design.type === 'customed clear case' ? styles.clearW : styles.rubberW}
+                    />
+                    <div className={styles.imageIconButtons}>
+                      <motion.button 
+                        className={`${post.is_liked ? styles1.liked : ''} ${styles.likeButton}`} 
+                        whileTap={{ scale: 0.9 }} 
+                        onClick={() => handleLike(post.id)}
+                      >
+                        {post.is_liked ? <FaHeart /> : <FiHeart />}
+                      </motion.button>
+                      <motion.button 
+                        className={`${post.is_favorited ? styles1.favorited : ''} ${styles.saveButton}`} 
+                        whileTap={{ scale: 0.9 }} 
+                        onClick={() => handleFavorite(post.id)}
+                      >
+                        {post.is_favorited ? <FaBookmark /> : <FiBookmark />}
+                      </motion.button>
           </div>
-          <div style={{ marginTop: "24px", height: "300px" }}>
-            <div className={styles.commentDropdown}>
-              <button
-                onClick={() => setCommentsVisible(!commentsVisible)}
-                className={styles.dropdownButton}
-              >
-                {commentsVisible ? "Hide Reviews" : "Show Reviews"}
+                    <motion.div 
+                      className={styles.quickViewOverlay} 
+                      initial={{ opacity: 0 }} 
+                      whileHover={{ opacity: 1 }}
+                    >
+                      <button onClick={() => handlePostClick(post)} className={styles.quickViewButton}>
+                        <FiEye /> Quick View
               </button>
-              <div className={`${styles.commentsContainer} ${commentsVisible ? styles.open : styles.closed}`}>
-                {post.comments && post.comments.length > 0 ? (
-                  post.comments.map((comment) => {
-                    console.log("LoggedInUsername:", loggedInUsername, "Comment User ID:", comment.user_id);
-                    return (
-                      <div className={styles.commentsection} key={comment.id}>
-                        <p>
-                          <span>
-                            <img className={styles.discprofile_pic} src={`${comment.profile_pic}`} alt="" />
-                            {comment.first_name}:
-                          </span>
-                          <span>{comment.content}</span>
-                          <div className={styles.commentActions}>
-                            {String(comment.user_id) === String(loggedInUsername) && (
-                              <button
-                                onClick={() => handleDeleteCommentClick(post.id, comment.id)}
-                                className={styles.deleteButton}
-                                title="Delete comment"
-                                style={{
-                                marginLeft: "8px",
-                                color: "red",
-                                border: "none",
-                                borderRadius: "4px",
-                                cursor: "pointer",
-                              }} 
-                              >
-                                <i className="fas fa-trash"></i>
-                              </button>
-                            )}
-                            {String(comment.user_id) !== String(loggedInUsername) && (
-                              <button
-                                onClick={() => handleReport('comment', comment.id)}
-                                className={styles.reportButton}
-                                title="Report comment"
-                              >
-                                <i className="fas fa-flag"></i>
-                              </button>
-                            )}
+                    </motion.div>
+                  </motion.div>
+                  <div className={styles.cardsContent}>
+                    <motion.h3 
+                      className={styles.title}
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: 0.2 }}
+                    >
+                      {post.caption}
+                    </motion.h3>
+                    <motion.div 
+                      className={styles.disc} onClick={() => {
+                        if (post.user_id === currentUserId) {
+                          router.push('/newprofile');
+                        } else {
+                          router.push(`/someoneProfile/${post.user_id}`);
+                        }
+                      }}
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: 0.3 }}
+                    >
+                      <img src={post.profile_pic} alt={post.user_details?.username || post.user?.username} className={styles.discprofile_pic} />
+                      <span>@{post.user_details?.username || post.user?.username}</span>
+                    </motion.div>
+                    <div className={styles.price}>${post.design.price}</div>
+                    <div className={styles.cardActions}>
+                      <motion.button 
+                        className={styles.addToCartButton}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => handleAddToCart(post)}
+                      >
+                        <FaShoppingCart /> Add to Cart
+                      </motion.button>
                           </div>
-                        </p>
                       </div>
-                    );
-                  })
-                ) : (
-                  <p>No comments yet.</p>
+                </motion.div>
+              ))
+            )}
+          </motion.div>
+
+          {/* Show More/Less Button */}
+          {posts.length > visiblePosts && (
+            <motion.div 
+              className={styles.showMoreContainer}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+            >
+              <motion.button 
+                className={styles.showMoreButton}
+                onClick={handleShowMore}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {showAllPosts ? 'Show Less' : `Show More (${posts.length - visiblePosts} more)`}
+              </motion.button>
+            </motion.div>
                 )}
               </div>
-            </div>
-          </div>
+      </section>
+
+      {/* Modal */}
+      {selectedPost && (
+        <div className={styles1.modalOverlay} onClick={handleCloseModal}>
+          <div className={styles1.modalContent} onClick={e => e.stopPropagation()}>
+            <div className={styles1.modalLeft}>
+              <img 
+                src={selectedPost.design.image_url} 
+                alt={selectedPost.caption} 
+                className={`${styles1.postImage} ${selectedPost.design.type === 'customed rubber case' ? styles1.postImagerubber : styles1.postImageclear}`} 
+              />
         </div>
 
-        <div className={post.design.type === 'customed rubber case' ? styles.rubberInfos : styles.clearInfos}>
-          <div className={styles.postText1}>
-            <h3 style={{ color: "var(--secondColor)" }}>{post.caption}</h3>
-            <h1><img src={`${post.profile_pic}`} className={styles.discprofile_pic} alt="" />Designed By <Link href={`/other_profile/${post.user_id}`} style={{ color: "var(--thirdColor)" }}>{post.first_name}</Link></h1>
+            <div className={styles1.modalRight}>
+              <div className={styles1.modalHeader}>
+                <h2>{selectedPost.caption}</h2>
+                <button className={styles1.closeButton} onClick={handleCloseModal}>×</button>
           </div>
 
-          <div className={styles.phoneFetures}>
-            <ul>
-              <li>Shock Absorption: Protects the phone from accidental drops and impacts.</li>
-              <li>Scratch Resistance: Keeps the phone and the case itself free from scratches.</li>
-              <li>High-Quality Build: Materials like TPU, polycarbonate, or leather ensure longevity.</li>
-              <li>Adds minimal bulk to the phone for easy portability.</li>
-              <li>Maintains the phone's sleek design while offering protection.</li>
-              <li>Edge-to-Edge Coverage: Covers all sides, corners, and back.</li>
-              <li>Raised Edges: Protects the screen and camera from direct contact with surfaces.</li>
-              <li>Dust and Water Resistance: Shields against minor spills and dust particles.</li>
-              <li><p className="mt-3">Model: {post.design.modell[2] === 'o' ? post.design.modell.slice(0, 2) + post.design.modell.slice(3) : post.design.modell}</p></li>
-              <li><p>Type: {post.design.type}</p></li>
-              <li><p style={{ fontWeight: "bolder" }}>Price: {post.design.price}$</p></li>
-            </ul>
-          </div>
+              <div className={styles1.modalBody}>
+                <div className={styles1.creatorInfo}>
+                  <div className={styles1.creatorHeader}> 
+                    <img 
+                      src={selectedPost.profile_pic || "/inspiration/e66ea461e14e113f67aa0b34db419404.jpg"} 
+                      alt={selectedPost.user_details?.username || selectedPost.user?.username} 
+                      className={styles1.creatorAvatar} 
+                    />
 
-          <div className={styles.postText2}>
-            <p>{post.description}</p>
+                    <div className={styles1.creatorDetails}>
+                      <span className={styles1.creatorName}>{selectedPost.user_details?.first_name || selectedPost.first_name} {selectedPost.user_details?.last_name || ''}</span>
+                      <span className={styles1.creatorUsername} onClick={() => {
+                        if (selectedPost.user_id === currentUserId) {
+                          router.push('/newprofile');
+                        } else {
+                          router.push(`/someoneProfile/${selectedPost.user_id}`);
+                        }
+                      }}>@{selectedPost.user_details?.username || selectedPost.user?.username}</span>
           </div>
-
-          <div className={styles.timer}>
-            <span>Posted At: {new Date(post.created_at).toLocaleString()}</span>
-            <div className={styles.postActions}>
-            {String(post.user_id) !== String(loggedInUsername) && (
-              <button
-                onClick={() => handleReport('post', post.id)}
-                className={styles.reportButton}
-                title="Report post"
-              >
-                <i className="fas fa-flag"></i>
-                <span>Report Post</span>
-              </button>
-              )}
+          </div>
+                  <div className={styles1.userDescription}>
+                    <p className={styles1.userDescriptionText}>
+                      {selectedPost.description}
+                    </p>
             </div>
           </div>
 
-          <div className={`${styles.holebuttonH}`}>
-            <div className={styles.postbuttonHolder}>
-              <button
-                className={`${styles.likebtn} ${post.is_liked ? styles.liked : ""}`}
-                onClick={() => handleLikeClick(post.id)}
-              >
-                <i className={post.is_liked ? "fas fa-heart" : "far fa-heart"}></i>
-                <span>{post.is_liked ? "Liked" : "Like"}</span>
-                <h4>{post.like_count}</h4>
-              </button>
+                <div className={styles1.postDescription}>
+                  <div className={styles1.descriptionHeader}>
+                    <h3 className={styles1.descriptionTitle}>Case Description</h3>
+                  </div>
+                  <p className={styles1.descriptionText}>A mesmerizing blend of vibrant colors and fluid shapes that creates a sense of movement and harmony. This design captures the essence of abstract art while maintaining a modern, minimalist aesthetic. Perfect for those who appreciate contemporary art and want to make a bold statement with their phone case.
 
-              <button
-                className={`${styles.likebtn} ${post.is_favorite ? styles.liked : ""}`}
-                onClick={() => handleFavoriteClick(post.id)}
-              >
-                <i className={post.is_favorite ? "fas fa-star" : "far fa-star"}></i>
-                <span>{post.is_favorite ? "Saved" : "Save"}</span>
-                <h4>{post.favorite_count}</h4>
-              </button>
+The case features a premium matte finish that enhances the colors and provides a comfortable grip. The design is printed using high-quality UV printing technology, ensuring long-lasting vibrancy and durability.</p>
 
-              <button
-                className={styles.btn5}
-                onClick={() => handleAddToCart(post.design.id)}
-              >
-                <i className="fas fa-shopping-cart"></i>
-                Add to cart
-              </button>
+                  <div className={styles1.descriptionTags}>
+                    {selectedPost.hashtag_names && selectedPost.hashtag_names.map((tag: string, index: number) => (
+                      <span key={index} className={styles1.tag}>#{tag}</span>
+                    ))}
             </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'row', gap: '10px', width: '100%' }}>
-            <input
-              value={commentContent}
-              onChange={(e) => setCommentContent(e.target.value)}
-              placeholder="Add a comment..."
-            />
-            <button
-              onClick={() => handleCommentSubmitClick(post.id)}
-              className={`${styles.addcommentbtn}`}
-            >
-              Add Comment
-            </button>
+                <div className={styles1.postInfo}>
+                  <div className={styles1.infoItem}>
+                    <div className={styles1.infoIcon}>
+                      <FaCalendarAlt />
           </div>
+                    <div className={styles1.infoContent}>
+                      <span className={styles1.infoLabel}>Posted on</span>
+                      <span className={styles1.infoValue}>
+                        {new Date(selectedPost.created_at).toLocaleDateString()}
+                      </span>
         </div>
       </div>
-      {sameClassSameTypePosts.filter(post => post.id !== selectedPost?.id).length > 0 && (
-          <section className={styles.viewsection}>
-            <h2>Same Type</h2>
-            <div className={styles.sliderContainer}>
-              <button className={styles.scrollButton} onClick={() => scrollSlider('left', 0)}>
-                <i className="fas fa-chevron-left"></i>
-              </button>
-              <div className={styles.viewsectionD} ref={(el) => (slidersRef.current[0] = el)}>
-                {sameClassSameTypePosts.filter(post => post.id !== selectedPost?.id).map((post) => (
-                  <div key={post.id} className={styles.cards}>
-                    <div className={styles.imgBack} onClick={() => handlePostClick(post)}>
-                      <img
-                        src={post.design.image_url}
-                        alt={`Post ${post.id}`}
-                        className={post.design.type === 'customed rubber case' ? styles.instockwidth : styles.outstockwidth}
-
-                        style={{ borderRadius: '8px' }}
-                      />
+                  <div className={styles1.infoItem}>
+                    <div className={styles1.infoIcon}>
+                      <FaMobile />
                     </div>
-                    <div className={styles.cardsContent} onClick={() => handlePostClick(post)}>
-                      <h2 className={styles.title}>{post.design.modell}</h2>
-                      <p className={styles.disc}>{post.design.type}</p>
-                      <p className={styles.disc}>By: {post.first_name}</p>
-                      <p className={styles.title2}>Price: {post.design.price}$</p>
+                    <div className={styles1.infoContent}>
+                      <span className={styles1.infoLabel}>Phone Model</span>
+                      <span className={styles1.infoValue}>{selectedPost.design.modell}</span>
                     </div>
-                    <button className={styles.btn5} onClick={() => handleAddToCart(post.design.id)}>
-                      Add to cart
-                    </button>
                   </div>
-                ))}
+                  <div className={styles1.infoItem}>
+                    <div className={styles1.infoIcon}>
+                      <FaTag />
+                    </div>
+                    <div className={styles1.infoContent}>
+                      <span className={styles1.infoLabel}>Case Type</span>
+                      <span className={styles1.infoValue}>{selectedPost.design.type === "customed clear case" ? "Clear Case" : 'Rubber Case'}
+                      </span>
               </div>
-              <button className={styles.scrollButton} onClick={() => scrollSlider('right', 0)}>
-                <i className="fas fa-chevron-right"></i>
+            </div>
+                  <div className={styles1.infoItem}>
+                    <div className={styles1.infoIcon}>
+                      <FaDollarSign />
+                    </div>
+                    <div className={styles1.infoContent}>
+                      <span className={styles1.infoLabel}>Price</span>
+                      <span className={styles1.infoValue}>${selectedPost.design.price}</span>
+                    </div>
+                  </div>
+              </div>
+
+                <div className={styles1.interactionBar}>
+                  <button className={`${styles1.interactionButton} ${isLiked ? styles1.active : ''}`} onClick={() => handleLike(selectedPost.id)}>
+                    {isLiked ? <FaHeart /> : <FaRegHeart />}
+                    <span className={styles1.interactionCount}>{selectedPost.like_count}</span>
+                  </button>
+                  <button className={`${styles1.interactionButton} ${isSaved ? styles1.active : ''}`} onClick={() => handleFavorite(selectedPost.id)}>
+                    {isSaved ? <FaBookmark /> : <FaRegBookmark />}
+                    <span className={styles1.interactionCount}>{selectedPost.favorite_count}</span>
+                  </button>
+                  <button 
+                    className={styles1.addToCartButton}
+                    onClick={() => handleAddToCart(selectedPost)}
+                  >
+                    <FaShoppingCart />
+                    <span>Add to Cart</span>
               </button>
             </div>
-          </section>
-        )}
-  
-        {/* Different Type Section */}
-        {sameClassDifferentTypePosts.filter(post => post.id !== selectedPost?.id).length > 0 && (
-          <section className={styles.viewsection}>
-            <h2>Other Types</h2>
-            <div className={styles.sliderContainer}>
-              <button className={styles.scrollButton} onClick={() => scrollSlider('left', 1)}>
-                <i className="fas fa-chevron-left"></i>
-              </button>
-              <div className={styles.viewsectionD} ref={(el) => (slidersRef.current[1] = el)}>
-                {sameClassDifferentTypePosts.filter(post => post.id !== selectedPost?.id).map((post) => (
-                  <div key={post.id} className={styles.cards}>
-                    <div className={styles.imgBack} onClick={() => handlePostClick(post)}>
-                      <img
-                        src={post.design.image_url}
-                        alt={`Post ${post.id}`}
-                        className={post.design.type === 'customed rubber case' ? styles.instockwidth : styles.outstockwidth}
 
-                        style={{ borderRadius: '8px' }}
-                      />
-                    </div>
-                    <div className={styles.cardsContent} onClick={() => handlePostClick(post)}>
-                      <h2 className={styles.title}>{post.design.modell}</h2>
-                      <p className={styles.disc}>{post.design.type}</p>
-                      <p className={styles.disc}>By: {post.first_name}</p>
-                      <p className={styles.title2}>Price: {post.design.price}$</p>
-                    </div>
-                    <button className={styles.btn5} onClick={() => handleAddToCart(post.design.id)}>
-                      Add to cart
-                    </button>
+                <div className={styles1.commentsSection}>
+                  <div className={styles1.commentsHeader}>
+                    <h3>Comments</h3>
+                    <span className={styles1.commentCount}>{selectedPost.comments?.length || 0}</span>
                   </div>
-                ))}
+                  
+                  <form className={styles1.commentInput} onSubmit={(e) => handleComment(e, selectedPost.id)}>
+                    <input
+                      type="text"
+                      name="content"
+                      placeholder="Add a comment..."
+
+                      required
+                    />
+                    <button type="submit">Submit</button>
+                  </form>
+
+                  <div className={styles1.commentsList}>
+                    {selectedPost.comments && selectedPost.comments.length > 0 ? (
+                      selectedPost.comments.map((comment: any) => {
+                        // Get current user info from token
+                        const token = localStorage.getItem('token');
+                        const currentUserId = token ? JSON.parse(atob(token.split('.')[1])).user_id : null;
+                        const isCommentOwner = currentUserId === comment.user_id;
+                        
+                        return (
+                          <div key={comment.id} className={styles1.comment}>
+                            <img 
+                              src={comment.profile_pic || "/inspiration/e66ea461e14e113f67aa0b34db419404.jpg"} 
+                              alt={comment.username} 
+                              className={styles1.commentAvatar} 
+                            />
+                            <div className={styles1.commentContent}>
+                              <div className={styles1.commentHeader}>
+                                <span className={styles1.commentAuthor} onClick={() => {
+                                  if (comment.user_id === currentUserId) {
+                                    router.push('/newprofile');
+                                  } else {
+                                    router.push(`/someoneProfile/${comment.user_id}`);
+                                  }
+                                }}>{comment.username}</span>
+                                <span className={styles1.commentDate}>
+                                  {new Date(comment.created_at).toLocaleDateString()}
+                                </span>
+                              </div>
+                              <div className={styles1.commentBody}>
+                                <p className={styles1.commentText}>{comment.content}</p>
+                                {isCommentOwner && (
+                                  <button 
+                                    className={styles1.deleteCommentButton}
+                                    onClick={() => handleDeleteComment(comment.id, selectedPost.id)}
+                                    title="Delete comment"
+                                  >
+                                    <FaTrash />
+              </button>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })
+                    ) : (
+                      <div className={styles1.noComments}>
+                        <p>No comments yet. Be the first to comment!</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
-              <button className={styles.scrollButton} onClick={() => scrollSlider('right', 1)}>
-                <i className="fas fa-chevron-right"></i>
-              </button>
-            </div>
-          </section>
-        )}
-      {showReportModal && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modalContent}>
-            <h3>Report {reportingType === 'post' ? 'Post' : 'Comment'}</h3>
-            <textarea
-              value={reportReason}
-              onChange={(e) => setReportReason(e.target.value)}
-              placeholder="Please provide a reason for reporting..."
-              className={styles.reportTextarea}
-            />
-            <div className={styles.modalActions}>
-              <button onClick={() => setShowReportModal(false)} className={styles.cancelButton}>
-                Cancel
-              </button>
-              <button onClick={handleReportSubmit} className={styles.submitButton}>
-                Submit Report
-              </button>
             </div>
           </div>
         </div>
       )}
-    </div>
-    </Layout>
-  );
-}
-  return (
-    <Layout>
-        
-    <div className={styles0.catacontainer}>
-        <h1>{category}</h1>
-     
-      
-
-      {/* Left Scroll Button */}
-
-
-      {/* Cards Container */}
-      
-        {posts.map((post) => (
-          <div key={post.id} className={styles.cards}>
-            <div className={styles.imgBack} onClick={() => handlePostClick(post)} style={{ cursor: 'pointer' }}>
-              <img
-                src={post.design.image_url}
-                alt={post.caption || `Design ${post.id}`}
-                className={post.design.type === 'customed rubber case' ? styles.instockwidth : styles.outstockwidth}
-                style={{ borderRadius: '8px' }}
-              />
-            </div>
-
-            <div className={styles.cardsContent} onClick={() => handlePostClick(post)} style={{ cursor: 'pointer' }}>
-              <h2 className={styles.title}>
-                {post.design.modell[2] === 'o'
-                  ? post.design.modell.slice(0, 2) + post.design.modell.slice(3)
-                  : post.design.modell}
-              </h2>
-              <p className={styles.disc}>{post.design.type}</p>
-              <p className={styles.disc}>
-                By:{' '}
-                <img
-                  src={post.profile_pic}
-                  className={styles.discprofile_pic}
-                  alt={`${post.first_name}'s profile`}
-                  style={{ borderRadius: '50%', width: '20px', height: '20px', marginRight: '5px' }}
-                />
-                {post.first_name}
-              </p>
-              <p className={styles.title2}>Price: {post.design.price}$</p>
-            </div>
-
-            <button className={styles.btn5} onClick={() => addToCart(post.design.id)}>
-              Add to cart
-            </button>
-          </div>
-        ))}
-  
-
-      {/* Right Scroll Button */}
-
-
-    </div>
     </Layout>
   );
 };

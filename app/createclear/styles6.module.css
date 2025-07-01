@@ -11,6 +11,9 @@
   scroll-behavior: smooth;
   border-right: 3px solid var(--thirdColor);
   background: #fff;
+  width: 830px;
+   
+
   z-index: 2;
   }
   .phoneSelectorWrapper::-webkit-scrollbar {
@@ -127,7 +130,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   gap: 10px;
-  max-height: 100vh;
+  max-height: 103vh;
   overflow: hidden;
   transition: all 0.4s ease;
   padding:5px;

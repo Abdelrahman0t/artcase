@@ -6,8 +6,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles3 from './makepost.module.css'
 import styles1 from '../../fyp/fyp.module.css'
+import HashtagPicker from './HashtagPicker';
 
-import Layout from '../../ordernow/layout';
+import Layout from '../../newui/layout';
 
 // Manual JWT decoding function
 const decodeJwt = (token: string) => {
@@ -39,6 +40,8 @@ const DesignPage = ({ params }: DesignProps) => {
   const [error, setError] = useState<string | null>(null);
   const [caption, setCaption] = useState<string>(""); // For post creation
   const [description, setDescription] = useState<string>("");
+  const [hashtags, setHashtags] = useState<string[]>([]);
+
   // Get the dynamic design ID from the URL parameter
   const { designid } = params;
 
@@ -47,7 +50,7 @@ const DesignPage = ({ params }: DesignProps) => {
 
   useEffect(() => {
     // Decode the token to get the user ID using the manual decodeJwt function
-    let decodedUserId = null;
+    let decodedUserId: string | null = null;
     if (token) {
       const decoded: any = decodeJwt(token);  // Decode the token manually
       decodedUserId = decoded.user_id;  // Assuming the token has 'user_id' as the identifier
@@ -107,18 +110,33 @@ const DesignPage = ({ params }: DesignProps) => {
       // If the decoded username doesn't match the design creator's username, redirect
       if (username !== design.user) {
         console.log('Redirecting to FYP page...');
-        router.push('/fyp');  // Redirect to FYP page
+        router.push('/');  // Redirect to FYP page
       }
     }
   }, [design, username, token, router]);  // Run the effect when the design or username is updated
 
-  const handlePostSubmit = async (e) => {
+  const handlePostSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
     if (!token) {
         setError("User is not authenticated.");
         return;
     }
+
+    if (!design || !design.id) {
+        setError("Design data is missing.");
+        return;
+    }
+
+    const postData = {
+        design: design.id,
+        caption,
+        description,
+        hashtags,
+    };
+
+    console.log("Submitting post with data:", postData);
+    console.log("Design object:", design);
 
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts/`, {
@@ -127,29 +145,128 @@ const DesignPage = ({ params }: DesignProps) => {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({
-                design: design.id,
-                caption,
-                description,
-            }),
+            body: JSON.stringify(postData),
         });
 
+        console.log("Response status:", response.status);
+
         if (!response.ok) {
-            throw new Error("Failed to create post.");
+            const errorData = await response.json();
+            console.error("Post creation failed:", errorData);
+            throw new Error(`Failed to create post: ${errorData.error || 'Unknown error'}`);
         }
 
         const data = await response.json();
         console.log("Post created successfully:", data);
         alert("Post created successfully!");
-        router.push('/fyp');  // Redirect to FYP page
+        router.push('/');  // Redirect to FYP page
 
     } catch (err) {
-        setError("Failed to create post.");
+        console.error("Error creating post:", err);
+        setError(err instanceof Error ? err.message : "Failed to create post.");
     }
 };
 
+  // Hashtag suggestions based on design type and class
+  const getHashtagSuggestions = () => {
+    const HASHTAG_OPTIONS = [
+      { label: "Anime", value: "Anime & Manga" },
+      { label: "TV/Movies", value: "TV Shows & Movies" },
+      { label: "Games", value: "Video Games" },
+      { label: "Cartoons", value: "Cartoons & Animated Characters" },
+      { label: "Pop", value: "Pop Culture & Music" },
+      { label: "K-Pop", value: "K-Pop & Idol Groups" },
+      { label: "Celebs", value: "Celebrities & Influencers" },
+      { label: "Floral", value: "Floral & Botanical" },
+      { label: "Scenery", value: "Scenery & Landscapes" },
+      { label: "Abstract", value: "Abstract & Minimalist" },
+      { label: "Cats/Dogs", value: "Cats & Dogs" },
+      { label: "Wildlife", value: "Wildlife & Exotic Animals" },
+      { label: "Fantasy", value: "Fantasy Creatures" },
+      { label: "Sports", value: "Football & Basketball" },
+      { label: "X-Sports", value: "Extreme Sports" },
+      { label: "Fitness", value: "Fitness & Gym" },
+      { label: "Inspo", value: "Motivational & Inspirational" },
+      { label: "Funny", value: "Funny & Meme-Based" },
+      { label: "Gothic", value: "Dark & Gothic" },
+      { label: "Sci-Fi", value: "Cyberpunk & Sci-Fi" },
+      { label: "Vaporwave", value: "Glitch & Vaporwave" },
+      { label: "AI", value: "AI & Robotics" },
+      { label: "Flags", value: "Flags & National Pride" },
+      { label: "Trad Art", value: "Traditional Art" },
+      { label: "Zodiac", value: "Astrology & Zodiac Signs" },
+    ];
+    
+    // Add design-specific suggestions if available
+    let suggestions = [...HASHTAG_OPTIONS];
+    
+    if (design?.theclass) {
+      // Check if theclass matches any existing option
+      const existingOption = HASHTAG_OPTIONS.find(option => option.value === design.theclass);
+      if (existingOption) {
+        // If it matches, don't add it again (it's already in the list)
+      } else {
+        // If it doesn't match, add it as a custom option
+        suggestions.unshift({ label: design.theclass, value: design.theclass });
+      }
+    }
+    if (design?.type) {
+      const typeWords = design.type.split(' ');
+      typeWords.forEach((word: string) => {
+        suggestions.unshift({ label: word, value: word });
+      });
+    }
+    
+    // Remove duplicates based on value
+    const uniqueSuggestions = suggestions.filter((suggestion, index, self) => 
+      index === self.findIndex(s => s.value === suggestion.value)
+    );
+    
+    return uniqueSuggestions;
+  };
 
+  // Get default tag with proper label/value structure
+  const getDefaultTag = () => {
+    const HASHTAG_OPTIONS = [
+      { label: "Anime", value: "Anime & Manga" },
+      { label: "TV/Movies", value: "TV Shows & Movies" },
+      { label: "Games", value: "Video Games" },
+      { label: "Cartoons", value: "Cartoons & Animated Characters" },
+      { label: "Pop", value: "Pop Culture & Music" },
+      { label: "K-Pop", value: "K-Pop & Idol Groups" },
+      { label: "Celebs", value: "Celebrities & Influencers" },
+      { label: "Floral", value: "Floral & Botanical" },
+      { label: "Scenery", value: "Scenery & Landscapes" },
+      { label: "Abstract", value: "Abstract & Minimalist" },
+      { label: "Cats/Dogs", value: "Cats & Dogs" },
+      { label: "Wildlife", value: "Wildlife & Exotic Animals" },
+      { label: "Fantasy", value: "Fantasy Creatures" },
+      { label: "Sports", value: "Football & Basketball" },
+      { label: "X-Sports", value: "Extreme Sports" },
+      { label: "Fitness", value: "Fitness & Gym" },
+      { label: "Motivational", value: "Motivational & Inspirational" },
+      { label: "Funny", value: "Funny & Meme-Based" },
+      { label: "Gothic", value: "Dark & Gothic" },
+      { label: "Sci-Fi", value: "Cyberpunk & Sci-Fi" },
+      { label: "Vaporwave", value: "Glitch & Vaporwave" },
+      { label: "AI", value: "AI & Robotics" },
+      { label: "Flags", value: "Flags & National Pride" },
+      { label: "Trad Art", value: "Traditional Art" },
+      { label: "Zodiac", value: "Astrology & Zodiac Signs" },
+    ];
 
+    const defaultValue = design?.theclass || 'design';
+    
+    // Check if the default value matches any predefined option
+    const matchingOption = HASHTAG_OPTIONS.find(option => option.value === defaultValue);
+    
+    if (matchingOption) {
+      return matchingOption;
+    } else {
+      // If no match, return the value as both label and value
+      return { label: defaultValue, value: defaultValue };
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;  // Show loading state while the design is being fetched
@@ -162,6 +279,16 @@ const DesignPage = ({ params }: DesignProps) => {
   return (
 <Layout>
     <div className={styles3.page_container}>
+      {/* Decorative Shapes */}
+      <div className={styles3.pageDecoration}>
+        <div className={styles3.pageShape1}></div>
+        <div className={styles3.pageShape2}></div>
+        <div className={styles3.pageShape3}></div>
+        <div className={styles3.pageShape4}></div>
+        <div className={styles3.pageShape5}></div>
+        <div className={styles3.pageShape6}></div>
+      </div>
+      
     <header className={styles3.header}>
       <h1>Share Your Design with the World</h1>
       <p>Upload your creative designs and inspire others.</p>
@@ -173,7 +300,7 @@ const DesignPage = ({ params }: DesignProps) => {
           <img
             src={design.image_url}
             alt={`Design of ${design.modell}`}
-            className={design.type === 'customed rubber case'? styles3.rubberimg : styles3.clearimg}
+            className={design.type === 'customed clear case'? styles3.clearimg : ''}
           />
         </div>
         <div className={styles3.design_details}>
@@ -205,12 +332,19 @@ const DesignPage = ({ params }: DesignProps) => {
               required
             />
           </div>
-          <button className={`${styles1.Mainbtn5}  `} style={{width : '100%'}} type="submit">
+          
+          <HashtagPicker
+            defaultTag={getDefaultTag()}
+            suggestions={getHashtagSuggestions()}
+            onChange={setHashtags}
+          />
+
+          <button className={`${styles3.submit_button}  `} style={{width : '100%'}} type="submit">
             Share Now
           </button>
         </form>
         <div className={styles3.back_to_home}>
-          <Link href="/fyp">Go Back to Home</Link>
+          <Link href="/">Go Back to Home</Link>
         </div>
       </div>
     </main>
