@@ -248,3 +248,12 @@
     width: 14rem;
    }
 }
+
+@media (max-width: 778px) {
+  .browsecontainer {
+    padding: 0;
+  }
+  .catagoryContainer{
+    padding: 0 0.2rem;
+  }
+}
