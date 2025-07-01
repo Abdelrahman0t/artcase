@@ -6425,6 +6425,9 @@ height: fit-content;
     padding: 0;
   }
   .catagoryContainer{
-    padding: 0 0.2rem;
+    padding: 0;
+  }
+  .designerscontainer{
+    padding: 0;
   }
 }
