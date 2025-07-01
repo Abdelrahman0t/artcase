@@ -325,8 +325,7 @@ const handlePhoneSelect = async (phone: any) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
       const [containerSize, setContainerSize] = useState({ width: 600, height: 600 });
-      const [stageScale, setStageScale] = useState(1);
-      const [stageSize, setStageSize] = React.useState({ width: window.innerWidth, height: window.innerHeight });
+
   const [stickerList1, setStickerList1] = useState([
     
         'stickers/amazed_8769075.png',
@@ -387,7 +386,7 @@ const handlePhoneSelect = async (phone: any) => {
             width: containerWidth,
             height: containerHeight,
           });
-          setStageScale(scale);
+
         };
     
         window.addEventListener("resize", updateStageSize);
@@ -401,7 +400,7 @@ const handlePhoneSelect = async (phone: any) => {
         const handleResize = () => {
           const newWidth = Math.min(window.innerWidth, 600); // Max width 600px
           const newHeight = Math.min(window.innerHeight, 600); // Max height 600px
-          setStageSize({ width: newWidth, height: newHeight });
+
         };
       
         window.addEventListener('resize', handleResize);
