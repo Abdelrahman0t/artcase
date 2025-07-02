@@ -3173,6 +3173,7 @@ font-size: 10px;
   font-size: 1.5rem;
   cursor: pointer;
   display: block;
+    color : black
 }
 @media (min-width: 992px) {
   .closeBtnMobile {
