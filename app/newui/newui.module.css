@@ -5896,6 +5896,7 @@ display: inline-flex
   transition: all 0.2s;
   font-size: 0.875rem;
   height: 2.5rem;
+  background: transparent;
 }
 
 .continueShoppingButton:hover {
