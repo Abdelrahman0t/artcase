@@ -6441,7 +6441,7 @@ height: fit-content;
 
 @media (max-width: 576px) {
  .designsGrid {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       gap: 1rem;
   }
 }
