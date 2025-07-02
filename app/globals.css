@@ -121,11 +121,18 @@ a {
   border-radius: 8px;
   color: #fff;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: clamp(0.95rem, 2.5vw, 1.15rem); /* Responsive font size */
   z-index: 9999;
   box-shadow: 0 4px 16px rgba(0,0,0,0.15);
   animation: toast-in 0.3s, toast-out 0.3s 2.2s;
   text-align: center;
+}
+
+@media (max-width: 400px) {
+  .custom-toast {
+    font-size: 0.75rem;
+    padding: 0.75rem 1rem;
+  }
 }
 
 .custom-toast-info {
