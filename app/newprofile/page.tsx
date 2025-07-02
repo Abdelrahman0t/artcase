@@ -31,6 +31,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { FaShoppingCart, FaShareAlt, FaTrash, FaArrowLeft, FaCalendarAlt, FaMobile, FaTag, FaDollarSign, FaHeart, FaRegHeart, FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import styles1 from '../newui/newui.module.css';
+import { useToast } from "../utils/ToastContext";
 // Types for API data
 interface UserData {
   id: number;
@@ -396,6 +397,7 @@ function formatDateDMY(dateString: string) {
 
 // Helper to get relative time (e.g., '1 day ago')
 function getRelativeTime(dateString: string) {
+  
   const now = new Date();
   const date = new Date(dateString);
   const diff = now.getTime() - date.getTime();
@@ -412,7 +414,7 @@ function getRelativeTime(dateString: string) {
 export default function Dashboard() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("designs")
-
+  const { showToast } = useToast();
   // User data state
   const [userData, setUserData] = useState<UserData | null>(null)
   const [userDesigns, setUserDesigns] = useState<Design[]>([])
@@ -1039,7 +1041,7 @@ export default function Dashboard() {
   const handleLike = async (postId: number) => {
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('Please log in to like posts');
+      showToast('Please log in to like posts', "error");
       return;
     }
     try {
@@ -1069,7 +1071,7 @@ export default function Dashboard() {
   const handleFavorite = async (postId: number) => {
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('Please log in to favorite posts');
+      showToast('Please log in to favorite posts', "error");
       return;
     }
     try {
@@ -1097,11 +1099,11 @@ export default function Dashboard() {
 
   const handleAddToCart = (post: any) => {
     if (post.design.stock === 'Out of Stock') {
-      alert("Sorry, this item is currently out of stock and cannot be added to cart.");
+        showToast("Sorry, this item is currently out of stock and cannot be added to cart.", "error");
       return;
     }
     if (post.stock === 'Out of Stock') {
-      alert("Sorry, this item is currently out of stock and cannot be added to cart.");
+      showToast("Sorry, this item is currently out of stock and cannot be added to cart.", "error");
       return;
     }
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -1119,9 +1121,9 @@ export default function Dashboard() {
       });
       localStorage.setItem('cart', JSON.stringify(cart));
       window.dispatchEvent(new Event('cartUpdated'));
-      alert('Added to cart!');
+      showToast('Added to cart!', "success");
     } else {
-      alert('Already in cart!');
+      showToast('Already in cart!, quantity increased', "error");
     }
   };
 
@@ -1129,13 +1131,13 @@ export default function Dashboard() {
     e.preventDefault();
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('Please log in to comment');
+      showToast('Please log in to comment', "error");
       return;
     }
     const formData = new FormData(e.currentTarget);
     const content = formData.get('content') as string;
     if (!content.trim()) {
-      alert('Please enter a comment');
+      showToast('Please enter a comment', "error");
       return;
     }
     try {
@@ -1177,7 +1179,7 @@ export default function Dashboard() {
   const handleDeleteComment = async (commentId: number, postId: number) => {
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('Please log in to delete comments');
+      showToast('Please log in to delete comments', "error");
       return;
     }
     try {
@@ -2286,7 +2288,7 @@ export default function Dashboard() {
                     className={styles.modalActionButton}
                     onClick={async () => {
                       if(selectedDesign.stock === "Out of Stock"){
-                        alert("This Item Is Out Of Stock Right Now")
+                        showToast("This Item Is Out Of Stock Right Now", "error");
                          return;
                       }
                       // Add to cart logic (localStorage or API)
@@ -2304,9 +2306,9 @@ export default function Dashboard() {
                         });
                         localStorage.setItem('cart', JSON.stringify(cart));
                         window.dispatchEvent(new Event('cartUpdated'));
-                        alert('Added to cart!');
+                        showToast('Added to cart!', "success");
                       } else {
-                        alert('Already in cart!');
+                        showToast('Already in cart!, quantity increased', "error");
                       }
                     }}
                   >

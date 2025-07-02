@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { ToastProvider } from "./utils/ToastContext";
 import { Roboto } from 'next/font/google';
 
 const roboto = Roboto({
@@ -78,7 +78,9 @@ export default function RootLayout({
 <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Monoton&family=Mulish:wght@200..1000&family=Oswald:wght@200..700&family=Playwrite+AU+VIC+Guides&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sarina&family=Ysabeau+SC:wght@1..1000&display=swap" rel="stylesheet"></link>
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <ToastProvider>
         {children}
+        </ToastProvider>
       </body>
     </html>
   );

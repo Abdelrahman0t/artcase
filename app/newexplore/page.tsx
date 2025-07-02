@@ -3,7 +3,7 @@
 import { useState, useEffect , useRef} from 'react';
 import Image from 'next/image';
 import { FiSearch, FiShoppingCart, FiArrowRight, FiTruck, FiRefreshCw, FiShield, FiCreditCard, FiMenu, FiX, FiFilter, FiTrendingUp, FiStar, FiClock, FiHeart, FiBookmark, FiEye, FiUser, FiGrid, FiAward, FiPenTool } from 'react-icons/fi';
-
+import { useToast } from "../utils/ToastContext";
 import styles from './newexplore.module.css';
 import styles1 from '../newui/newui.module.css';
 import ccardStyles from './categorycards.module.css';
@@ -709,7 +709,7 @@ export default function ExplorePage() {
 
   const [topUsers, setTopUsers] = useState([]);
   const router = useRouter();
-
+  const { showToast } = useToast();
 
 
   const totalCards = mostLikedData.length;
@@ -743,7 +743,7 @@ const [currentUserId, setCurrentUserId] = useState<number | null>(null);
 
   const handleAddToCart = (product) => {
     if (product.design.stock === 'Out of Stock') {
-      alert("Sorry, this item is currently out of stock and cannot be added to cart.");
+      showToast("Sorry, this item is currently out of stock and cannot be added to cart.", "error");
       return;
     }
     const cartItem = {
@@ -761,10 +761,10 @@ const [currentUserId, setCurrentUserId] = useState<number | null>(null);
   
     if (index > -1) {
       existingCart[index].quantity += 1;
-      alert("This item is already in the cart. Quantity increased.");
+      showToast("This item is already in the cart. Quantity increased.");
     } else {
       existingCart.push(cartItem);
-      alert("Added to cart!");
+      showToast("Added to cart!", "success");
     }
   
     localStorage.setItem("cart", JSON.stringify(existingCart));
@@ -909,7 +909,7 @@ const dotCount = maxSlideIndex + 1;
   const debugPost = async (postId: number) => {
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('Please log in to debug');
+      showToast('Please log in to debug', "error");
       return;
     }
   
@@ -938,7 +938,7 @@ const dotCount = maxSlideIndex + 1;
   const handleLike = async (postId: number) => {
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('Please log in to like posts');
+      showToast('Please log in to like posts', "error");
       return;
     }
   
@@ -1008,7 +1008,7 @@ const dotCount = maxSlideIndex + 1;
   const handleFavorite = async (postId: number) => {
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('Please log in to favorite posts');
+      showToast('Please log in to favorite posts', "error");
       return;
     }
   
@@ -1080,7 +1080,7 @@ const dotCount = maxSlideIndex + 1;
     e.preventDefault();
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('Please log in to comment');
+      showToast('Please log in to comment', "error");
       return;
     }
   
@@ -1088,7 +1088,7 @@ const dotCount = maxSlideIndex + 1;
     const content = formData.get('content') as string;
   
     if (!content.trim()) {
-      alert('Please enter a comment');
+      showToast('Please enter a comment', "error");
       return;
     }
   
@@ -1151,7 +1151,7 @@ const dotCount = maxSlideIndex + 1;
   const handleDeleteComment = async (commentId: number, postId: number) => {
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('Please log in to delete comments');
+      showToast('Please log in to delete comments', "error");
       return;
     }
   

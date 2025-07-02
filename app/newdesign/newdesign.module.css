@@ -7,9 +7,16 @@
 
     position: relative;
     padding-top: 50px;
-       overflow-y: auto;
+    overflow-y: auto;
     
     
+}
+.container::-webkit-scrollbar{
+    display: none;
+}
+
+.container::-webkit-scrollbar-thumb{
+    display: none;
 }
 
 .stage{
@@ -3138,4 +3145,7 @@ font-size: 10px;
     .infoGrid {
       grid-template-columns: 1fr;
     }
+  }
+  .open2{
+    left: 0%;
   }

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Layout from '../../newui/layout';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiHeart, FiBookmark, FiEye, FiShoppingCart, FiArrowRight, FiPenTool } from 'react-icons/fi';
+import { useToast } from '../../utils/ToastContext';
 import { FaHeart, FaRegHeart, FaBookmark, FaRegBookmark, FaComment, FaShoppingCart, FaMobile, FaTag, FaTrash, FaCalendarAlt, FaDollarSign, FaUpload, FaMobileAlt, FaEye, FaLock, FaShare, FaPlane, FaUndo, FaMapMarkerAlt, FaEnvelope, FaInstagram, FaTiktok, FaPinterest } from 'react-icons/fa';
 import {
   fetchPublicPosts,
@@ -70,6 +71,7 @@ interface ExtendedComment extends Comment {
 }
 
 const CategoryPage = () => {
+  const { showToast } = useToast();
   const params = useParams();
   const category = params.category as string;
   const [posts, setPosts] = useState<Post[]>([]);
@@ -159,7 +161,7 @@ const CategoryPage = () => {
   const handleLike = async (postId: number) => {
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('Please log in to like posts');
+      showToast('Please log in to like posts', "error");
       return;
     }
 
@@ -213,7 +215,7 @@ const CategoryPage = () => {
   const handleFavorite = async (postId: number) => {
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('Please log in to favorite posts');
+      showToast('Please log in to favorite posts', "error");
       return;
     }
 
@@ -268,7 +270,7 @@ const CategoryPage = () => {
     e.preventDefault();
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('Please log in to comment');
+      showToast('Please log in to comment', "error");
       return;
     }
 
@@ -276,7 +278,7 @@ const CategoryPage = () => {
     const content = formData.get('content') as string;
 
     if (!content.trim()) {
-      alert('Please enter a comment');
+      showToast('Please enter a comment', "error");
       return;
     }
 
@@ -339,7 +341,7 @@ post.id === postId
   const handleDeleteComment = async (commentId: number, postId: number) => {
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('Please log in to delete comments');
+      showToast('Please log in to delete comments', "error");
       return;
     }
 
@@ -403,7 +405,7 @@ post.id === postId
     }
 
     localStorage.setItem("cart", JSON.stringify(existingCart));
-    alert('Added to cart successfully!');
+    showToast('Added to cart successfully!', "success");
   };
 
   const handleShowMore = () => {

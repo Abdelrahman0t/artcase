@@ -9,7 +9,7 @@ import { ArrowLeft, Heart, MessageCircle, Bookmark, Calendar, TrendingUp, Clock,
 import Layout from "../../newui/layout";
 import styles1 from "../../newui/newui.module.css";
 import { FaHeart, FaRegHeart, FaBookmark, FaRegBookmark, FaShoppingCart, FaMobile, FaTag, FaCalendarAlt, FaDollarSign, FaTrash } from 'react-icons/fa';
-
+import { useToast } from "../../utils/ToastContext";
 
 // Real API fetch functions
 const fetchUserProfile = async (userId: string) => {
@@ -202,7 +202,7 @@ export default function SomeoneProfile() {
   const [isSaved, setIsSaved] = useState(false);
   const [commentInput, setCommentInput] = useState("");
   const [showAsProfileOwner, setShowAsProfileOwner] = useState(false);
-
+  const { showToast } = useToast();
   const router = useRouter();
   const [currentUserId, setCurrentUserId] = useState<number | null>(null);
   useEffect(() => {
@@ -280,7 +280,7 @@ export default function SomeoneProfile() {
   const handleLike = async (postId: number) => {
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('Please log in to like posts');
+      showToast('Please log in to like posts', "error");
       return;
     }
     try {
@@ -310,7 +310,7 @@ export default function SomeoneProfile() {
   const handleFavorite = async (postId: number) => {
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('You must be logged in to save posts.');
+      showToast('You must be logged in to save posts.', "error");
       return;
     }
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts/${postId}/favorite/`, {
@@ -332,7 +332,7 @@ export default function SomeoneProfile() {
 
   const handleAddToCart = (product: any) => {
     if (product.design.stock === 'Out of Stock') {
-      alert("Sorry, this item is currently out of stock and cannot be added to cart.");
+      showToast("Sorry, this item is currently out of stock and cannot be added to cart.", "error");
       return;
     }
     const cartItem = {
@@ -350,10 +350,10 @@ export default function SomeoneProfile() {
 
     if (index > -1) {
       existingCart[index].quantity += 1;
-      alert("This item is already in the cart. Quantity increased.");
+      showToast("This item is already in the cart. Quantity increased.");
     } else {
       existingCart.push(cartItem);
-      alert("Added to cart!");
+      showToast("Added to cart!", "success");
     }
 
     localStorage.setItem("cart", JSON.stringify(existingCart));
@@ -364,11 +364,11 @@ export default function SomeoneProfile() {
     e.preventDefault();
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('Please log in to comment');
+      showToast('Please log in to comment');
       return;
     }
     if (!commentInput.trim()) {
-      alert('Please enter a comment');
+      showToast('Please enter a comment', "error");
       return;
     }
     try {
@@ -410,7 +410,7 @@ export default function SomeoneProfile() {
   const handleDeleteComment = async (commentId: number, postId: number) => {
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('Please log in to delete comments');
+      showToast('Please log in to delete comments');
       return;
     }
     try {
