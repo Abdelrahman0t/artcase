@@ -8,7 +8,7 @@
     position: relative;
     padding-top: 50px;
     overflow-y: auto;
-    
+
     
 }
 .container::-webkit-scrollbar{
@@ -794,7 +794,7 @@ margin: 30px;
         align-items: center;
         overflow: scroll;
         overflow-x: hidden;
-        height: fit-content;
+        height: 110vh;
     }
     .stage0{
         margin-top: 100px;
@@ -868,10 +868,10 @@ margin: 30px;
 
    .extras{
     position: absolute;
-    right: -300px;
+    right: -100vw;
     top: 0%;
     margin-top:0px;
-    width: 250px;
+    width: 100vw;
     z-index: 10;
     background-color: white;
     height: 110vh;
@@ -2659,7 +2659,7 @@ font-size: 10px;
   .phoneSelectorWrapper {
     position: fixed;
     left: -100%; /* hidden to the left */
-    width: 250px;
+    width: 70vw;
     height: 100vh;
     top: 0%;
     background: white;
@@ -3149,3 +3149,33 @@ font-size: 10px;
   .open2{
     left: 0%;
   }
+
+
+@media (min-width: 992px) {
+  .closeBtnMobile {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1200px) {
+    .closeBtnMobile {
+      display: none !important;
+    }
+  }
+
+.closeBtnMobile {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1001;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: block;
+}
+@media (min-width: 992px) {
+  .closeBtnMobile {
+    display: none !important;
+  }
+}

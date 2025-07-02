@@ -1410,6 +1410,15 @@ onChange={handleColorChange} />
 
 
 <div className={`${style6.phoneSelectorWrapper} ${isSidebarPhoneOpen ? style6.open2 : ""}`}>
+    {/* X Button for closing phone selector */}
+    <button 
+      className={styles1.closeBtnMobile}
+      style={{ position: 'absolute', top: 10, right: 10, zIndex: 1001, background: 'transparent', border: 'none', fontSize: '1.5rem', cursor: 'pointer' }}
+      onClick={() => setIsSidebarPhoneOpen(false)}
+      aria-label="Close phone selector"
+    >
+      <i className="fa-solid fa-times"></i>
+    </button>
     {/* Phone Categories */}
     <div className={styles1.phoneCategoriesHeader}>
         <h2>Phone Models</h2>
@@ -1965,6 +1974,16 @@ Cancel
 
 
       <div className={`${styles1.extras} ${isSidebarOpen ? styles1.open : ""}`}>
+      {/* X Button for closing extras */}
+      <button 
+        className={styles1.closeBtnMobile}
+
+        style={{ position: 'absolute', top: 10, right: 10, zIndex: 1001, background: 'transparent', border: 'none', fontSize: '1.5rem', cursor: 'pointer' }}
+        onClick={() => setIsSidebarOpen(false)}
+        aria-label="Close extras"
+      >
+        <i className="fa-solid fa-times"></i>
+      </button>
       {/* Stickers Section */}
       <h2><i className="fa-solid fa-sticky-note"></i> Pick A Sticker</h2>
       <div

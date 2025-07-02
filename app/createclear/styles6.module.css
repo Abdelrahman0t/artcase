@@ -78,7 +78,7 @@
     .phoneSelectorWrapper {
         position: fixed;
         left: -100%; /* hidden to the left */
-        width: 250px;
+        width: 70vw;
         height: 100vh;
         top:0%;
         background: white;
@@ -92,6 +92,24 @@
       }
 }
 
+
+@media (max-width: 576px){
+  .phoneSelectorWrapper {
+    position: fixed;
+    left: -100%; /* hidden to the left */
+    width: 100vw;
+    height: 100vh;
+    top:0%;
+    background: white;
+    border-right: 3px solid var(--thirdColor);
+    z-index: 999;
+    transition: 0.7s;
+    overflow-y: auto;
+  }
+  .phoneSelectorWrapper.open2 {
+    left: 0; /* slide in */
+  }
+}
 
 
 

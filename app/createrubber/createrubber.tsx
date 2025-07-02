@@ -14,7 +14,7 @@ import 'cropperjs/dist/cropper.css'; // Import the cropperjs CSS
 import styles1 from '../newdesign/newdesign.module.css'; // Import the CSS module
 
 import styles from '../newui/newui.module.css'; // Import the CSS module
-import style6 from '../createclear/styles6.module.css'; // Import the CSS module
+import style6 from '../createrubber/styles6.module.css'; // Import the CSS module
 
 import Layoutt from '../newui/layout';
 import { Merriweather, Roboto, Oswald } from 'next/font/google';
@@ -1515,7 +1515,14 @@ onChange={handleColorChange} />
 
 
 
-<div className={`${styles1.phoneSelectorWrapper} ${isSidebarPhoneOpen ? styles1.open2 : ""}`}> 
+<div className={`${style6.phoneSelectorWrapper} ${isSidebarPhoneOpen ? style6.open2 : ""}`}> 
+<button
+  className={styles1.closeBtnMobile}
+  onClick={() => setIsSidebarPhoneOpen(false)}
+  aria-label="Close phone selector"
+>
+  <i className="fa-solid fa-times"></i>
+</button>
   {/* Phone Categories Header */}
   <div className={styles1.phoneCategoriesHeader}>
     <h2>Phone Models</h2>
@@ -1973,6 +1980,13 @@ Upload Your Image
 </div>
 
 <div className={`${styles1.extras} ${isSidebarOpen ? styles1.open : ""}`}>
+<button
+  className={styles1.closeBtnMobile}
+  onClick={() => setIsSidebarOpen(false)}
+  aria-label="Close phone selector"
+>
+  <i className="fa-solid fa-times"></i>
+</button>
       {/* Stickers Section */}
       <h2><i className="fa-solid fa-sticky-note"></i> Pick A Sticker</h2>
       <div

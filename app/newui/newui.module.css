@@ -2891,7 +2891,6 @@
   display: flex;
   gap: 12px;
   margin-bottom: 24px;
-  color : black
 }
 
 .commentInput input {
@@ -2902,7 +2901,6 @@
   font-size: 1rem;
   transition: all 0.3s ease;
   background: white;
-  color: black;
 }
 
 .commentInput input:focus {
