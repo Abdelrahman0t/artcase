@@ -14,6 +14,7 @@ import { FaHeart, FaRegHeart, FaBookmark, FaRegBookmark, FaComment, FaShoppingCa
 import { fetchMostLikedDesigns, fetchTopUsersByLikes } from '../utils/apiUtils';
 import { useRouter } from "next/navigation";
 import { Router } from 'lucide-react';
+import { useIsMobile } from "../utils/useIsMobile";
 // Helper components
 const Card = ({ className, children }: { className?: string; children: React.ReactNode }) => <div className={className}>{children}</div>;
 const CardContent = ({ className, children }: { className?: string; children: React.ReactNode }) => <div className={className}>{children}</div>;
@@ -718,7 +719,7 @@ const gap = 30;
 const padding = 40;
 const [visibleCards, setVisibleCards] = useState(1);
 const [currentSlide, setCurrentSlide] = useState(0);
-
+const isMobile = useIsMobile();
 
 const [currentUserId, setCurrentUserId] = useState<number | null>(null);
   useEffect(() => {
@@ -909,7 +910,7 @@ const dotCount = maxSlideIndex + 1;
   const debugPost = async (postId: number) => {
     const token = localStorage.getItem('token');
     if (!token) {
-      showToast('Please log in to debug', "error");
+      s('Please log in to debug');
       return;
     }
   
@@ -2014,119 +2015,169 @@ const sortedPosts = [...filteredPosts].sort((a, b) => {
 {!postsLoading && !postsError && sortedPosts.slice(0, visibleBackendPosts).map((post, index)  =>{ 
   
   console.log(`Rendering post ${post.id}:`, { is_liked: post.is_liked, is_favorited: post.is_favorited });
-  return(
-  <motion.div 
-    key={post.id}
-    className={styles.cards}
-    initial={{ opacity: 0, y: 50, scale: 0.9 }}
-    whileInView={{ opacity: 1, y: 0, scale: 1 }}
-    viewport={{ once: true, margin: "-20px" }}
-    transition={{ 
-      type: 'spring', 
-      stiffness: 300, 
-      damping: 25,
-      delay: index * 0.1,
-      duration: 0.6
-    }}
-    whileHover={{ 
-      y: -8,
-      transition: { duration: 0.2 }
-    }}
-  >
-    <motion.div 
-      className={styles.imgBack}
-      transition={{ duration: 0.3 }}
-    >
-      <img 
-        src={post.design.image_url} 
-        alt={post.caption} 
-        className={post.design.type === 'customed clear case' ? styles.clearW : styles.rubberW}
-      />
-      <div className={styles.imageIconButtons}>
-      <motion.button className={`${post.is_liked ? styles1.liked : ''} ${styles.likeButton}`} whileTap={{ scale: 0.9 }} onClick={() => handleLike(post.id)}>
-      {post.is_liked ? <FaHeart /> : <FiHeart />}
-        </motion.button>
-        <motion.button className={` ${post.is_favorited ? styles1.favorited : ''} ${styles.saveButton}`} whileTap={{ scale: 0.9 }} onClick={() => handleFavorite(post.id)}>
-          {post.is_favorited ? <FaBookmark /> : <FiBookmark />}
-        </motion.button>
-            </div>
-      <motion.div className={styles.quickViewOverlay} initial={{ opacity: 0 }} whileHover={{ opacity: 1 }}>
-        <button onClick={() => { console.log(post); handlePostClick(post); }} className={styles.quickViewButton}>
-          <FiEye /> Quick View
-        </button>
-
-
-        <button 
-      onClick={() => debugPost(post.id)}
-      style={{
-        position: 'absolute',
-        top: '5px',
-        right: '5px',
-        background: 'red',
-        color: 'white',
-        border: 'none',
-        borderRadius: '3px',
-        padding: '2px 6px',
-        fontSize: '10px',
-        cursor: 'pointer',
-        zIndex: 1000,
-        display: 'none'
+  if (!isMobile) {
+    return (
+      <div key={post.id} className={styles.cards}>
+        <div className={styles.imgBack}>
+          <img 
+            src={post.design.image_url} 
+            alt={post.caption} 
+            className={post.design.type === 'customed clear case' ? styles.clearW : styles.rubberW}
+          />
+          <div className={styles.imageIconButtons}>
+            <button className={`${post.is_liked ? styles1.liked : ''} ${styles.likeButton}`} onClick={() => handleLike(post.id)}>
+              {post.is_liked ? <FaHeart /> : <FiHeart />}
+            </button>
+            <button className={` ${post.is_favorited ? styles1.favorited : ''} ${styles.saveButton}`} onClick={() => handleFavorite(post.id)}>
+              {post.is_favorited ? <FaBookmark /> : <FiBookmark />}
+            </button>
+          </div>
+          <div className={styles.quickViewOverlay}>
+            <button onClick={() => handlePostClick(post)} className={styles.quickViewButton}>
+              <FiEye /> Quick View
+            </button>
+          </div>
+        </div>
+        <div className={styles.cardsContent}>
+          <h3 className={styles.title}>{post.caption}</h3>
+          <div className={styles.disc} onClick={() => {
+            if (post.user_id === currentUserId) {
+              router.push('/newprofile');
+            } else {
+              router.push(`/someoneProfile/${post.user_id}`);
+            }
+          }}>
+            <img src={post.profile_pic} alt={post.user} className={styles.discprofile_pic} />
+            <span>@{post.user}</span>
+          </div>
+          <div className={styles.price}>${post.design.price}</div>
+          <div className={styles.cardActions}>
+            <button className={styles.addToCartButton} onClick={() => handleAddToCart(post)}>
+              <FiShoppingCart/> Add to Cart
+            </button>
+            <button className={styles.viewButton} onClick={() => handlePostClick(post)}>
+              <FiEye />
+            </button>
+          </div>
+        </div>
+      </div>
+    );}
+  
+  else{
+    return(
+      <motion.div 
+      key={post.id}
+      className={styles.cards}
+      initial={{ opacity: 0, y: 50, scale: 0.9 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: "-20px" }}
+      transition={{ 
+        type: 'spring', 
+        stiffness: 300, 
+        damping: 25,
+        delay: index * 0.1,
+        duration: 0.6
+      }}
+      whileHover={{ 
+        y: -8,
+        transition: { duration: 0.2 }
       }}
     >
-      DEBUG
-    </button>
-    
-      </motion.div>
-    </motion.div>
-    <div className={styles.cardsContent}>
-      <motion.h3 
-        className={styles.title}
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.4, delay: 0.2 }}
-      >
-        {post.caption}
-      </motion.h3>
       <motion.div 
-        className={styles.disc}
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.4, delay: 0.3 }}
-        onClick={() => {
-          if (post.user_id === currentUserId) {
-            router.push('/newprofile');
-          } else {
-            router.push(`/someoneProfile/${post.user_id}`);
-          }
+        className={styles.imgBack}
+        transition={{ duration: 0.3 }}
+      >
+        <img 
+          src={post.design.image_url} 
+          alt={post.caption} 
+          className={post.design.type === 'customed clear case' ? styles.clearW : styles.rubberW}
+        />
+        <div className={styles.imageIconButtons}>
+        <motion.button className={`${post.is_liked ? styles1.liked : ''} ${styles.likeButton}`} whileTap={{ scale: 0.9 }} onClick={() => handleLike(post.id)}>
+        {post.is_liked ? <FaHeart /> : <FiHeart />}
+          </motion.button>
+          <motion.button className={` ${post.is_favorited ? styles1.favorited : ''} ${styles.saveButton}`} whileTap={{ scale: 0.9 }} onClick={() => handleFavorite(post.id)}>
+            {post.is_favorited ? <FaBookmark /> : <FiBookmark />}
+          </motion.button>
+              </div>
+        <motion.div className={styles.quickViewOverlay} initial={{ opacity: 0 }} whileHover={{ opacity: 1 }}>
+          <button onClick={() => { console.log(post); handlePostClick(post); }} className={styles.quickViewButton}>
+            <FiEye /> Quick View
+          </button>
+  
+  
+          <button 
+        onClick={() => debugPost(post.id)}
+        style={{
+          position: 'absolute',
+          top: '5px',
+          right: '5px',
+          background: 'red',
+          color: 'white',
+          border: 'none',
+          borderRadius: '3px',
+          padding: '2px 6px',
+          fontSize: '10px',
+          cursor: 'pointer',
+          zIndex: 1000,
+          display: 'none'
         }}
       >
-        <img src={post.profile_pic} alt={post.user} className={styles.discprofile_pic} />
-        <span>@{post.user}</span>
+        DEBUG
+      </button>
+      
+        </motion.div>
       </motion.div>
-      <div className={styles.price}>${post.design.price}</div>
-      <div className={styles.cardActions}>
-        <motion.button 
-          className={styles.addToCartButton}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => handleAddToCart(post)}
+      <div className={styles.cardsContent}>
+        <motion.h3 
+          className={styles.title}
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.2 }}
         >
-          <FiShoppingCart/> Add to Cart
-        </motion.button>
-        <motion.button 
-          className={styles.viewButton}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => { console.log(post); handlePostClick(post); }}
+          {post.caption}
+        </motion.h3>
+        <motion.div 
+          className={styles.disc}
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.3 }}
+          onClick={() => {
+            if (post.user_id === currentUserId) {
+              router.push('/newprofile');
+            } else {
+              router.push(`/someoneProfile/${post.user_id}`);
+            }
+          }}
         >
-          <FiEye />
-        </motion.button>
-              </div>
+          <img src={post.profile_pic} alt={post.user} className={styles.discprofile_pic} />
+          <span>@{post.user}</span>
+        </motion.div>
+        <div className={styles.price}>${post.design.price}</div>
+        <div className={styles.cardActions}>
+          <motion.button 
+            className={styles.addToCartButton}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => handleAddToCart(post)}
+          >
+            <FiShoppingCart/> Add to Cart
+          </motion.button>
+          <motion.button 
+            className={styles.viewButton}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => { console.log(post); handlePostClick(post); }}
+          >
+            <FiEye />
+          </motion.button>
                 </div>
-  </motion.div>
-  );
+                  </div>
+    </motion.div>
+    )
+  }
 })}
         </motion.div>
               </div>
