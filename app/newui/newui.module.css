@@ -82,6 +82,7 @@
   font-size: 0.95rem;
   background-color: #f8f9fa;
   transition: all 0.2s ease;
+  color: black;
 }
 
 .modernSearch:focus {
