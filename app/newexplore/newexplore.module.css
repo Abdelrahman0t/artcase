@@ -6437,16 +6437,6 @@ height: fit-content;
 }
 
 
-
-
-@media (max-width: 576px) {
- .designsGrid {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-  }
-}
-
-
 @media (max-width: 362px){
   .addToCartButton{
     font-size: 0.7rem;
@@ -6469,3 +6459,15 @@ height: fit-content;
     font-size: 0.6rem;
   }
 } 
+
+
+
+@media (max-width: 576px) {
+ .designsGrid {
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+  }
+}
+
+
+
