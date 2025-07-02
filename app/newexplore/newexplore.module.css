@@ -6437,8 +6437,17 @@ height: fit-content;
 }
 
 
-@media (max-width: 362px){
-  .addToCartButton{
+
+
+
+
+@media (max-width: 576px) {
+ .designsGrid {
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+  }
+
+    .addToCartButton{
     font-size: 0.7rem;
   }
   .cardsContent .title{
@@ -6457,15 +6466,6 @@ height: fit-content;
   }
   .quickViewButton{
     font-size: 0.6rem;
-  }
-} 
-
-
-
-@media (max-width: 576px) {
- .designsGrid {
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
   }
 }
 
