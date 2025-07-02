@@ -279,7 +279,7 @@
   justify-content: space-between;
   font-size: 0.875rem;
   color: #475569;
-  margin-bottom: 0.5rem;
+  
 }
 
 .postStat {
@@ -1072,4 +1072,59 @@
   color: #64748b;
   white-space: nowrap;
   margin-left: 1rem;
+}
+@media (max-width: 666px) {
+  .galleryHeader{
+    padding-left: 0;
+    padding-right: 0;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+  }
+.tabsContainer{
+  flex-wrap: nowrap;
+  
+ 
+}
+.tabButton{
+  font-size: 0.7rem;
+  padding: 0.5rem 0.5rem;
+}
+}
+@media (max-width: 503px) {
+  .postTitle{
+    font-size: 1rem;
+  }
+  .postText{
+    font-size: 0.8rem;
+  }
+  .postActionButtons {
+    display: none;
+  }
+  .postActions{
+    justify-content: center;
+
+  }
+  .postStat{
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 469px){
+.tabButton{
+  padding: 0.5rem 0.2rem;
+}
+
+}
+@media (max-width: 354px){
+  .postAuthorName{
+    font-size: 0.75rem;
+  }
+  .postStats{
+    gap: 0.7rem;
+  }
+  .postStat{
+    font-size: 0.6rem;
+  }
 }

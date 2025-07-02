@@ -607,7 +607,7 @@ export default function SomeoneProfile() {
                         variant={post.design?.type === "clear" ? "default" : "secondary"}
                         className={styles.postTypeBadge}
                       >
-                        {post.design?.type || "design"}
+                        {post.design?.type === 'customed clear case' ? 'Clear' : 'Rubber'}
                       </Badge>
                     </div>
 

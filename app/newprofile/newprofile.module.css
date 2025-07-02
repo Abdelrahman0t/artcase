@@ -1322,13 +1322,13 @@
   /* Responsive adjustments */
   @media (max-width: 640px) {
     .postActions {
-      flex-direction: column;
-      align-items: flex-start;
+      flex-direction: row;
+
       gap: 1rem;
     }
   
     .postActionButtons {
-      width: 100%;
+      
       justify-content: space-around;
     }
   
@@ -2345,5 +2345,102 @@ font-size: 0.9rem;
   }
   .modalActionButton{
     padding: 0.85rem 0.5rem
+  }
+}
+
+
+
+
+
+
+
+
+
+@media (max-width: 666px) {
+  .galleryHeader{
+    padding-left: 0;
+    padding-right: 0;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+  }
+.tabsContainer{
+  flex-wrap: nowrap;
+  
+ 
+}
+.tabButton{
+  font-size: 0.7rem;
+  padding: 0.5rem 0.5rem;
+}
+}
+
+@media (max-width: 532px){
+  .postActionButtons {
+    display: none;
+  }
+  .postStats{
+    width: 100%;
+    justify-content: center;
+  }
+
+}
+@media (max-width: 503px) {
+.tabContent{
+  padding: 1.5rem 1rem;
+}
+  .postTitle{
+    font-size: 1rem;
+  }
+  .postText{
+    font-size: 0.8rem;
+  }
+  .postActionButtons {
+    display: none;
+  }
+  .postActions{
+    justify-content: center;
+
+  }
+  .postStat{
+    font-size: 0.7rem;
+  }
+}
+@media (max-width: 494px){
+  .tabHeader{
+    align-items: center;
+  }
+.filterButtons{
+  flex-wrap: wrap;
+  justify-content: center;
+}
+}
+@media (max-width: 469px){
+
+.tabButton{
+  padding: 0.5rem 0.2rem;
+}
+
+}
+@media (max-width: 354px){
+  .postAuthorName{
+    font-size: 0.75rem;
+  }
+  .postStats{
+    gap: 0.7rem;
+  }
+  .postStat{
+    font-size: 0.6rem;
+  }
+}
+
+
+
+
+@media (max-width: 365px) {
+  .newprofile_postImage__k23zu {
+      width: 50%;
+      height: 250px;
   }
 }

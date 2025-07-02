@@ -1757,7 +1757,7 @@ export default function Dashboard() {
                             className={styles.designBadge}
                             variant={design.type === "clear" ? "default" : "secondary"}
                           >
-                            {design.type}
+                            {design.type === 'customed clear case' ? 'Clear' : 'Rubber'}
                           </Badge>
                         </div>
                         <CardContent className={styles.designInfo}>
@@ -1846,7 +1846,7 @@ export default function Dashboard() {
                                 variant={post.design.type === "clear" ? "default" : "secondary"}
                                 className={styles.postTypeBadge}
                               >
-                                {post.design.type}
+                                {post.design?.type === 'customed clear case' ? 'Clear' : 'Rubber'}
                               </Badge>
                             </div>
 
@@ -1983,7 +1983,7 @@ export default function Dashboard() {
                                   variant={post.design.type === "clear" ? "default" : "secondary"}
                                   className={styles.postTypeBadge}
                                 >
-                                  {post.design.type}
+                                  {post.design?.type === 'customed clear case' ? 'Clear' : 'Rubber'}
                                 </Badge>
                               </div>
 
@@ -2127,7 +2127,7 @@ export default function Dashboard() {
                                   variant={post.design.type === "clear" ? "default" : "secondary"}
                                   className={styles.postTypeBadge}
                                 >
-                                  {post.design.type}
+                                  {post.design?.type === 'customed clear case' ? 'Clear' : 'Rubber'}
                                 </Badge>
                               </div>
 
